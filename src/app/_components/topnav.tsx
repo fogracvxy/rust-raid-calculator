@@ -86,31 +86,33 @@ export function TopNav() {
         >
           Calculator
         </Link>
-        <Link
-          className="link mb-2 md:mb-0"
-          href="https://www.battlemetrics.com/servers/rust/4729828"
-        >
+        <Link className="link mb-2 md:mb-0" href="/battlemetrics">
           BattleMetrics
         </Link>
       </div>
       <div className="flex flex-col items-center md:items-end mt-2 md:mt-0">
-        {error && <p>{error}</p>}
-        {!error && isLoading && <p>Loading...</p>}
-        {!error && !isLoading && serverData && (
-          <p className="text-center font-mono text-sm md:text-right">
-            <span>
-              {serverData.attributes.players} /{" "}
-              {serverData.attributes.maxPlayers} Players Online
-            </span>
-            {serverData.attributes.details?.rust_queued_players === 0 ? (
-              <span className="ml-1">(0 queued)</span>
-            ) : (
-              <span className="ml-1">
-                ({serverData.attributes.details?.rust_queued_players} queued)
-              </span>
+        {pathname !== "/battlemetrics" && (
+          <>
+            {error && <p>{error}</p>}
+            {!error && isLoading && <p>Loading...</p>}
+            {!error && !isLoading && serverData && (
+              <p className="text-center font-mono text-sm md:text-right">
+                <span>
+                  {serverData.attributes.players} /{" "}
+                  {serverData.attributes.maxPlayers} Players Online
+                </span>
+                {serverData.attributes.details?.rust_queued_players === 0 ? (
+                  <span className="ml-1">(0 queued)</span>
+                ) : (
+                  <span className="ml-1">
+                    ({serverData.attributes.details?.rust_queued_players}{" "}
+                    queued)
+                  </span>
+                )}
+                <span> on {serverData.attributes.name}</span>
+              </p>
             )}
-            <span> on {serverData.attributes.name}</span>
-          </p>
+          </>
         )}
       </div>
     </nav>

@@ -4,7 +4,7 @@ import "./globals.css";
 import { TopNav } from "./_components/topnav";
 import { Footer } from "./_components/footer";
 const inter = Inter({ subsets: ["latin"] });
-
+import "react-toastify/dist/ReactToastify.css";
 export const metadata: Metadata = {
   title: "Rust raid calculator by MSpudicDesign",
   description: "Calculate the number of explosives required for a raid in Rust",
