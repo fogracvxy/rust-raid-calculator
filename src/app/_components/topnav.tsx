@@ -106,10 +106,10 @@ export function TopNav() {
               <span className="ml-1">(0 queued)</span>
             ) : (
               <span className="ml-1">
-                {serverData.attributes.details?.rust_queued_players} queued
+                ({serverData.attributes.details?.rust_queued_players} queued)
               </span>
             )}
-            <span> Players on {serverData.attributes.name}</span>
+            <span> on {serverData.attributes.name}</span>
           </p>
         )}
       </div>
