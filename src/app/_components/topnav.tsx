@@ -1,14 +1,22 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 export function TopNav() {
   const router = useRouter();
-
+  const pathname = usePathname();
   return (
-    <nav className="flex  border-b p-4 text-xl font-semibold">
+    <nav className="flex border-b p-4 justify-center text-xl font-semibold">
       <div className="flex max-w-6xl flex-row font-mono items-center">
-        <Link href="/">Home</Link>
-        <Link className="ml-5" href="/raid">
+        <Link
+          className={`link ${pathname === "/" ? "border-b-2" : ""} ml-5`}
+          href="/"
+        >
+          Home
+        </Link>
+        <Link
+          className={`link ${pathname === "/raid" ? "border-b-2" : ""} ml-5`}
+          href="/raid"
+        >
           Calculator
         </Link>
         <Link
