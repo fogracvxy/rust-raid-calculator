@@ -15,28 +15,5 @@ export default function RaidCalculator() {
     // Update the result state with the calculated options
   };
 
-  return (
-    <div>
-      <div>
-        <label htmlFor="wallTypes">Number of Wall Types:</label>
-        <input
-          type="number"
-          id="wallTypes"
-          value={wallTypes}
-          onChange={handleChange}
-        />
-      </div>
-      <button onClick={calculateRaid}>Calculate</button>
-      {result.length > 0 && (
-        <div>
-          <h2>RAID Options:</h2>
-          <ul>
-            {result.map((option, index) => (
-              <li key={index}>{option}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
+  return <div className="text-center">TO BE ADDED</div>;
 }
