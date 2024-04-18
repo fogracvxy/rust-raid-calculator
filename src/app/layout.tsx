@@ -21,7 +21,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body
+        className={`${inter.className} flex flex-col min-h-screen font-mono`}
+      >
         <TopNav />
         <main className="flex-grow">{children}</main>
         <Footer />
