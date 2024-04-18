@@ -15,6 +15,7 @@ interface ServerData {
     details: {
       rust_headerimage: string;
       rust_queued_players: number;
+      rust_url: string;
       rust_maps: {
         url: string;
         thumbnailUrl: string;
@@ -52,6 +53,7 @@ export default function BattleMetrics() {
               details: {
                 rust_queued_players:
                   serverAttributes.details?.rust_queued_players ?? 0,
+                rust_url: serverAttributes.details?.rust_url ?? "",
                 rust_headerimage:
                   serverAttributes.details?.rust_headerimage ?? "",
                 rust_maps: {
@@ -97,7 +99,7 @@ export default function BattleMetrics() {
           position: "bottom-center",
         });
         setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 3000); // Reset copied state after 3 seconds
+        // setTimeout(() => setIsCopied(false), 3000); // Reset copied state after 3 seconds
       })
       .catch((error) => {
         console.error("Failed to copy to clipboard:", error);
@@ -108,14 +110,21 @@ export default function BattleMetrics() {
     ? `${serverData.attributes.address}:${serverData.attributes.port}`
     : "";
   return (
-    <div className="flex  flex-col justify-center items-center pt-10 text-center">
-      <div className="flex  flex-col  border rounded-lg p-2 items-center mt-2 md:mt-0">
-        <h1 className="pb-5">Server info</h1>
+    <div className="flex flex-col justify-center items-center pt-10 text-center">
+      <div className="flex flex-col  border rounded-lg p-2 items-center mt-2 md:mt-0">
+        <h1 className="border-b-2 pb-2">Server info</h1>
         <>
           {error && <p>{error}</p>}
           {!error && isLoading && <p>Loading...</p>}
           {!error && !isLoading && serverData && (
             <>
+              <Link href={serverData?.attributes.details.rust_url}>
+                {" "}
+                <p className="text-center py-2 font-mono text-md md:text-right hover:text-gray-500">
+                  <span> {serverData.attributes.name}</span>
+                </p>
+              </Link>
+
               <div className="relative w-40 h-40 object-cover">
                 {" "}
                 <Image
@@ -136,13 +145,13 @@ export default function BattleMetrics() {
                 onClick={() => handleCopyToClipboard(ipText)}
               >
                 IP: {ipText}
-                {isCopied && " (Copied)"}
               </p>
-              <p className="text-center font-mono text-sm md:text-right">
-                <span>
-                  {serverData.attributes.players} /{" "}
-                  {serverData.attributes.maxPlayers} Players Online
-                </span>
+              <p> {isCopied ? " (Copied)" : "(Click to copy IP)"}</p>
+              <p>
+                {serverData.attributes.players} /{" "}
+                {serverData.attributes.maxPlayers} Players Online{" "}
+              </p>
+              <p>
                 {serverData.attributes.details?.rust_queued_players === 0 ? (
                   <span className="ml-1">(0 queued)</span>
                 ) : (
@@ -151,14 +160,15 @@ export default function BattleMetrics() {
                     queued)
                   </span>
                 )}
-                <span> on {serverData.attributes.name}</span>
               </p>
+              <div className="py-5">
+                <h1 className="border-b-2 ">Current map</h1>
+              </div>
               <div>
                 {" "}
                 <Link
                   href={serverData?.attributes.details?.rust_maps?.url ?? ""}
                 >
-                  <h1 className="py-5">Current map</h1>
                   <Image
                     className="rounded-lg hover:opacity-80 transition-opacity duration-300 ease-in-out cursor-pointer"
                     src={
