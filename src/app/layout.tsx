@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Rust raid calculator by MSpudicDesign",
   description: "Calculate the number of explosives required for a raid in Rust",
+  icons: {
+    icon: ["/icon.ico"],
+    apple: ["/icon.ico"],
+  },
 };
 
 export default function RootLayout({
