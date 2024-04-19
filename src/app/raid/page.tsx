@@ -10,6 +10,7 @@ interface Item {
     rockets: number;
     satchel: number;
   };
+  category: string;
 }
 
 const items: Item[] = [
@@ -22,6 +23,7 @@ const items: Item[] = [
       rockets: 15,
       satchel: 46,
     },
+    category: "Walls",
   },
   {
     name: "Metal Wall",
@@ -32,6 +34,7 @@ const items: Item[] = [
       rockets: 8,
       satchel: 23,
     },
+    category: "Walls",
   },
   {
     name: "Stone Wall",
@@ -42,6 +45,7 @@ const items: Item[] = [
       rockets: 4,
       satchel: 10,
     },
+    category: "Walls",
   },
   {
     name: "Wooden Wall",
@@ -52,6 +56,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 3,
     },
+    category: "Walls",
   },
   {
     name: "Sheet Metal Door",
@@ -62,6 +67,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 4,
     },
+    category: "Doors",
   },
   {
     name: "Armored Door",
@@ -72,6 +78,7 @@ const items: Item[] = [
       rockets: 5,
       satchel: 15,
     },
+    category: "Doors",
   },
   {
     name: "Wooden Door",
@@ -82,6 +89,7 @@ const items: Item[] = [
       rockets: 1,
       satchel: 2,
     },
+    category: "Doors",
   },
   {
     name: "Garage Door",
@@ -92,6 +100,7 @@ const items: Item[] = [
       rockets: 3,
       satchel: 9,
     },
+    category: "Doors",
   },
   {
     name: "Ladder Hatch",
@@ -102,6 +111,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 4,
     },
+    category: "Doors",
   },
   {
     name: "Metal Shop Front",
@@ -112,6 +122,7 @@ const items: Item[] = [
       rockets: 6,
       satchel: 18,
     },
+    category: "Doors",
   },
   {
     name: "External Wooden Wall",
@@ -122,6 +133,7 @@ const items: Item[] = [
       rockets: 3,
       satchel: 6,
     },
+    category: "External Walls",
   },
   {
     name: "External Stone Wall",
@@ -132,6 +144,7 @@ const items: Item[] = [
       rockets: 4,
       satchel: 10,
     },
+    category: "External Walls",
   },
   {
     name: "Auto Turret",
@@ -142,6 +155,7 @@ const items: Item[] = [
       rockets: 4,
       satchel: 2,
     },
+    category: "Defenses",
   },
   {
     name: "Shotgun Trap",
@@ -152,6 +166,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 1,
     },
+    category: "Defenses",
   },
   {
     name: "Flame Turret",
@@ -162,6 +177,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 1,
     },
+    category: "Defenses",
   },
   {
     name: "SAM Site",
@@ -172,6 +188,7 @@ const items: Item[] = [
       rockets: 4,
       satchel: 2,
     },
+    category: "Defenses",
   },
   {
     name: "Workbench lvl 1",
@@ -182,6 +199,7 @@ const items: Item[] = [
       rockets: 2,
       satchel: 1,
     },
+    category: "Furniture",
   },
   {
     name: "Workbench lvl 2",
@@ -192,6 +210,7 @@ const items: Item[] = [
       rockets: 4,
       satchel: 7,
     },
+    category: "Furniture",
   },
   {
     name: "Workbench lvl 3",
@@ -202,6 +221,7 @@ const items: Item[] = [
       rockets: 6,
       satchel: 10,
     },
+    category: "Furniture",
   },
   {
     name: "Vending Machine",
@@ -212,6 +232,7 @@ const items: Item[] = [
       rockets: 10,
       satchel: 15,
     },
+    category: "Furniture",
   },
 
   // Add more items here...
@@ -223,7 +244,7 @@ const DestructionUI = () => {
   >([]);
   const [selectedMethod, setSelectedMethod] =
     useState<keyof Item["destructionOptions"]>("c4");
-
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const handleAddItem = (item: Item) => {
     const existingItem = collection.find((c) => c.item === item);
     if (existingItem) {
@@ -317,10 +338,42 @@ const DestructionUI = () => {
         return 0;
     }
   };
+  const renderItemsByCategory = (category: string) =>
+    items
+      .filter((item) => item.category === category)
+      .map((item) => (
+        <div key={item.name} className="bg-black rounded-lg shadow-md p-2">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-20 h-20 object-contain mx-auto mb-2"
+          />
+          <p className="text-sm font-semibold text-center">{item.name}</p>
+          <div className="flex justify-center items-center mt-2">
+            <button
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2"
+              onClick={() => handleRemoveItem(item)}
+            >
+              -
+            </button>
+            <span className="font-semibold">
+              {collection.find((c) => c.item === item)?.quantity || 0}
+            </span>
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2"
+              onClick={() => handleAddItem(item)}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      ));
   return (
     <div className="p-4">
       <div>
-        <label htmlFor="methodSelect">Select Raid Method:</label>
+        <label className="mr-2" htmlFor="methodSelect">
+          Select Raid Method:
+        </label>
         <select
           id="methodSelect"
           className="text-black"
@@ -333,36 +386,52 @@ const DestructionUI = () => {
           <option value="bullets">Bullets</option>
         </select>
       </div>
-      <div className="grid grid-cols-4 font-mono sm:grid-cols-6 lg:grid-cols-10 gap-4">
-        {items.map((item) => (
-          <div key={item.name} className="bg-black rounded-lg shadow-md p-2">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-20 h-20 object-contain mx-auto mb-2"
-            />
-            <p className="text-sm font-semibold text-center">{item.name}</p>
-            <div className="flex justify-center items-center mt-2">
-              <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2"
-                onClick={() => handleRemoveItem(item)}
-              >
-                -
-              </button>
-              <span className="font-semibold">
-                {collection.find((c) => c.item === item)?.quantity || 0}
-              </span>
-              <button
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2"
-                onClick={() => handleAddItem(item)}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="flex justify-center my-4 space-x-4">
+        <button
+          className={`text-sm font-semibold px-2 py-1 rounded ${
+            activeCategory === "Walls"
+              ? "bg-gray-500 border text-white"
+              : "text-white border"
+          }`}
+          onClick={() => setActiveCategory("Walls")}
+        >
+          Walls
+        </button>
+        <button
+          className={`text-sm font-semibold px-2 py-1 rounded ${
+            activeCategory === "Doors"
+              ? "bg-gray-500 border text-white"
+              : "text-white border"
+          }`}
+          onClick={() => setActiveCategory("Doors")}
+        >
+          Doors
+        </button>
+        <button
+          className={`text-sm font-semibold px-2 py-1 rounded ${
+            activeCategory === "Defenses"
+              ? "bg-gray-500 border text-white"
+              : "text-white border"
+          }`}
+          onClick={() => setActiveCategory("Defenses")}
+        >
+          Defenses
+        </button>
+        <button
+          className={`text-sm font-semibold px-2 py-1 rounded ${
+            activeCategory === "Furniture"
+              ? "bg-gray-500 border text-white"
+              : "text-white border"
+          }`}
+          onClick={() => setActiveCategory("Furniture")}
+        >
+          Furniture
+        </button>
+        {/* Add more category buttons as needed */}
       </div>
-
+      <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-10 gap-4 justify-center items-center">
+        {activeCategory && renderItemsByCategory(activeCategory)}
+      </div>
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-2">Collection</h2>
         {collection.map((c) => (
