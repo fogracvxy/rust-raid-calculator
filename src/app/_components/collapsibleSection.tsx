@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
-export const CollapsibleSection = ({ title, children }) => {
+interface CollapsibleSectionProps {
+  title: string;
+  children: ReactNode;
+}
+
+export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
+  title,
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSection = () => {
@@ -17,5 +25,3 @@ export const CollapsibleSection = ({ title, children }) => {
     </div>
   );
 };
-
-
