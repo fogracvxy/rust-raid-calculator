@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { items } from "./items";
 import Image from "next/image";
-
 interface Item {
   name: string;
   image: string;
@@ -114,10 +113,12 @@ const DestructionUI = () => {
 
       return (
         <div key={item.name} className="bg-black rounded-lg shadow-md p-2">
-          <img
+          <Image
             src={item.image}
             alt={item.name}
             className="w-20 h-20 object-contain mx-auto mb-2"
+            height={100}
+            width={100}
           />
           <p className="text-sm font-semibold text-center">{item.name}</p>
           <div className="flex justify-center items-center mt-2">
@@ -359,6 +360,7 @@ const DestructionUI = () => {
           </div>
         </div>
       </div>
+
       <div className="pt-20 flex justify-center lg:flex lg:justify-start ">
         {" "}
         <button
