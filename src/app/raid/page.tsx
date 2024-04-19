@@ -242,45 +242,58 @@ const DestructionUI = () => {
   const [collection, setCollection] = useState<
     { item: Item; quantity: number }[]
   >(() => {
-    const storedCollection = localStorage.getItem("collection");
-    return storedCollection ? JSON.parse(storedCollection) : [];
+    if (typeof window !== "undefined") {
+      const storedCollection = localStorage.getItem("collection");
+      return storedCollection ? JSON.parse(storedCollection) : [];
+    }
+    return [];
   });
 
   const [selectedMethod, setSelectedMethod] = useState<
     keyof Item["destructionOptions"]
   >(() => {
-    const storedMethod = localStorage.getItem("selectedMethod");
-    return (storedMethod as keyof Item["destructionOptions"]) || "c4"; // Default value
+    if (typeof window !== "undefined") {
+      const storedMethod = localStorage.getItem("selectedMethod");
+      return (storedMethod as keyof Item["destructionOptions"]) || "c4";
+    }
+    return "c4"; // Default value if localStorage is not available
   });
 
   const [activeCategory, setActiveCategory] = useState<string | null>(() => {
-    const storedCategory = localStorage.getItem("activeCategory");
-    return storedCategory || null;
+    if (typeof window !== "undefined") {
+      const storedCategory = localStorage.getItem("activeCategory");
+      return storedCategory || null;
+    }
+    return null; // Default value if localStorage is not available
   });
 
   useEffect(() => {
-    localStorage.setItem("collection", JSON.stringify(collection));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("collection", JSON.stringify(collection));
+    }
   }, [collection]);
 
   useEffect(() => {
-    localStorage.setItem("selectedMethod", selectedMethod);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedMethod", selectedMethod);
+    }
   }, [selectedMethod]);
 
   useEffect(() => {
-    localStorage.setItem("activeCategory", activeCategory || "");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("activeCategory", activeCategory || "");
+    }
   }, [activeCategory]);
 
   const handleAddItem = (item: Item) => {
     const existingItem = collection.find((c) => c.item.name === item.name);
 
     if (existingItem) {
-      // If item already exists, update its quantity
       const updatedCollection = collection.map((c) =>
         c.item.name === item.name ? { ...c, quantity: c.quantity + 1 } : c
       );
       setCollection(updatedCollection);
     } else {
-      // Otherwise, add the item with quantity of 1
       setCollection([...collection, { item, quantity: 1 }]);
     }
   };
@@ -290,13 +303,11 @@ const DestructionUI = () => {
 
     if (existingItem) {
       if (existingItem.quantity === 1) {
-        // If only one item, remove it from collection
         const updatedCollection = collection.filter(
           (c) => c.item.name !== item.name
         );
         setCollection(updatedCollection);
       } else {
-        // Decrease quantity if more than one
         const updatedCollection = collection.map((c) =>
           c.item.name === item.name ? { ...c, quantity: c.quantity - 1 } : c
         );
@@ -309,9 +320,47 @@ const DestructionUI = () => {
     setCollection([]);
     setSelectedMethod("c4");
     setActiveCategory(null);
-    localStorage.removeItem("collection");
-    localStorage.removeItem("selectedMethod");
-    localStorage.removeItem("activeCategory");
+
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("collection");
+      localStorage.removeItem("selectedMethod");
+      localStorage.removeItem("activeCategory");
+    }
+  };
+
+  const renderItemsByCategory = (category: string) => {
+    const filteredItems = items.filter((item) => item.category === category);
+
+    return filteredItems.map((item) => {
+      const collectionItem = collection.find((c) => c.item.name === item.name);
+      const quantity = collectionItem ? collectionItem.quantity : 0;
+
+      return (
+        <div key={item.name} className="bg-black rounded-lg shadow-md p-2">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-20 h-20 object-contain mx-auto mb-2"
+          />
+          <p className="text-sm font-semibold text-center">{item.name}</p>
+          <div className="flex justify-center items-center mt-2">
+            <button
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2"
+              onClick={() => handleRemoveItem(item)}
+            >
+              -
+            </button>
+            <span className="font-semibold">{quantity}</span>
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2"
+              onClick={() => handleAddItem(item)}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      );
+    });
   };
   const calculateResources = () => {
     let c4 = 0;
@@ -378,41 +427,7 @@ const DestructionUI = () => {
         return 0;
     }
   };
-  const renderItemsByCategory = (category: string) =>
-    items
-      .filter((item) => item.category === category)
-      .map((item) => {
-        const collectionItem = collection.find(
-          (c) => c.item.name === item.name
-        );
-        const quantity = collectionItem ? collectionItem.quantity : 0;
 
-        return (
-          <div key={item.name} className="bg-black rounded-lg shadow-md p-2">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-20 h-20 object-contain mx-auto mb-2"
-            />
-            <p className="text-sm font-semibold text-center">{item.name}</p>
-            <div className="flex justify-center items-center mt-2">
-              <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2"
-                onClick={() => handleRemoveItem(item)}
-              >
-                -
-              </button>
-              <span className="font-semibold">{quantity}</span>
-              <button
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2"
-                onClick={() => handleAddItem(item)}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        );
-      });
   return (
     <div className="p-4 py-8">
       <div>
