@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { items } from "./items";
+import Image from "next/image";
 
 interface Item {
   name: string;
@@ -12,231 +14,6 @@ interface Item {
   };
   category: string;
 }
-
-const items: Item[] = [
-  {
-    name: "Armored Wall",
-    image: "/images/wall4.png",
-    destructionOptions: {
-      c4: 4,
-      bullets: 799,
-      rockets: 15,
-      satchel: 46,
-    },
-    category: "Walls",
-  },
-  {
-    name: "Metal Wall",
-    image: "/images/wall3.png",
-    destructionOptions: {
-      c4: 4,
-      bullets: 400,
-      rockets: 8,
-      satchel: 23,
-    },
-    category: "Walls",
-  },
-  {
-    name: "Stone Wall",
-    image: "/images/wall2.png",
-    destructionOptions: {
-      c4: 2,
-      bullets: 185,
-      rockets: 4,
-      satchel: 10,
-    },
-    category: "Walls",
-  },
-  {
-    name: "Wooden Wall",
-    image: "/images/wall1.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 49,
-      rockets: 2,
-      satchel: 3,
-    },
-    category: "Walls",
-  },
-  {
-    name: "Sheet Metal Door",
-    image: "/images/door.hinged.metal.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 63,
-      rockets: 2,
-      satchel: 4,
-    },
-    category: "Doors",
-  },
-  {
-    name: "Armored Door",
-    image: "/images/door.hinged.toptier.png",
-    destructionOptions: {
-      c4: 3,
-      bullets: 250,
-      rockets: 5,
-      satchel: 15,
-    },
-    category: "Doors",
-  },
-  {
-    name: "Wooden Door",
-    image: "/images/door.hinged.wood.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 19,
-      rockets: 1,
-      satchel: 2,
-    },
-    category: "Doors",
-  },
-  {
-    name: "Garage Door",
-    image: "/images/wall.frame.garagedoor.png",
-    destructionOptions: {
-      c4: 2,
-      bullets: 150,
-      rockets: 3,
-      satchel: 9,
-    },
-    category: "Doors",
-  },
-  {
-    name: "Ladder Hatch",
-    image: "/images/floor.ladder.hatch.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 63,
-      rockets: 2,
-      satchel: 4,
-    },
-    category: "Doors",
-  },
-  {
-    name: "Metal Shop Front",
-    image: "/images/wall.frame.shopfront.metal.png",
-    destructionOptions: {
-      c4: 3,
-      bullets: 300,
-      rockets: 6,
-      satchel: 18,
-    },
-    category: "Doors",
-  },
-  {
-    name: "External Wooden Wall",
-    image: "/images/wall.external.high.png",
-    destructionOptions: {
-      c4: 2,
-      bullets: 98,
-      rockets: 3,
-      satchel: 6,
-    },
-    category: "External Walls",
-  },
-  {
-    name: "External Stone Wall",
-    image: "/images/wall.external.high.stone.png",
-    destructionOptions: {
-      c4: 2,
-      bullets: 185,
-      rockets: 4,
-      satchel: 10,
-    },
-    category: "External Walls",
-  },
-  {
-    name: "Auto Turret",
-    image: "/images/autoturret.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 112,
-      rockets: 4,
-      satchel: 2,
-    },
-    category: "Defenses",
-  },
-  {
-    name: "Shotgun Trap",
-    image: "/images/guntrap.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 34,
-      rockets: 2,
-      satchel: 1,
-    },
-    category: "Defenses",
-  },
-  {
-    name: "Flame Turret",
-    image: "/images/flameturret.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 34,
-      rockets: 2,
-      satchel: 1,
-    },
-    category: "Defenses",
-  },
-  {
-    name: "SAM Site",
-    image: "/images/samsite.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 200,
-      rockets: 4,
-      satchel: 2,
-    },
-    category: "Defenses",
-  },
-  {
-    name: "Workbench lvl 1",
-    image: "/images/workbench1.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 56,
-      rockets: 2,
-      satchel: 1,
-    },
-    category: "Furniture",
-  },
-  {
-    name: "Workbench lvl 2",
-    image: "/images/workbench2.png",
-    destructionOptions: {
-      c4: 1,
-      bullets: 173,
-      rockets: 4,
-      satchel: 7,
-    },
-    category: "Furniture",
-  },
-  {
-    name: "Workbench lvl 3",
-    image: "/images/workbench3.png",
-    destructionOptions: {
-      c4: 2,
-      bullets: 259,
-      rockets: 6,
-      satchel: 10,
-    },
-    category: "Furniture",
-  },
-  {
-    name: "Vending Machine",
-    image: "/images/vending.machine.png",
-    destructionOptions: {
-      c4: 3,
-      bullets: 499,
-      rockets: 10,
-      satchel: 15,
-    },
-    category: "Furniture",
-  },
-
-  // Add more items here...
-];
 
 const DestructionUI = () => {
   const [collection, setCollection] = useState<
@@ -519,17 +296,68 @@ const DestructionUI = () => {
 
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-2">Required Resources</h2>
-        <p>C4: {calculateResources().c4}</p>
-        <p>Bullets: {calculateResources().bullets}</p>
-        <p>Rockets: {calculateResources().rockets}</p>
-        <p>Satchel: {calculateResources().satchel}</p>
+        <div className="flex">
+          <div className="flex flex-col mr-4">
+            <div className="flex items-center mb-2">
+              <Image
+                src="/images/explosive.timed.png"
+                height={40}
+                width={40}
+                alt="Timed Explosive Charge"
+              />
+              <p className="ml-4">{calculateResources().c4}</p>
+            </div>
+            <div className="flex items-center mb-2">
+              <Image
+                src="/images/ammo.rifle.explosive.png"
+                height={40}
+                width={40}
+                alt="Explosive Ammo"
+              />
+              <p className="ml-4">{calculateResources().bullets}</p>
+            </div>
+            <div className="flex items-center mb-2">
+              <Image
+                src="/images/ammo.rocket.basic.png"
+                height={40}
+                width={40}
+                alt="Rocket"
+              />
+              <p className="ml-4">{calculateResources().rockets}</p>
+            </div>
+            <div className="flex items-center">
+              <Image
+                src="/images/explosive.satchel.png"
+                height={40}
+                width={40}
+                alt="Satchel Charge"
+              />
+              <p className="ml-4">{calculateResources().satchel}</p>
+            </div>
+          </div>
+
+          {/* Add more columns here if needed */}
+        </div>
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-2">Total Sulfur Cost</h2>
-        <p>
-          Total Sulfur Cost ({selectedMethod}):{" "}
-          {calculateTotalSulfur(selectedMethod)}
-        </p>
+        <div className="flex">
+          <div className="flex flex-col">
+            <h2 className="text-xl font-bold mb-2">
+              Total Sulfur Cost ({selectedMethod})
+            </h2>
+            <div className="flex items-center  mb-2 ">
+              <Image
+                src="/images/sulfur.png"
+                height={40}
+                width={40}
+                alt="Sulfur"
+              />
+              <p className="ml-5 mt-2">
+                {calculateTotalSulfur(selectedMethod)}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="pt-20 flex justify-center lg:flex lg:justify-start ">
         {" "}
