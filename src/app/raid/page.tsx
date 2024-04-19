@@ -170,11 +170,25 @@ const DestructionUI = () => {
 
     return totalSulfur;
   };
-
-  // Function to handle changing the selected method
-  const handleSelectMethod = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMethod(event.target.value as keyof Item["destructionOptions"]);
-  };
+  const resources = [
+    { name: "C4", image: "/images/c4.png", quantity: calculateResources().c4 },
+    {
+      name: "Bullets",
+      image: "/images/bullets.png",
+      quantity: calculateResources().bullets,
+    },
+    {
+      name: "Rockets",
+      image: "/images/rockets.png",
+      quantity: calculateResources().rockets,
+    },
+    {
+      name: "Satchel",
+      image: "/images/satchel.png",
+      quantity: calculateResources().satchel,
+    },
+    // Add more resources here if needed
+  ];
 
   const getSulfurCost = (method: keyof Item["destructionOptions"]) => {
     // Define the sulfur cost per unit for each raid method
@@ -265,7 +279,7 @@ const DestructionUI = () => {
               {c.item.name} x {c.quantity}
             </p>
             <button
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm"
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
               onClick={() => handleRemoveItem(c.item)}
             >
               Remove
@@ -274,49 +288,29 @@ const DestructionUI = () => {
         ))}
       </div>
 
-      <div className="mt-8 ml-10">
+      <div className="mt-8 ml-10 ">
         <h2 className="text-xl font-bold mb-2">Required Resources</h2>
-        <div className="flex">
-          <div className="flex flex-col mr-4">
-            <div className="flex items-center mb-2">
-              <Image
-                src="/images/c4.png"
-                height={40}
-                width={40}
-                alt="Timed Explosive Charge"
-              />
-              <p className="ml-4">{calculateResources().c4}</p>
+        <div className="flex flex-wrap">
+          {resources.map((resource) => (
+            <div
+              key={resource.name}
+              className="flex items-center mr-4 mb-4 relative"
+            >
+              {/* Resource Image with Quantity */}
+              <div className="relative">
+                <Image
+                  src={resource.image}
+                  height={40}
+                  width={40}
+                  alt={resource.name}
+                />
+                <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-1 py-0.5 rounded">
+                  {resource.quantity}
+                </div>
+              </div>
+              {/* End Resource Image with Quantity */}
             </div>
-            <div className="flex items-center mb-2">
-              <Image
-                src="/images/bullets.png"
-                height={40}
-                width={40}
-                alt="Explosive Ammo"
-              />
-              <p className="ml-4">{calculateResources().bullets}</p>
-            </div>
-            <div className="flex items-center mb-2">
-              <Image
-                src="/images/rockets.png"
-                height={40}
-                width={40}
-                alt="Rocket"
-              />
-              <p className="ml-4">{calculateResources().rockets}</p>
-            </div>
-            <div className="flex items-center">
-              <Image
-                src="/images/satchel.png"
-                height={40}
-                width={40}
-                alt="Satchel Charge"
-              />
-              <p className="ml-4">{calculateResources().satchel}</p>
-            </div>
-          </div>
-
-          {/* Add more columns here if needed */}
+          ))}
         </div>
       </div>
       <div className="p-4 py-8 ml-6">
@@ -329,7 +323,7 @@ const DestructionUI = () => {
               {/* Sulfur Image with Dim Overlay */}
               <div style={{ position: "relative" }}>
                 <Image
-                  src={`/images/${method}.png`} // Assuming you have images named like c4.png, rockets.png, etc.
+                  src={`/images/${method}.png`}
                   height={50}
                   width={50}
                   alt={method.toUpperCase()}
@@ -371,7 +365,7 @@ const DestructionUI = () => {
         </div>
       </div>
 
-      <div className="pt-10 flex justify-center lg:flex lg:justify-start ml-10 ">
+      <div className="pt-10 flex justify-center lg:flex lg:justify-start lg:ml-10 ">
         {" "}
         <button
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
