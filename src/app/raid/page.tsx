@@ -258,6 +258,16 @@ const DestructionUI = () => {
         >
           Furniture
         </button>
+        <button
+          className={`text-sm font-semibold px-2 py-1 rounded ${
+            activeCategory === "External Walls"
+              ? "bg-gray-500 border text-white"
+              : "text-white border"
+          }`}
+          onClick={() => setActiveCategory("External Walls")}
+        >
+          External Walls
+        </button>
         {/* Add more category buttons as needed */}
       </div>
       <div className="flex justify-center">
@@ -300,8 +310,8 @@ const DestructionUI = () => {
               <div className="relative">
                 <Image
                   src={resource.image}
-                  height={40}
-                  width={40}
+                  height={50}
+                  width={50}
                   alt={resource.name}
                 />
                 <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-1 py-0.5 rounded">
