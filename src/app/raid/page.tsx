@@ -369,7 +369,7 @@ const DestructionUI = () => {
         </div>
       ));
   return (
-    <div className="p-4">
+    <div className="p-4 py-8">
       <div>
         <label className="mr-2" htmlFor="methodSelect">
           Select Raid Method:
@@ -386,7 +386,7 @@ const DestructionUI = () => {
           <option value="bullets">Bullets</option>
         </select>
       </div>
-      <div className="flex justify-center my-4 space-x-4">
+      <div className="flex justify-center my-8 space-x-4">
         <button
           className={`text-sm font-semibold px-2 py-1 rounded ${
             activeCategory === "Walls"
@@ -429,6 +429,14 @@ const DestructionUI = () => {
         </button>
         {/* Add more category buttons as needed */}
       </div>
+      <div className="flex justify-center">
+        {!activeCategory ? (
+          <div>
+            <p className="text-red-600 text-lg ">Choose category to begin!</p>
+          </div>
+        ) : null}
+      </div>
+
       <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-10 gap-4 justify-center items-center">
         {activeCategory && renderItemsByCategory(activeCategory)}
       </div>
