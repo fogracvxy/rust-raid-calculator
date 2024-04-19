@@ -217,59 +217,59 @@ const DestructionUI = () => {
   );
   return (
     <div className="p-4 py-8">
-      <div className="flex justify-center my-8 space-x-4">
+      <div className="flex justify-center flex-wrap gap-4 my-8">
         <button
-          className={`text-sm font-semibold px-2 py-1 rounded ${
+          className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Walls"
-              ? "bg-gray-500 border text-white"
-              : "text-white border"
+              ? "bg-gray-500 text-white"
+              : "text-white border border-gray-300 hover:bg-gray-200"
           }`}
           onClick={() => setActiveCategory("Walls")}
         >
           Walls
         </button>
         <button
-          className={`text-sm font-semibold px-2 py-1 rounded ${
+          className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Doors"
-              ? "bg-gray-500 border text-white"
-              : "text-white border"
+              ? "bg-gray-500 text-white"
+              : "text-white border border-gray-300 hover:bg-gray-200"
           }`}
           onClick={() => setActiveCategory("Doors")}
         >
           Doors
         </button>
         <button
-          className={`text-sm font-semibold px-2 py-1 rounded ${
+          className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Defenses"
-              ? "bg-gray-500 border text-white"
-              : "text-white border"
+              ? "bg-gray-500 text-white"
+              : "text-white border border-gray-300 hover:bg-gray-200"
           }`}
           onClick={() => setActiveCategory("Defenses")}
         >
           Defenses
         </button>
         <button
-          className={`text-sm font-semibold px-2 py-1 rounded ${
+          className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Furniture"
-              ? "bg-gray-500 border text-white"
-              : "text-white border"
+              ? "bg-gray-500 text-white"
+              : "text-white border border-gray-300 hover:bg-gray-200"
           }`}
           onClick={() => setActiveCategory("Furniture")}
         >
           Furniture
         </button>
         <button
-          className={`text-sm font-semibold px-2 py-1 rounded ${
+          className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "External Walls"
-              ? "bg-gray-500 border text-white"
-              : "text-white border"
+              ? "bg-gray-500 text-white"
+              : "text-white border border-gray-300 hover:bg-gray-200"
           }`}
           onClick={() => setActiveCategory("External Walls")}
         >
           External Walls
         </button>
-        {/* Add more category buttons as needed */}
       </div>
+
       <div className="flex justify-center">
         {!activeCategory ? (
           <div>
