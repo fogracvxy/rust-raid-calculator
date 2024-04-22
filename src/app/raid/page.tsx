@@ -297,9 +297,11 @@ const DestructionUI = () => {
         {collection.map((c) => (
           <div key={`${c.item.name}`} className="mb-6">
             <div className="flex items-center mb-2">
-              <p className="flex-1">
+              {/* Item Name */}
+              <p className="flex-1 underline underline-offset-4">
                 {c.item.name} x {c.quantity}
               </p>
+              {/* Remove Button */}
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
                 onClick={() => handleRemoveItem(c.item)}
@@ -338,11 +340,12 @@ const DestructionUI = () => {
           </div>
         ))}
       </div>
+
       <div className="mt-8 ml-10">
         <h2 className="text-xl font-bold mb-2">Best Options Calculated</h2>
         <div className="flex flex-wrap">
           {/* Render calculated best options */}
-          {["rockets", "c4", "bullets", "satchel"]
+          {["c4", "bullets", "rockets", "satchel"]
             .filter(
               (option) =>
                 collection.reduce(
@@ -386,7 +389,7 @@ const DestructionUI = () => {
       <div className="p-4 py-8 ml-6">
         <h2 className="text-xl font-bold mb-4">Best Option Sulfur Cost</h2>
         <div className="flex">
-          {["c4", "rockets", "bullets", "satchel"]
+          {["c4", "bullets", "rockets", "satchel"]
             .filter((option) => {
               const totalCost = collection.reduce((total, c) => {
                 const optionValue =
