@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["clone-deep"],
+  experimental: {
+    serverComponentsExternalPackages: [
+      "puppeteer-extra",
+      "puppeteer-extra-plugin-stealth",
+      "puppeteer-extra-plugin-recaptcha",
+    ],
+  },
   images: {
     remotePatterns: [
       {

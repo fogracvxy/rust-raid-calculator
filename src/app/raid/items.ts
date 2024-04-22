@@ -9,6 +9,12 @@ export const items = [
       satchel: 46,
     },
     category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 30,
+      rockets: 14,
+      satchel: 0,
+    },
   },
   {
     name: "Metal Wall",
@@ -20,6 +26,12 @@ export const items = [
       satchel: 23,
     },
     category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 15,
+      rockets: 7,
+      satchel: 0,
+    },
   },
   {
     name: "Stone Wall",
@@ -31,6 +43,12 @@ export const items = [
       satchel: 10,
     },
     category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 35,
+      rockets: 3,
+      satchel: 0,
+    },
   },
   {
     name: "Wooden Wall",
@@ -44,6 +62,40 @@ export const items = [
     category: "Walls",
   },
   {
+    name: "Strengthened window",
+    image: "/images/wall.window.glass.reinforced.png",
+    destructionOptions: {
+      c4: 2,
+      bullets: 140,
+      rockets: 3,
+      satchel: 9,
+    },
+    category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 30,
+      rockets: 2,
+      satchel: 0,
+    },
+  },
+  {
+    name: "Reinforced window",
+    image: "/images/wall.window.bars.toptier.png",
+    destructionOptions: {
+      c4: 2,
+      bullets: 200,
+      rockets: 4,
+      satchel: 12,
+    },
+    category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 35,
+      rockets: 3,
+      satchel: 0,
+    },
+  },
+  {
     name: "Sheet Metal Door",
     image: "/images/door.hinged.metal.png",
     destructionOptions: {
@@ -53,6 +105,12 @@ export const items = [
       satchel: 4,
     },
     category: "Doors",
+    bestOption: {
+      c4: 0,
+      bullets: 8,
+      rockets: 1,
+      satchel: 0,
+    },
   },
   {
     name: "Armored Door",
@@ -75,6 +133,12 @@ export const items = [
       satchel: 2,
     },
     category: "Doors",
+    bestOption: {
+      c4: 0,
+      bullets: 30,
+      rockets: 4,
+      satchel: 0,
+    },
   },
   {
     name: "Garage Door",
@@ -86,6 +150,12 @@ export const items = [
       satchel: 9,
     },
     category: "Doors",
+    bestOption: {
+      c4: 0,
+      bullets: 0,
+      rockets: 3,
+      satchel: 0,
+    },
   },
   {
     name: "Ladder Hatch",

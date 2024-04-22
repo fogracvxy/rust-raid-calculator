@@ -48,6 +48,14 @@ export function TopNav() {
         >
           Calculator
         </Link>
+        <Link
+          className={`link ${
+            pathname === "/stats" ? "border-b-2" : ""
+          } mb-2 md:mb-0 md:mr-5`}
+          href="/stats"
+        >
+          Stats
+        </Link>
         <Link className="link mb-2 md:mb-0" href="/battlemetrics">
           BattleMetrics
         </Link>

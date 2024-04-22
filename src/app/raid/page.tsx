@@ -12,6 +12,12 @@ interface Item {
     satchel: number;
   };
   category: string;
+  bestOption?: {
+    c4: number;
+    bullets: number;
+    rockets: number;
+    satchel: number;
+  };
 }
 
 const DestructionUI = () => {
@@ -211,7 +217,12 @@ const DestructionUI = () => {
     satchel: calculateSulfurCost("satchel"),
     bullets: calculateSulfurCost("bullets"),
   };
-
+  const calculateCost = (option: string, quantity: number) => {
+    const sulfurCost = getSulfurCost(
+      option as keyof Item["destructionOptions"]
+    );
+    return sulfurCost * quantity;
+  };
   const sortedOptions = Object.entries(sulfurCosts).sort(
     ([, costA], [, costB]) => costA - costB
   );
@@ -284,22 +295,163 @@ const DestructionUI = () => {
       <div className="mt-8 ml-10">
         <h2 className="text-xl font-bold mb-2">Collection</h2>
         {collection.map((c) => (
-          <div key={`${c.item.name}`} className="flex items-center mb-2">
-            <p className="flex-1">
-              {c.item.name} x {c.quantity}
-            </p>
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
-              onClick={() => handleRemoveItem(c.item)}
-            >
-              Remove
-            </button>
+          <div key={`${c.item.name}`} className="mb-6">
+            <div className="flex items-center mb-2">
+              <p className="flex-1">
+                {c.item.name} x {c.quantity}
+              </p>
+              <button
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
+                onClick={() => handleRemoveItem(c.item)}
+              >
+                Remove
+              </button>
+            </div>
+            {c.item.bestOption && (
+              <div className="mt-2 ml-10">
+                <h2 className="text-md font-bold mb-2">Best Option (x1) </h2>
+                <div className="flex flex-wrap">
+                  {Object.entries(c.item.bestOption).map(([option, value]) => (
+                    <div
+                      key={option}
+                      className="flex items-center mr-4 mb-4 relative"
+                    >
+                      {/* Resource Image with Quantity */}
+                      {value > 0 && (
+                        <div className="relative">
+                          <Image
+                            src={`/images/${option}.png`}
+                            height={35}
+                            width={35}
+                            alt={option}
+                          />
+                          <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-1 py-0.5 rounded">
+                            {value}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
-
+      <div className="mt-8 ml-10">
+        <h2 className="text-xl font-bold mb-2">Best Options Calculated</h2>
+        <div className="flex flex-wrap">
+          {/* Render calculated best options */}
+          {["rockets", "c4", "bullets", "satchel"]
+            .filter(
+              (option) =>
+                collection.reduce(
+                  (total, c) =>
+                    total +
+                    (c.item.bestOption?.[
+                      option as keyof typeof c.item.bestOption
+                    ] || 0) *
+                      c.quantity,
+                  0
+                ) > 0
+            )
+            .map((option) => (
+              <div
+                key={option}
+                className="flex items-center mr-4 mb-4 relative"
+              >
+                <div className="relative">
+                  <Image
+                    src={`/images/${option}.png`}
+                    height={50}
+                    width={50}
+                    alt={option}
+                  />
+                  <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-1 py-0.5 rounded">
+                    {collection.reduce(
+                      (total, c) =>
+                        total +
+                        (c.item.bestOption?.[
+                          option as keyof typeof c.item.bestOption
+                        ] || 0) *
+                          c.quantity,
+                      0
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+      <div className="p-4 py-8 ml-6">
+        <h2 className="text-xl font-bold mb-4">Best Option Sulfur Cost</h2>
+        <div className="flex">
+          {["c4", "rockets", "bullets", "satchel"]
+            .filter((option) => {
+              const totalCost = collection.reduce((total, c) => {
+                const optionValue =
+                  c.item.bestOption?.[
+                    option as keyof typeof c.item.bestOption
+                  ] || 0;
+                return total + calculateCost(option, optionValue * c.quantity);
+              }, 0);
+              return totalCost > 0;
+            })
+            .map((option) => {
+              const totalCost = collection.reduce((total, c) => {
+                const optionValue =
+                  c.item.bestOption?.[
+                    option as keyof typeof c.item.bestOption
+                  ] || 0;
+                return total + calculateCost(option, optionValue * c.quantity);
+              }, 0);
+              return (
+                <div key={option} className="flex items-center mr-4">
+                  <div style={{ position: "relative" }}>
+                    <Image
+                      src={`/images/${option}.png`}
+                      height={50}
+                      width={50}
+                      alt={option.toUpperCase()}
+                    />
+                    <div
+                      className="overlay"
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "#DDD71B",
+                        fontSize: 14,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <p className="opacity-100">{totalCost}</p>
+                      <div className="flex flex-col w-20 h-20 absolute top-0 left-0">
+                        <Image
+                          src="/images/sulfur.png"
+                          height={15}
+                          width={15}
+                          alt="Sulfur"
+                          className="brightness-100"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
       <div className="mt-8 ml-10 ">
-        <h2 className="text-xl font-bold mb-2">Required Resources</h2>
+        <h2 className="text-xl font-bold mb-2">
+          Required Resources (choose one){" "}
+        </h2>
         <div className="flex flex-wrap">
           {resources.map((resource) => (
             <div
@@ -323,6 +475,7 @@ const DestructionUI = () => {
           ))}
         </div>
       </div>
+
       <div className="p-4 py-8 ml-6">
         <h2 className="text-xl font-bold mb-4">
           Sulfur Costs Sorted (Lowest to Highest)
