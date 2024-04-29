@@ -24,6 +24,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cdn.rustafied.systems",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "i.imgur.com",
         port: "",
         pathname: "/**",
