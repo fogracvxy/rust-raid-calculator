@@ -176,6 +176,10 @@ export const itemsRecycle = [
       scrap: 18,
       highQualityMetal: 2,
     },
+    yieldsafezone: {
+      scrap: 12,
+      highQualityMetal: 2,
+    },
     image: "/images/components/smgbody.png",
   },
   {
