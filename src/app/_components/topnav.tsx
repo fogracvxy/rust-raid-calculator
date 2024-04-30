@@ -50,11 +50,11 @@ export function TopNav() {
         </Link>
         <Link
           className={`link ${
-            pathname === "/stats" ? "border-b-2" : ""
+            pathname === "/recycle" ? "border-b-2" : ""
           } mb-2 md:mb-0 md:mr-5`}
-          href="/stats"
+          href="/recycle"
         >
-          Stats
+          Recycle
         </Link>
         <Link className="link mb-2 md:mb-0" href="/battlemetrics">
           BattleMetrics
