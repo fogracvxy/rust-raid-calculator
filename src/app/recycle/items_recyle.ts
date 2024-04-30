@@ -7,6 +7,12 @@ export const itemsRecycle = [
       highQualityMetal: null,
       other: "Component",
     },
+    yieldradioactive: {
+      scrap: 24,
+    },
+    yieldsafezone: {
+      scrap: 16,
+    },
     image: "/images/components/fuse.png",
   },
   {
@@ -16,6 +22,14 @@ export const itemsRecycle = [
       metal: 50,
       highQualityMetal: null,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 2,
+      metal: 61,
+    },
+    yieldsafezone: {
+      scrap: 1,
+      metal: 40,
     },
     image: "/images/components/propanetank.png",
   },
@@ -27,6 +41,15 @@ export const itemsRecycle = [
       highQualityMetal: null,
       other: "Component",
     },
+    yieldradioactive: {
+      scrap: 12,
+      metal: 16,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 8,
+      metal: 10,
+    },
     image: "/images/components/gears.png",
   },
   {
@@ -36,6 +59,15 @@ export const itemsRecycle = [
       metal: 15,
       highQualityMetal: null,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 3,
+      metal: 18,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 2,
+      metal: 12,
     },
     image: "/images/components/metalblade.png",
   },
@@ -47,6 +79,15 @@ export const itemsRecycle = [
       highQualityMetal: 1,
       other: "Component",
     },
+    yieldradioactive: {
+      scrap: 6,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 4,
+      highQualityMetal: 1,
+    },
     image: "/images/components/metalpipe.png",
   },
   {
@@ -56,6 +97,15 @@ export const itemsRecycle = [
       metal: null,
       highQualityMetal: 1,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 12,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 8,
+      highQualityMetal: 1,
     },
     image: "/images/components/metalspring.png",
   },
@@ -67,6 +117,15 @@ export const itemsRecycle = [
       highQualityMetal: 2,
       other: "Component",
     },
+    yieldradioactive: {
+      scrap: 31,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 20,
+      highQualityMetal: 2,
+    },
     image: "/images/components/riflebody.png",
   },
   {
@@ -76,6 +135,15 @@ export const itemsRecycle = [
       metal: null,
       highQualityMetal: 1,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 6,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      // 20% lower than normal yield
+      scrap: 4,
+      highQualityMetal: 1,
     },
     image: "/images/components/roadsigns.png",
   },
@@ -88,6 +156,12 @@ export const itemsRecycle = [
       cloth: 15,
       other: "Component",
     },
+    yieldradioactive: {
+      cloth: 18,
+    },
+    yieldsafezone: {
+      cloth: 12,
+    },
     image: "/images/components/rope.png",
   },
   {
@@ -98,15 +172,29 @@ export const itemsRecycle = [
       highQualityMetal: 2,
       other: "Component",
     },
+    yieldradioactive: {
+      scrap: 18,
+      highQualityMetal: 2,
+    },
     image: "/images/components/smgbody.png",
   },
   {
-    name: "Semi Automatic Body",
+    name: "Semi Body",
     yield: {
       scrap: 15,
       metal: 75,
       highQualityMetal: 2,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 18,
+      metal: 90,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      scrap: 12,
+      metal: 60,
+      highQualityMetal: 2,
     },
     image: "/images/components/semibody.png",
   },
@@ -120,6 +208,14 @@ export const itemsRecycle = [
       rope: 2,
       other: "Component",
     },
+    yieldradioactive: {
+      cloth: 12,
+      rope: 2,
+    },
+    yieldsafezone: {
+      cloth: 8,
+      rope: 2,
+    },
     image: "/images/components/sewingkit.png",
   },
   {
@@ -129,6 +225,16 @@ export const itemsRecycle = [
       metal: 100,
       highQualityMetal: 1,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 10,
+      metal: 121,
+      highQualityMetal: 2,
+    },
+    yieldsafezone: {
+      scrap: 7,
+      metal: 80,
+      highQualityMetal: 1,
     },
     image: "/images/components/sheetmetal.png",
   },
@@ -141,6 +247,12 @@ export const itemsRecycle = [
       cloth: 50,
       other: "Component",
     },
+    yieldradioactive: {
+      cloth: 61,
+    },
+    yieldsafezone: {
+      cloth: 40,
+    },
     image: "/images/components/tarp.png",
   },
   {
@@ -150,6 +262,10 @@ export const itemsRecycle = [
       metal: null,
       highQualityMetal: 1,
       other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 24,
+      highQualityMetal: 2,
     },
     image: "/images/components/techparts.png",
   },

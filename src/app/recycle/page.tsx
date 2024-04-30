@@ -6,14 +6,18 @@ import { resources } from "./resources";
 
 interface ItemRecycle {
   name: string;
-  yield: {
-    scrap: number | null;
-    metal: number | null;
-    highQualityMetal: number | null;
-    cloth?: number;
-    rope?: number;
-  };
+  yield: Yield;
+  yieldsafezone?: Yield;
+  yieldradioactive?: Yield;
   image: string;
+}
+
+interface Yield {
+  scrap?: number | null;
+  metal?: number | null;
+  highQualityMetal?: number | null;
+  cloth?: number;
+  rope?: number;
 }
 
 const Recycle: React.FC = () => {
@@ -64,16 +68,27 @@ const Recycle: React.FC = () => {
       totalMetal: 0,
       totalCloth: 0,
       totalHighQualityMetal: 0,
+      totalRope: 0,
     };
 
     selectedItems.forEach((item) => {
       const selectedItem = itemsRecycle.find((i) => i.name === item.name);
       if (selectedItem) {
-        totals.totalScrap += (selectedItem.yield.scrap || 0) * item.amount;
-        totals.totalMetal += (selectedItem.yield.metal || 0) * item.amount;
-        totals.totalCloth += (selectedItem.yield.cloth || 0) * item.amount;
+        const yieldType =
+          mode === "Safezone"
+            ? "yieldsafezone"
+            : mode === "Radtown"
+            ? "yieldradioactive"
+            : "yield";
+        totals.totalScrap +=
+          (selectedItem[yieldType]?.scrap || 0) * item.amount;
+        totals.totalMetal +=
+          (selectedItem[yieldType]?.metal || 0) * item.amount;
+        totals.totalCloth +=
+          (selectedItem[yieldType]?.cloth || 0) * item.amount;
         totals.totalHighQualityMetal +=
-          (selectedItem.yield.highQualityMetal || 0) * item.amount;
+          (selectedItem[yieldType]?.highQualityMetal || 0) * item.amount;
+        totals.totalRope += (selectedItem[yieldType]?.rope || 0) * item.amount;
       }
     });
 
@@ -85,7 +100,7 @@ const Recycle: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">
         Recycling Calculator
       </h1>
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center items-center mb-4">
         <select
           value={mode}
           onChange={(e) =>
@@ -97,15 +112,21 @@ const Recycle: React.FC = () => {
           <option value="Safezone">Safezone</option>
           <option value="Radtown">Radtown</option>
         </select>
+        <button
+          onClick={resetSelectedItems}
+          className="px-4 py-2 bg-red-500 text-white rounded-md ml-4"
+        >
+          Reset Selected Items
+        </button>
       </div>
-      <div className="grid grid-cols-3 gap-4 text-sm lg:text-md">
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 text-sm lg:text-md">
         {itemsRecycle.map((item: ItemRecycle, index: number) => {
           const selectedItem = selectedItems.find((i) => i.name === item.name);
           const amount = selectedItem ? selectedItem.amount : 0;
 
           return (
             <div key={index} className="flex flex-col items-center">
-              <Image src={item.image} alt={item.name} width={80} height={80} />
+              <Image src={item.image} alt={item.name} width={50} height={50} />
               <span className="text-center">{item.name}</span>
               <div className="flex items-center mt-2">
                 <button
@@ -128,19 +149,7 @@ const Recycle: React.FC = () => {
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">Selected Items (Yield) </h2>
-        {/* <ul>
-          {selectedItems.map((item, index) => (
-            <li key={index}>
-              {item.name} - Quantity: {item.amount}
-            </li>
-          ))}
-        </ul> */}
-        <button
-          onClick={resetSelectedItems}
-          className="px-4 py-2 bg-red-500 text-white rounded-md mb-4"
-        >
-          Reset Selected Items
-        </button>
+
         <div className="flex flex-wrap">
           {resources.map((resource) => {
             const totalResource = getTotalYield()[`total${resource.name}`];

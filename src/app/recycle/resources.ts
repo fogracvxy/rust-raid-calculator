@@ -15,4 +15,8 @@ export const resources = [
     name: "HighQualityMetal",
     image: "/images/resources/metal.refined.png",
   },
+  {
+    name: "Rope",
+    image: "/images/components/rope.png",
+  },
 ];
