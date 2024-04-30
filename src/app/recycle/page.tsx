@@ -21,12 +21,17 @@ interface Yield {
   other?: string;
 }
 const getInitialState = () => {
-  const storedSelectedItems = localStorage.getItem("selectedItems");
-  const storedMode = localStorage.getItem("mode");
-
+  if (typeof window !== "undefined") {
+    const storedSelectedItems = localStorage.getItem("selectedItems");
+    const storedMode = localStorage.getItem("mode");
+    return {
+      selectedItems: storedSelectedItems ? JSON.parse(storedSelectedItems) : [],
+      mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
+    };
+  }
   return {
-    selectedItems: storedSelectedItems ? JSON.parse(storedSelectedItems) : [],
-    mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
+    selectedItems: [],
+    mode: "Default",
   };
 };
 const Recycle: React.FC = () => {
