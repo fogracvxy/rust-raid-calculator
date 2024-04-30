@@ -267,6 +267,10 @@ export const itemsRecycle = [
       scrap: 24,
       highQualityMetal: 2,
     },
+    yieldsafezone: {
+      scrap: 16,
+      highQualityMetal: 1,
+    },
     image: "/images/components/techparts.png",
   },
 ];

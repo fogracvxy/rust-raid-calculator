@@ -20,21 +20,25 @@ interface Yield {
   rope?: number;
   other?: string;
 }
-const getInitialState = () => {
-  if (typeof window !== "undefined") {
-    const storedSelectedItems = localStorage.getItem("selectedItems");
-    const storedMode = localStorage.getItem("mode");
-    return {
-      selectedItems: storedSelectedItems ? JSON.parse(storedSelectedItems) : [],
-      mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
-    };
-  }
-  return {
-    selectedItems: [],
-    mode: "Default",
-  };
-};
+
 const Recycle: React.FC = () => {
+  const getInitialState = () => {
+    if (typeof window !== "undefined") {
+      const storedSelectedItems = localStorage.getItem("selectedItems");
+      const storedMode = localStorage.getItem("mode");
+      return {
+        selectedItems: storedSelectedItems
+          ? JSON.parse(storedSelectedItems)
+          : [],
+        mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
+      };
+    }
+    return {
+      selectedItems: [],
+      mode: "Default",
+    };
+  };
+
   const { selectedItems: initialSelectedItems, mode: initialMode } =
     getInitialState();
 
@@ -55,32 +59,67 @@ const Recycle: React.FC = () => {
   }, [selectedItems, mode]);
 
   const handleIncrement = (itemName: string) => {
-    setSelectedItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.name === itemName);
-      if (existingItem) {
-        const updatedItems = prevItems.map((item) =>
-          item.name === itemName ? { ...item, amount: item.amount + 1 } : item
-        );
-        return updatedItems;
-      } else {
-        return [...prevItems, { name: itemName, amount: 1 }];
-      }
-    });
+    let incrementTimeout: NodeJS.Timeout;
+
+    const increment = () => {
+      setSelectedItems((prevItems) => {
+        const existingItem = prevItems.find((item) => item.name === itemName);
+        if (existingItem) {
+          const updatedItems = prevItems.map((item) =>
+            item.name === itemName ? { ...item, amount: item.amount + 1 } : item
+          );
+          return updatedItems;
+        } else {
+          return [...prevItems, { name: itemName, amount: 1 }];
+        }
+      });
+
+      incrementTimeout = setTimeout(increment, 300); // Repeat increment after 300ms
+    };
+
+    increment(); // Start first increment
+
+    // Listen for mouseup to stop incrementing
+    const stopIncrement = () => {
+      clearTimeout(incrementTimeout);
+      window.removeEventListener("mouseup", stopIncrement);
+    };
+
+    window.addEventListener("mouseup", stopIncrement);
   };
+
   const handleDecrement = (itemName: string) => {
-    setSelectedItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.name === itemName);
-      if (existingItem) {
-        const updatedItems = prevItems.map((item) =>
-          item.name === itemName && item.amount > 0
-            ? { ...item, amount: item.amount - 1 }
-            : item
-        );
-        return updatedItems.filter((item) => item.amount > 0);
-      } else {
-        return prevItems;
-      }
-    });
+    let decrementTimeout: NodeJS.Timeout;
+
+    const decrement = () => {
+      setSelectedItems((prevItems) => {
+        const existingItem = prevItems.find((item) => item.name === itemName);
+        if (existingItem && existingItem.amount > 0) {
+          const updatedItems = prevItems
+            .map((item) =>
+              item.name === itemName
+                ? { ...item, amount: item.amount - 1 }
+                : item
+            )
+            .filter((item) => item.amount > 0);
+          return updatedItems;
+        } else {
+          return prevItems;
+        }
+      });
+
+      decrementTimeout = setTimeout(decrement, 300); // Repeat decrement after 300ms
+    };
+
+    decrement(); // Start first decrement
+
+    // Listen for mouseup to stop decrementing
+    const stopDecrement = () => {
+      clearTimeout(decrementTimeout);
+      window.removeEventListener("mouseup", stopDecrement);
+    };
+
+    window.addEventListener("mouseup", stopDecrement);
   };
 
   const resetSelectedItems = () => {
@@ -156,14 +195,14 @@ const Recycle: React.FC = () => {
               <span className="text-center">{item.name}</span>
               <div className="flex items-center mt-2">
                 <button
-                  onClick={() => handleDecrement(item.name)}
+                  onMouseDown={() => handleDecrement(item.name)}
                   className="bg-gray-500 px-2 py-1 rounded-l"
                 >
                   -
                 </button>
                 <span className="px-4">{amount}</span>
                 <button
-                  onClick={() => handleIncrement(item.name)}
+                  onMouseDown={() => handleIncrement(item.name)}
                   className="bg-gray-500 px-2 py-1 rounded-r"
                 >
                   +
@@ -174,8 +213,7 @@ const Recycle: React.FC = () => {
         })}
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Selected Items (Yield) </h2>
-
+        <h2 className="text-xl font-bold mb-4">Selected Items (Yield)</h2>
         <div className="flex flex-wrap">
           {resources.map((resource) => {
             const totalResource = getTotalYield()[`total${resource.name}`];
