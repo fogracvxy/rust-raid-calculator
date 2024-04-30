@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import { itemsRecycle } from "./items_recyle";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { itemsRecycle } from "./items_recyle";
 import { resources } from "./resources";
 
 interface ItemRecycle {
@@ -18,15 +18,36 @@ interface Yield {
   highQualityMetal?: number | null;
   cloth?: number;
   rope?: number;
+  other?: string;
 }
+const getInitialState = () => {
+  const storedSelectedItems = localStorage.getItem("selectedItems");
+  const storedMode = localStorage.getItem("mode");
 
+  return {
+    selectedItems: storedSelectedItems ? JSON.parse(storedSelectedItems) : [],
+    mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
+  };
+};
 const Recycle: React.FC = () => {
-  const [selectedItems, setSelectedItems] = useState<
-    { name: string; amount: number }[]
-  >([]);
+  const { selectedItems: initialSelectedItems, mode: initialMode } =
+    getInitialState();
+
+  const [selectedItems, setSelectedItems] =
+    useState<{ name: string; amount: number }[]>(initialSelectedItems);
   const [mode, setMode] = useState<"Safezone" | "Radtown" | "Default">(
-    "Default"
+    initialMode
   );
+
+  useEffect(() => {
+    localStorage.setItem(
+      "selectedItems",
+      JSON.stringify(
+        selectedItems.map(({ name, amount }) => ({ name, amount }))
+      )
+    );
+    localStorage.setItem("mode", mode);
+  }, [selectedItems, mode]);
 
   const handleIncrement = (itemName: string) => {
     setSelectedItems((prevItems) => {
@@ -41,7 +62,6 @@ const Recycle: React.FC = () => {
       }
     });
   };
-
   const handleDecrement = (itemName: string) => {
     setSelectedItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.name === itemName);
@@ -60,6 +80,7 @@ const Recycle: React.FC = () => {
 
   const resetSelectedItems = () => {
     setSelectedItems([]);
+    localStorage.removeItem("selectedItems");
   };
 
   const getTotalYield = () => {
