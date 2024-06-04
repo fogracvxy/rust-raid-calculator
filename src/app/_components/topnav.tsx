@@ -145,7 +145,7 @@ export function TopNav() {
         )}
       </div>
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-10 left-0 right-0 bg-black p-4 shadow-md rounded-md">
+        <div className="lg:hidden absolute top-10 left-0 right-0 z-50 bg-black p-4 shadow-md rounded-md">
           <div className="flex flex-col gap-4">
             <Link href="/" onClick={closeMenu}>
               <span
