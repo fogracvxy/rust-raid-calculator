@@ -24,11 +24,10 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      scrap: 2,
-      metal: 61,
+      scrap: 1,
+      metal: 60,
     },
     yieldsafezone: {
-      scrap: 1,
       metal: 40,
     },
     image: "/images/components/propanetank.png",
@@ -43,7 +42,7 @@ export const itemsRecycle = [
     },
     yieldradioactive: {
       scrap: 12,
-      metal: 16,
+      metal: 15,
     },
     yieldsafezone: {
       // 20% lower than normal yield
@@ -61,12 +60,12 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      scrap: 3,
+      scrap: 2,
       metal: 18,
     },
     yieldsafezone: {
       // 20% lower than normal yield
-      scrap: 2,
+      scrap: 1,
       metal: 12,
     },
     image: "/images/components/metalblade.png",
@@ -118,7 +117,7 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      scrap: 31,
+      scrap: 30,
       highQualityMetal: 2,
     },
     yieldsafezone: {
@@ -231,12 +230,12 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      scrap: 10,
-      metal: 121,
+      scrap: 9,
+      metal: 120,
       highQualityMetal: 2,
     },
     yieldsafezone: {
-      scrap: 7,
+      scrap: 6,
       metal: 80,
       highQualityMetal: 1,
     },
@@ -252,7 +251,7 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      cloth: 61,
+      cloth: 60,
     },
     yieldsafezone: {
       cloth: 40,
