@@ -143,9 +143,9 @@ export default function Excavator() {
             )}
           </tbody>
         </table>
-        <div className="flex justify-center m-5 items-center bg-gray-500 p-4 rounded-lg shadow-md">
+        <div className="flex justify-center m-5 items-center border border-5 p-4 rounded-lg shadow-md">
           <span className="text-lg font-semibold text-gray-200">Time:</span>
-          <span className="ml-2 text-lg font-bold text-red-500">
+          <span className="ml-2 text-lg font-bold text-red-600">
             {time} minutes
           </span>
         </div>
