@@ -8,7 +8,7 @@ export default function Home() {
   };
   return (
     <main className="flex flex-col items-center justify-between p-4 lg:p-24">
-      <div className="w-full max-w-6xl flex flex-col-reverse lg:flex-row items-center justify-between font-mono text-lg">
+      <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between font-mono text-lg">
         {/* Content Section */}
         <div className="w-full lg:w-2/3 lg:order-1 pr-8">
           <h1 className="ml-4 text-4xl font-bold">
@@ -31,7 +31,7 @@ export default function Home() {
         {/* Logo Section */}
         <div className="w-full lg:w-1/3 lg:order-2 mb-8 lg:mb-0">
           <Image
-            src="https://logos-world.net/wp-content/uploads/2021/02/Rust-Emblem.png"
+            src="/images/mockup_raid.png"
             alt="Rust RAID Calculator"
             width={800}
             height={600}

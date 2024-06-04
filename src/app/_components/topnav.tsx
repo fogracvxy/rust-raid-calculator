@@ -56,6 +56,14 @@ export function TopNav() {
         >
           Recycle
         </Link>
+        <Link
+          className={`link ${
+            pathname === "/excavator" ? "border-b-2" : ""
+          } mb-2 md:mb-0 md:mr-5`}
+          href="/excavator"
+        >
+          Excavator
+        </Link>
         <Link className="link mb-2 md:mb-0" href="/battlemetrics">
           BattleMetrics
         </Link>

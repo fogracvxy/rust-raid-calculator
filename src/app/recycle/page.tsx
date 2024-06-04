@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { itemsRecycle } from "./items_recyle";
+import { itemsRecycle } from "./items_recycle";
 import { resources } from "./resources";
 
 interface ItemRecycle {
@@ -21,42 +21,57 @@ interface Yield {
   other?: string;
 }
 
+type Mode = "Safezone" | "Radtown" | "Default";
+
 const Recycle: React.FC = () => {
-  const getInitialState = () => {
-    if (typeof window !== "undefined") {
-      const storedSelectedItems = localStorage.getItem("selectedItems");
-      const storedMode = localStorage.getItem("mode");
-      return {
-        selectedItems: storedSelectedItems
-          ? JSON.parse(storedSelectedItems)
-          : [],
-        mode: (storedMode as "Safezone" | "Radtown" | "Default") || "Default",
-      };
-    }
-    return {
-      selectedItems: [],
-      mode: "Default",
-    };
-  };
-
-  const { selectedItems: initialSelectedItems, mode: initialMode } =
-    getInitialState();
-
-  const [selectedItems, setSelectedItems] =
-    useState<{ name: string; amount: number }[]>(initialSelectedItems);
-  const [mode, setMode] = useState<"Safezone" | "Radtown" | "Default">(
-    initialMode
-  );
+  const [selectedItems, setSelectedItems] = useState<
+    { name: string; amount: number }[]
+  >([]);
+  const [mode, setMode] = useState<Mode>("Default");
+  const initialized = useRef(false);
 
   useEffect(() => {
-    localStorage.setItem(
-      "selectedItems",
-      JSON.stringify(
-        selectedItems.map(({ name, amount }) => ({ name, amount }))
-      )
-    );
-    localStorage.setItem("mode", mode);
-  }, [selectedItems, mode]);
+    if (!initialized.current && typeof window !== "undefined") {
+      const storedSelectedItems = localStorage.getItem("selectedItems");
+      const storedMode = localStorage.getItem("mode") as Mode | null;
+
+      console.log(
+        "Loading from localStorage:",
+        storedSelectedItems,
+        storedMode
+      );
+
+      if (storedSelectedItems) {
+        setSelectedItems(JSON.parse(storedSelectedItems));
+      }
+
+      if (
+        storedMode === "Safezone" ||
+        storedMode === "Radtown" ||
+        storedMode === "Default"
+      ) {
+        setMode(storedMode);
+      }
+
+      initialized.current = true;
+    }
+  }, []);
+
+  // Save selected items to local storage whenever they change
+  useEffect(() => {
+    if (initialized.current) {
+      console.log("Saving selectedItems to localStorage:", selectedItems);
+      localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+    }
+  }, [selectedItems]);
+
+  // Save mode to local storage whenever it changes
+  useEffect(() => {
+    if (initialized.current) {
+      console.log("Saving mode to localStorage:", mode);
+      localStorage.setItem("mode", mode);
+    }
+  }, [mode]);
 
   const handleIncrement = (itemName: string) => {
     let incrementTimeout: NodeJS.Timeout;
@@ -168,9 +183,7 @@ const Recycle: React.FC = () => {
       <div className="flex justify-center items-center mb-4">
         <select
           value={mode}
-          onChange={(e) =>
-            setMode(e.target.value as "Safezone" | "Radtown" | "Default")
-          }
+          onChange={(e) => setMode(e.target.value as Mode)}
           className="px-4 py-2 border rounded-md text-black"
         >
           <option value="Default">Default Values WIP</option>
