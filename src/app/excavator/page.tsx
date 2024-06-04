@@ -36,7 +36,28 @@ export default function Excavator() {
 
     window.addEventListener("mouseup", stopIncrement);
   };
+  const DisplayTime = () => {
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
 
+    let timeString = "";
+    if (hours > 0) {
+      timeString += `${hours} hour${hours > 1 ? "s" : ""}`;
+      if (minutes > 0) {
+        timeString += ` and ${minutes} minute${minutes > 1 ? "s" : ""}`;
+      }
+    } else {
+      timeString += `${minutes} minute${minutes > 1 ? "s" : ""}`;
+    }
+    return (
+      <div className="flex justify-center m-5 items-center border border-5 p-4 rounded-lg shadow-md">
+        <span className="text-lg font-semibold text-gray-200">Time:</span>
+        <span className="ml-2 text-lg font-bold text-red-600">
+          {timeString}
+        </span>
+      </div>
+    );
+  };
   const handleDecrement = () => {
     const decrement = () => {
       setDieselFuel((prev) => Math.max(1, prev - 1));
@@ -143,12 +164,7 @@ export default function Excavator() {
             )}
           </tbody>
         </table>
-        <div className="flex justify-center m-5 items-center border border-5 p-4 rounded-lg shadow-md">
-          <span className="text-lg font-semibold text-gray-200">Time:</span>
-          <span className="ml-2 text-lg font-bold text-red-600">
-            {time} minutes
-          </span>
-        </div>
+        <DisplayTime />
       </div>
     </div>
   );
