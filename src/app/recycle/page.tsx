@@ -180,7 +180,7 @@ const Recycle: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">
         Recycling Calculator
       </h1>
-      <div className="flex justify-center items-center mb-4">
+      <div className="flex justify-center items-center mb-10">
         <select
           value={mode}
           onChange={(e) => setMode(e.target.value as Mode)}
@@ -192,7 +192,7 @@ const Recycle: React.FC = () => {
         </select>
         <button
           onClick={resetSelectedItems}
-          className="px-4 py-2 bg-red-500 text-white rounded-md ml-4"
+          className="px-4 py-2 bg-red-600 text-white rounded-md ml-4"
         >
           Reset Selected Items
         </button>
@@ -209,14 +209,14 @@ const Recycle: React.FC = () => {
               <div className="flex items-center mt-2">
                 <button
                   onMouseDown={() => handleDecrement(item.name)}
-                  className="bg-gray-500 px-2 py-1 rounded-l"
+                  className="bg-red-600 px-2 py-1 rounded-l"
                 >
                   -
                 </button>
                 <span className="px-4">{amount}</span>
                 <button
                   onMouseDown={() => handleIncrement(item.name)}
-                  className="bg-gray-500 px-2 py-1 rounded-r"
+                  className="bg-green-500 px-2 py-1 rounded-r"
                 >
                   +
                 </button>

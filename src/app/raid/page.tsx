@@ -134,14 +134,14 @@ const DestructionUI = () => {
           <p className="text-sm font-semibold text-center">{item.name}</p>
           <div className="flex justify-center items-center mt-2">
             <button
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2"
+              className="bg-red-600 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm mr-2 rounded-l"
               onClick={() => handleRemoveItem(item)}
             >
               -
             </button>
             <span className="font-semibold">{quantity}</span>
             <button
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-sm ml-2  rounded-r"
               onClick={() => handleAddItem(item)}
             >
               +
@@ -237,8 +237,8 @@ const DestructionUI = () => {
         <button
           className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Walls"
-              ? "bg-gray-500 text-white"
-              : "text-white border border-gray-300 hover:bg-gray-200"
+              ? "bg-red-600 text-white"
+              : "text-white border border-gray-300 hover:bg-red-600"
           }`}
           onClick={() => setActiveCategory("Walls")}
         >
@@ -247,8 +247,8 @@ const DestructionUI = () => {
         <button
           className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Doors"
-              ? "bg-gray-500 text-white"
-              : "text-white border border-gray-300 hover:bg-gray-200"
+              ? "bg-red-600 text-white"
+              : "text-white border border-gray-300 hover:bg-red-600"
           }`}
           onClick={() => setActiveCategory("Doors")}
         >
@@ -257,8 +257,8 @@ const DestructionUI = () => {
         <button
           className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Defenses"
-              ? "bg-gray-500 text-white"
-              : "text-white border border-gray-300 hover:bg-gray-200"
+              ? "bg-red-600 text-white"
+              : "text-white border border-gray-300 hover:bg-red-600"
           }`}
           onClick={() => setActiveCategory("Defenses")}
         >
@@ -267,8 +267,8 @@ const DestructionUI = () => {
         <button
           className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "Furniture"
-              ? "bg-gray-500 text-white"
-              : "text-white border border-gray-300 hover:bg-gray-200"
+              ? "bg-red-600 text-white"
+              : "text-white border border-gray-300 hover:bg-red-600"
           }`}
           onClick={() => setActiveCategory("Furniture")}
         >
@@ -277,8 +277,8 @@ const DestructionUI = () => {
         <button
           className={`text-sm font-semibold px-3 py-1 rounded ${
             activeCategory === "External Walls"
-              ? "bg-gray-500 text-white"
-              : "text-white border border-gray-300 hover:bg-gray-200"
+              ? "bg-red-600 text-white"
+              : "text-white border border-gray-300 hover:bg-red-600"
           }`}
           onClick={() => setActiveCategory("External Walls")}
         >
@@ -308,7 +308,7 @@ const DestructionUI = () => {
               </p>
               {/* Remove Button */}
               <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
+                className="bg-red-600 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-sm mr-6"
                 onClick={() => handleRemoveItem(c.item)}
               >
                 Remove
@@ -539,7 +539,7 @@ const DestructionUI = () => {
       <div className="pt-10 flex justify-center lg:flex lg:justify-start lg:ml-10 ">
         {" "}
         <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleResetAll}
         >
           Reset All and Clear Storage

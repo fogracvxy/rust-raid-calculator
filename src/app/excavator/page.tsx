@@ -114,7 +114,7 @@ export default function Excavator() {
               clearTimeout(decrementTimeoutRef.current);
           }}
           disabled={dieselFuel === 1}
-          className="bg-red-500 px-4 py-2 text-white rounded-l disabled:opacity-50"
+          className="bg-red-600 px-4 py-2 text-white rounded-l disabled:opacity-50"
         >
           -
         </button>

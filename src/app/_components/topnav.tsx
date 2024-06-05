@@ -48,7 +48,7 @@ export function TopNav() {
         <div className="lg:flex hidden gap-4 lg:flex-row items-center justify-start">
           <Link
             className={`link ${
-              pathname === "/" ? "border-b-2" : ""
+              pathname === "/" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/"
           >
@@ -56,7 +56,7 @@ export function TopNav() {
           </Link>
           <Link
             className={`link ${
-              pathname === "/raid" ? "border-b-2" : ""
+              pathname === "/raid" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/raid"
           >
@@ -64,7 +64,7 @@ export function TopNav() {
           </Link>
           <Link
             className={`link ${
-              pathname === "/recycle" ? "border-b-2" : ""
+              pathname === "/recycle" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/recycle"
           >
@@ -72,7 +72,7 @@ export function TopNav() {
           </Link>
           <Link
             className={`link ${
-              pathname === "/excavator" ? "border-b-2" : ""
+              pathname === "/excavator" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/excavator"
           >
@@ -80,7 +80,7 @@ export function TopNav() {
           </Link>
           <Link
             className={`link ${
-              pathname === "/battlemetrics" ? "border-b-2" : ""
+              pathname === "/battlemetrics" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/battlemetrics"
           >
@@ -150,7 +150,7 @@ export function TopNav() {
             <Link href="/" onClick={closeMenu}>
               <span
                 className={`link ${
-                  pathname === "/" ? "border-b-2" : ""
+                  pathname === "/" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 {" "}
@@ -160,7 +160,7 @@ export function TopNav() {
             <Link href="/raid" onClick={closeMenu}>
               <span
                 className={`link ${
-                  pathname === "/raid" ? "border-b-2" : ""
+                  pathname === "/raid" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 {" "}
@@ -170,7 +170,7 @@ export function TopNav() {
             <Link href="/recycle" onClick={closeMenu}>
               <span
                 className={`link ${
-                  pathname === "/recycle" ? "border-b-2" : ""
+                  pathname === "/recycle" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 Recycle
@@ -179,7 +179,7 @@ export function TopNav() {
             <Link href="/excavator" onClick={closeMenu}>
               <span
                 className={`link ${
-                  pathname === "/excavator" ? "border-b-2" : ""
+                  pathname === "/excavator" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 {" "}
@@ -189,7 +189,7 @@ export function TopNav() {
             <Link onClick={closeMenu} href="/battlemetrics">
               <span
                 className={`link ${
-                  pathname === "/battlemetrics" ? "border-b-2" : ""
+                  pathname === "/battlemetrics" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 BattleMetrics
