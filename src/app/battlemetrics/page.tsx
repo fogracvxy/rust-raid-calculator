@@ -31,7 +31,7 @@ export default function BattleMetrics() {
   }, []); // Only run on component mount
   const handleCopyToClipboard = (text: string) => {
     navigator.clipboard
-      .writeText(text)
+      .writeText("connect " + text)
       .then(() => {
         toast.success("Copied to clipboard!", {
           autoClose: 3000,
