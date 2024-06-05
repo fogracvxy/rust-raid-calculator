@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { items } from "./items";
 import Image from "next/image";
 interface Item {
@@ -19,50 +19,55 @@ interface Item {
     satchel: number;
   };
 }
-
+interface CollectionItem {
+  item: Item;
+  quantity: number;
+}
 const DestructionUI = () => {
-  const [collection, setCollection] = useState<
-    { item: Item; quantity: number }[]
-  >(() => {
-    if (typeof window !== "undefined") {
-      const storedCollection = localStorage.getItem("collection");
-      return storedCollection ? JSON.parse(storedCollection) : [];
-    }
-    return [];
-  });
-
-  const [selectedMethod, setSelectedMethod] = useState<
-    keyof Item["destructionOptions"]
-  >(() => {
-    if (typeof window !== "undefined") {
-      const storedMethod = localStorage.getItem("selectedMethod");
-      return (storedMethod as keyof Item["destructionOptions"]) || "c4";
-    }
-    return "c4"; // Default value if localStorage is not available
-  });
-
-  const [activeCategory, setActiveCategory] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      const storedCategory = localStorage.getItem("activeCategory");
-      return storedCategory || null;
-    }
-    return null; // Default value if localStorage is not available
-  });
+  const [collection, setCollection] = useState<CollectionItem[]>([]);
+  const [selectedMethod, setSelectedMethod] =
+    useState<keyof Item["destructionOptions"]>("c4");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (!initialized.current && typeof window !== "undefined") {
+      const storedCollection = localStorage.getItem("collection");
+      const storedMethod = localStorage.getItem("selectedMethod") as
+        | keyof Item["destructionOptions"]
+        | null;
+      const storedCategory = localStorage.getItem("activeCategory");
+
+      if (storedCollection) {
+        setCollection(JSON.parse(storedCollection));
+      }
+
+      if (storedMethod) {
+        setSelectedMethod(storedMethod);
+      }
+
+      if (storedCategory) {
+        setActiveCategory(storedCategory);
+      }
+
+      initialized.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialized.current) {
       localStorage.setItem("collection", JSON.stringify(collection));
     }
   }, [collection]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (initialized.current) {
       localStorage.setItem("selectedMethod", selectedMethod);
     }
   }, [selectedMethod]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (initialized.current) {
       localStorage.setItem("activeCategory", activeCategory || "");
     }
   }, [activeCategory]);
