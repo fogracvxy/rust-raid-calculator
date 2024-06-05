@@ -21,7 +21,7 @@ export interface ServerData {
 export const fetchServerData = async (): Promise<ServerData | null> => {
   try {
     const response = await fetch(
-      "https://api.battlemetrics.com/servers/3332713"
+      "https://api.battlemetrics.com/servers/4233468"
     );
     if (!response.ok) {
       throw new Error("Failed to fetch server data");
