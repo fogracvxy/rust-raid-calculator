@@ -47,7 +47,10 @@ export default function BattleMetrics() {
       });
   };
   const ipText = serverData
-    ? `${serverData.attributes.address}:${serverData.attributes.port}`
+    ? serverData.attributes.address !== null &&
+      serverData.attributes.address !== undefined
+      ? `${serverData.attributes.address}:${serverData.attributes.port}`
+      : `${serverData.attributes.ip}:${serverData.attributes.port}`
     : "";
   return (
     <div className="flex flex-col justify-center items-center pt-10 text-center">

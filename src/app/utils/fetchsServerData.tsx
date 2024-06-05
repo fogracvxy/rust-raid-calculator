@@ -5,6 +5,7 @@ export interface ServerData {
     maxPlayers: number;
     port: number;
     address: string;
+    ip: string;
     details: {
       rust_headerimage: string;
       rust_queued_players: number;
@@ -28,12 +29,15 @@ export const fetchServerData = async (): Promise<ServerData | null> => {
     }
     const responseData = await response.json();
     const serverAttributes = responseData?.data?.attributes;
+
     if (serverAttributes) {
+      console.log(serverAttributes);
       const serverData: ServerData = {
         attributes: {
           players: serverAttributes.players,
           name: serverAttributes.name,
           address: serverAttributes.address,
+          ip: serverAttributes.ip,
           port: serverAttributes.port,
           maxPlayers: serverAttributes.maxPlayers,
           details: {
