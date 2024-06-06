@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Hourglass } from "react-loader-spinner";
 interface CountdownTime {
   days: number;
@@ -18,11 +18,27 @@ export default function Home() {
     minutes: 0,
     seconds: 0,
   });
+  const updateCountdown = useCallback(() => {
+    let nextThursday = getNextFirstThursday();
+
+    let now = new Date();
+    let difference = nextThursday.getTime() - now.getTime();
+
+    // Calculate the remaining time
+    let days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor(
+      (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    setCountDownTime({ days, hours, minutes, seconds });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [updateCountdown]);
 
   const getNextFirstThursday = (): Date => {
     let now = new Date();
@@ -52,25 +68,6 @@ export default function Home() {
     date.setHours(20, 0, 0, 0);
     // Set the target time to 8 PM
     return date;
-  };
-
-  const updateCountdown = () => {
-    let nextThursday = getNextFirstThursday();
-
-    let now = new Date();
-    let difference = nextThursday.getTime() - now.getTime();
-
-    // Calculate the remaining time
-    let days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    let hours = Math.floor(
-      (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-    setCountDownTime({ days, hours, minutes, seconds });
-
-    // Update circle references
   };
 
   const handleEnterCalculator = () => {
