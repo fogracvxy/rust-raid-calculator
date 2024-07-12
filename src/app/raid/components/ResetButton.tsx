@@ -18,7 +18,7 @@ const ResetButton: React.FC<ResetButtonProps> = ({
   }
 
   return (
-    <div className="pt-10 flex justify-center lg:flex lg:justify-start lg:ml-10">
+    <div className="mt-8 flex justify-center">
       <button
         className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         onClick={handleResetAll}

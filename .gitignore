@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+public/images/wb3.png
+src/app/workbench/page.tsx
+src/app/workbench/types.ts
+src/app/workbench/data.ts
+src/app/workbench/components/ClickableImage.tsx

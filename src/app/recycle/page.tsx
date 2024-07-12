@@ -57,7 +57,6 @@ const Recycle: React.FC = () => {
     }
   }, []);
 
-  // Save selected items to local storage whenever they change
   useEffect(() => {
     if (initialized.current) {
       console.log("Saving selectedItems to localStorage:", selectedItems);
@@ -65,7 +64,6 @@ const Recycle: React.FC = () => {
     }
   }, [selectedItems]);
 
-  // Save mode to local storage whenever it changes
   useEffect(() => {
     if (initialized.current) {
       console.log("Saving mode to localStorage:", mode);
@@ -89,12 +87,11 @@ const Recycle: React.FC = () => {
         }
       });
 
-      incrementTimeout = setTimeout(increment, 300); // Repeat increment after 300ms
+      incrementTimeout = setTimeout(increment, 300);
     };
 
-    increment(); // Start first increment
+    increment();
 
-    // Listen for mouseup to stop incrementing
     const stopIncrement = () => {
       clearTimeout(incrementTimeout);
       window.removeEventListener("mouseup", stopIncrement);
@@ -123,12 +120,11 @@ const Recycle: React.FC = () => {
         }
       });
 
-      decrementTimeout = setTimeout(decrement, 300); // Repeat decrement after 300ms
+      decrementTimeout = setTimeout(decrement, 300);
     };
 
-    decrement(); // Start first decrement
+    decrement();
 
-    // Listen for mouseup to stop decrementing
     const stopDecrement = () => {
       clearTimeout(decrementTimeout);
       window.removeEventListener("mouseup", stopDecrement);
@@ -176,7 +172,7 @@ const Recycle: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 mb-16">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Recycling Calculator
       </h1>
@@ -186,15 +182,15 @@ const Recycle: React.FC = () => {
           onChange={(e) => setMode(e.target.value as Mode)}
           className="px-4 py-2 border rounded-md text-black"
         >
-          <option value="Default">Default Values WIP</option>
+          <option value="Default">Default</option>
           <option value="Safezone">Safezone</option>
           <option value="Radtown">Radtown</option>
         </select>
         <button
           onClick={resetSelectedItems}
-          className="px-4 py-2 bg-red-600 text-white rounded-md ml-4"
+          className="px-2 py-2 bg-red-600 text-white rounded-md ml-4"
         >
-          Reset Selected Items
+          Reset
         </button>
       </div>
       <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 text-sm lg:text-md">
@@ -225,17 +221,16 @@ const Recycle: React.FC = () => {
           );
         })}
       </div>
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Selected Items (Yield)</h2>
-        <div className="flex flex-wrap">
-          {resources.map((resource) => {
-            const totalResource = getTotalYield()[`total${resource.name}`];
-            return (
-              <div
-                key={resource.name}
-                className="flex items-center mr-4 mb-4 relative"
-              >
-                <div className="relative">
+      {selectedItems.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-black text-white border-t-2 border-gray-700 py-4 flex flex-col items-center">
+          <h2 className="text-lg font-bold border-b-2 border-green-500 text-green-500 mb-4">
+            {mode} - Recycle Summary
+          </h2>
+          <div className="flex items-center justify-center space-x-4 mb-4">
+            {resources.map((resource) => {
+              const totalResource = getTotalYield()[`total${resource.name}`];
+              return (
+                <div key={resource.name} className="relative">
                   <Image
                     src={resource.image}
                     height={50}
@@ -246,11 +241,11 @@ const Recycle: React.FC = () => {
                     {totalResource || 0}
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

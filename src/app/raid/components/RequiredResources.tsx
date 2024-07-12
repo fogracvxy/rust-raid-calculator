@@ -1,11 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-interface Resource {
-  name: string;
-  image: string;
-  quantity: number;
-}
+import { Resource } from "../types";
 
 interface RequiredResourcesProps {
   resources: Resource[];

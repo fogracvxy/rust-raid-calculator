@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Hourglass } from "react-loader-spinner";
+import axios from "axios";
+
 interface CountdownTime {
   days: number;
   hours: number;
@@ -18,6 +20,7 @@ export default function Home() {
     minutes: 0,
     seconds: 0,
   });
+
   const updateCountdown = useCallback(() => {
     let nextThursday = getNextFirstThursday();
 
@@ -73,11 +76,13 @@ export default function Home() {
   const handleEnterCalculator = () => {
     router.push("/raid"); // Navigate to '/raid' route
   };
+
   const isCountdownZero =
     countDownTime.days === 0 &&
     countDownTime.hours === 0 &&
     countDownTime.minutes === 0 &&
     countDownTime.seconds === 0;
+
   return (
     <main className="flex flex-col items-center justify-between p-4 pb-32 bg-black text-white">
       <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between font-mono text-lg">
@@ -175,6 +180,7 @@ export default function Home() {
           </div>
         </>
       )}
+
       {/* Grid Section */}
       <div className="w-full max-w-6xl mt-12 grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="bg-red-800 p-6 rounded-lg shadow-lg shadow-red-800/50 text-center transition-transform transform hover:-translate-y-1 hover:scale-105">

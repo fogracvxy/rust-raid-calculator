@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchServerData, ServerData } from "../utils/fetchsServerData";
 
-// Existing imports and setup...
-
 export function TopNav() {
   const [serverData, setServerData] = useState<ServerData | null>(null);
   const [isLoading, setLoading] = useState(true);
@@ -94,7 +92,7 @@ export function TopNav() {
             aria-label="Toggle Menu"
           >
             <svg
-              className="w-6 h-6"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

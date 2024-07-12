@@ -3,13 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { items } from "./items";
 import CategoryButtons from "./components/CategoryButtons";
 import ItemGrid from "./components/ItemGrid";
-import CollectionList from "./components/CollectionList";
-import BestOptionsList from "./components/BestOptionsList";
-import BestOptionSulfurCost from "./components/BestOptionSulfurCost";
-import RequiredResources from "./components/RequiredResources";
-import SulfurCostsSorted from "./components/SulfurCostsSorted";
+
 import ResetButton from "./components/ResetButton";
 import { Item, CollectionItem, SortedSulfurCost } from "./types";
+import CollectionDrawer from "./components/CollectionDrawer";
 
 const DestructionUI = () => {
   const [collection, setCollection] = useState<CollectionItem[]>([]);
@@ -176,7 +173,7 @@ const DestructionUI = () => {
     bullets: calculateSulfurCost("bullets"),
   };
 
-  const calculateCost = (option: string, quantity: number) => {
+  const calculateCost = (option: string, quantity: number): number => {
     const sulfurCost = getSulfurCost(
       option as keyof Item["destructionOptions"]
     );
@@ -188,20 +185,18 @@ const DestructionUI = () => {
     .sort((a, b) => a.quantity - b.quantity);
 
   return (
-    <div className="p-4 py-8">
+    <div className="container mx-auto px-4 py-8 mb-16">
+      {" "}
+      {/* Reduced bottom margin */}
       <CategoryButtons
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
-
-      <div className="flex justify-center">
-        {!activeCategory ? (
-          <div>
-            <p className="text-red-600 text-lg ">Choose category to begin!</p>
-          </div>
-        ) : null}
-      </div>
-
+      {!activeCategory && (
+        <div className="text-center my-8">
+          <p className="text-red-600 text-lg">Choose a category to begin!</p>
+        </div>
+      )}
       <ItemGrid
         category={activeCategory}
         items={items}
@@ -209,24 +204,14 @@ const DestructionUI = () => {
         handleAddItem={handleAddItem}
         handleRemoveItem={handleRemoveItem}
       />
-
-      <CollectionList
+      <CollectionDrawer
         collection={collection}
         handleRemoveItem={handleRemoveItem}
-      />
-
-      <BestOptionsList collection={collection} />
-
-      <BestOptionSulfurCost
-        collection={collection}
         calculateCost={calculateCost}
+        resources={resources}
+        sortedOptions={sortedOptions}
+        handleResetAll={handleResetAll}
       />
-
-      <RequiredResources resources={resources} />
-
-      <SulfurCostsSorted sortedOptions={sortedOptions} />
-
-      <ResetButton handleResetAll={handleResetAll} collection={collection} />
     </div>
   );
 };
