@@ -16,26 +16,26 @@ export default function BattleMetrics() {
   );
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchServerData();
-      if (data) {
-        setServersData(data);
-      } else {
-        setError("Failed to fetch server data");
+      try {
+        const data = await fetchServerData();
+        if (data) {
+          setServersData(data);
+        } else {
+          setError("Failed to fetch server data");
+        }
+      } catch (err) {
+        setError("An error occurred while fetching data");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    // Fetch data initially
     fetchData();
 
-    // Set up interval to fetch data every 2 minutes (120000 milliseconds)
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 120000); // 2 minutes in milliseconds
+    const intervalId = setInterval(fetchData, 120000); // 2 minutes
 
-    // Clean up interval on component unmount
     return () => clearInterval(intervalId);
-  }, []); // Only run on component mount
+  }, []);
 
   const handleCopyToClipboard = (text: string, index: number) => {
     if (!serversData || !serversData[index]) {
@@ -65,6 +65,7 @@ export default function BattleMetrics() {
         toast.error("Failed to copy to clipboard!");
       });
   };
+
   return (
     <div className="flex flex-col justify-center items-center pt-10 text-center">
       <h1 className="border-b-2 mb-5">Server info</h1>
@@ -118,8 +119,8 @@ export default function BattleMetrics() {
                     : "(Click to copy IP)"}
                 </p>
                 <p>
-                  {serverData.attributes.players} /{" "}
-                  {serverData.attributes.maxPlayers} Players Online
+                  {serverData.attributes?.players} /{" "}
+                  {serverData.attributes?.maxPlayers} Players Online
                 </p>
                 <p>
                   {serverData.attributes.details?.rust_queued_players === 0 ? (

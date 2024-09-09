@@ -5,27 +5,27 @@ import { useEffect, useState } from "react";
 import { fetchServerData, ServerData } from "../utils/fetchsServerData";
 
 export function TopNav() {
-  const [serverData, setServerData] = useState<ServerData | null>(null);
+  const [serversData, setServersData] = useState<ServerData[] | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchServerData();
-      setServerData(data);
-      setLoading(false);
+      try {
+        const data = await fetchServerData();
+        setServersData(data);
+      } catch (error) {
+        setError("Failed to fetch server data");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Fetch data initially
     fetchData();
 
-    // Set up interval to fetch data every 2 minutes (120000 milliseconds)
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 120000); // 2 minutes in milliseconds
+    const intervalId = setInterval(fetchData, 120000); // 2 minutes
 
-    // Clean up interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
@@ -39,6 +39,33 @@ export function TopNav() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  // Aggregate server data for display
+  const aggregateServerData = () => {
+    if (!serversData || serversData.length === 0) return null;
+
+    const totalPlayers = serversData.reduce(
+      (acc, server) => acc + server.attributes.players,
+      0
+    );
+    const maxPlayers = serversData.reduce(
+      (acc, server) => acc + server.attributes.maxPlayers,
+      0
+    );
+    const queuedPlayers = serversData.reduce(
+      (acc, server) =>
+        acc + (server.attributes.details?.rust_queued_players ?? 0),
+      0
+    );
+    const serverName =
+      serversData.length > 0
+        ? serversData[0].attributes.name
+        : "Unknown Server";
+
+    return { totalPlayers, maxPlayers, queuedPlayers, serverName };
+  };
+
+  const aggregatedData = aggregateServerData();
 
   return (
     <nav className="flex flex-col md:flex-row justify-between items-center border-b p-4 text-base md:text-xl font-semibold relative">
@@ -117,26 +144,25 @@ export function TopNav() {
           </button>
         </div>
       </div>
-      <div className=" md:flex md:items-center md:justify-end w-full md:w-auto">
+      <div className="md:flex md:items-center md:justify-end w-full md:w-auto">
         {pathname !== "/battlemetrics" && (
           <>
             {error && <p>{error}</p>}
             {!error && isLoading && <p>Loading...</p>}
-            {!error && !isLoading && serverData && (
+            {!error && !isLoading && aggregatedData && (
               <p className="text-center font-mono text-sm">
                 <span>
-                  {serverData.attributes.players} /{" "}
-                  {serverData.attributes.maxPlayers} Players Online
+                  {aggregatedData.totalPlayers} / {aggregatedData.maxPlayers}{" "}
+                  Players Online
                 </span>
-                {serverData.attributes.details?.rust_queued_players === 0 ? (
+                {aggregatedData.queuedPlayers === 0 ? (
                   <span className="ml-1">(0 queued)</span>
                 ) : (
                   <span className="ml-1">
-                    ({serverData.attributes.details?.rust_queued_players}{" "}
-                    queued)
+                    ({aggregatedData.queuedPlayers} queued)
                   </span>
                 )}
-                <span> on {serverData.attributes.name}</span>
+                <span> on {aggregatedData.serverName}</span>
               </p>
             )}
           </>
@@ -151,7 +177,6 @@ export function TopNav() {
                   pathname === "/" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
-                {" "}
                 Home
               </span>
             </Link>
@@ -161,7 +186,6 @@ export function TopNav() {
                   pathname === "/raid" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
-                {" "}
                 Calculator
               </span>
             </Link>
@@ -180,7 +204,6 @@ export function TopNav() {
                   pathname === "/excavator" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
-                {" "}
                 Excavator
               </span>
             </Link>
