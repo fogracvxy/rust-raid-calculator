@@ -24,6 +24,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cdn.rusticated.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "cdn.rustafied.systems",
         port: "",
         pathname: "/**",
