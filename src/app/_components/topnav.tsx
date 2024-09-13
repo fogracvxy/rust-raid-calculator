@@ -9,12 +9,18 @@ export function TopNav() {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentServerIndex, setCurrentServerIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchServerData();
         setServersData(data);
+
+        // Reset currentServerIndex if data length changes
+        setCurrentServerIndex((prevIndex) =>
+          data && prevIndex >= data.length ? 0 : prevIndex
+        );
       } catch (error) {
         setError("Failed to fetch server data");
       } finally {
@@ -40,35 +46,21 @@ export function TopNav() {
     setIsMenuOpen(false);
   };
 
-  // Aggregate server data for display
-  const aggregateServerData = () => {
-    if (!serversData || serversData.length === 0) return null;
+  // Handle click to cycle through servers
+  const handleServerInfoClick = () => {
+    if (!serversData) return;
 
-    const totalPlayers = serversData.reduce(
-      (acc, server) => acc + server.attributes.players,
-      0
-    );
-    const maxPlayers = serversData.reduce(
-      (acc, server) => acc + server.attributes.maxPlayers,
-      0
-    );
-    const queuedPlayers = serversData.reduce(
-      (acc, server) =>
-        acc + (server.attributes.details?.rust_queued_players ?? 0),
-      0
-    );
-    const serverName =
-      serversData.length > 0
-        ? serversData[0].attributes.name
-        : "Unknown Server";
-
-    return { totalPlayers, maxPlayers, queuedPlayers, serverName };
+    setCurrentServerIndex((prevIndex) => (prevIndex + 1) % serversData.length);
   };
 
-  const aggregatedData = aggregateServerData();
+  // Get the current server data
+  const currentServerData =
+    serversData && serversData.length > 0
+      ? serversData[currentServerIndex]
+      : null;
 
   return (
-    <nav className="flex flex-col md:flex-row justify-between items-center border-b p-4 text-base md:text-xl font-semibold relative">
+    <nav className="flex flex-col md:flex-row justify-between items-center border-b p-4 text-base md:text-xl font-semibold relative select-none">
       <div className="flex justify-between items-center w-full max-w-6xl">
         <div className="lg:flex hidden gap-4 lg:flex-row items-center justify-start">
           <Link
@@ -149,20 +141,29 @@ export function TopNav() {
           <>
             {error && <p>{error}</p>}
             {!error && isLoading && <p>Loading...</p>}
-            {!error && !isLoading && aggregatedData && (
-              <p className="text-center font-mono text-sm">
+            {!error && !isLoading && currentServerData && (
+              <p
+                className="text-center font-mono text-sm cursor-pointer"
+                onClick={handleServerInfoClick}
+                title="Click to view next server"
+              >
                 <span>
-                  {aggregatedData.totalPlayers} / {aggregatedData.maxPlayers}{" "}
-                  Players Online
+                  {currentServerData.attributes.players} /{" "}
+                  {currentServerData.attributes.maxPlayers} Players Online
                 </span>
-                {aggregatedData.queuedPlayers === 0 ? (
+                {currentServerData.attributes.details?.rust_queued_players ===
+                0 ? (
                   <span className="ml-1">(0 queued)</span>
                 ) : (
                   <span className="ml-1">
-                    ({aggregatedData.queuedPlayers} queued)
+                    ({currentServerData.attributes.details?.rust_queued_players}{" "}
+                    queued)
                   </span>
                 )}
-                <span> on {aggregatedData.serverName}</span>
+                <span className="text-red-500">
+                  {" "}
+                  on {currentServerData.attributes.name}
+                </span>
               </p>
             )}
           </>
