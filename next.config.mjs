@@ -18,6 +18,18 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "files.facepunch.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "content.rustmaps.com",
         port: "",
         pathname: "/**",

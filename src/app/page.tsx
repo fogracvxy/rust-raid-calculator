@@ -3,8 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Hourglass } from "react-loader-spinner";
-import axios from "axios";
-
+import CommitList from "./_components/CommitList";
 interface CountdownTime {
   days: number;
   hours: number;
@@ -180,7 +179,7 @@ export default function Home() {
           </div>
         </>
       )}
-
+      <CommitList />
       {/* Grid Section */}
       <div className="w-full max-w-6xl mt-12 grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="bg-red-800 p-6 rounded-lg shadow-lg shadow-red-800/50 text-center transition-transform transform hover:-translate-y-1 hover:scale-105">
