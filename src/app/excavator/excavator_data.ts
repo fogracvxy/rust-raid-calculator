@@ -1,3 +1,5 @@
+// Excavator data
+export const excavatorTimePerFuelInSeconds = 120;
 export const excavatorData: { name: string; amount: number; image: string }[] =
   [
     {
@@ -26,3 +28,53 @@ export const excavatorData: { name: string; amount: number; image: string }[] =
       image: "/images/resources/stones.png",
     },
   ];
+
+// Quarry data for different types of quarries
+export const quarryData: {
+  type: string;
+  yield: { name: string; amount: number; image: string }[];
+  timePerFuelInSeconds: number;
+  fuel: string;
+}[] = [
+  {
+    type: "HQM Quarry",
+    yield: [
+      {
+        name: "High Quality Metal",
+        amount: 50,
+        image: "/images/resources/hqore.png",
+      },
+    ],
+    timePerFuelInSeconds: 130, // 2 minutes 10 seconds per diesel fuel
+    fuel: "/images/diesel_barrel.png",
+  },
+  {
+    type: "Sulfur Quarry",
+    yield: [
+      {
+        name: "Sulfur Ore",
+        amount: 1000,
+        image: "/images/sulfur.ore.png",
+      },
+    ],
+    timePerFuelInSeconds: 130,
+    fuel: "/images/diesel_barrel.png",
+  },
+  {
+    type: "Stone Quarry",
+    yield: [
+      {
+        name: "Metal Fragments",
+        amount: 1000,
+        image: "/images/resources/metal.fragments.png",
+      },
+      {
+        name: "Stones",
+        amount: 5000,
+        image: "/images/resources/stones.png",
+      },
+    ],
+    timePerFuelInSeconds: 130,
+    fuel: "/images/diesel_barrel.png",
+  },
+];

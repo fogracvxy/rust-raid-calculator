@@ -93,7 +93,7 @@ export function TopNav() {
             } mb-2 md:mb-0 md:mr-5`}
             href="/excavator"
           >
-            Excavator
+            Diesel Calculator
           </Link>
           <Link
             className={`link ${
@@ -205,7 +205,7 @@ export function TopNav() {
                   pathname === "/excavator" ? "border-b-2 text-red-600" : ""
                 } mb-2 md:mb-0 md:mr-5`}
               >
-                Excavator
+                Diesel Calculator
               </span>
             </Link>
             <Link onClick={closeMenu} href="/battlemetrics">
