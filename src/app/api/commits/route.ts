@@ -7,6 +7,7 @@ import { sub, formatISO } from "date-fns";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface Commit {
   id: number;
@@ -26,11 +27,16 @@ interface Commit {
 
 export async function GET(request: NextRequest) {
   try {
-    const commits = await fetchLatestCommits(90); // Fetch the latest 50 commits
+    const commits = await fetchLatestCommits(90); // Fetch the latest 90 commits
     const response = NextResponse.json(commits);
 
-    // Add Cache-Control header to prevent caching
-    response.headers.set("Cache-Control", "no-store, max-age=0");
+    // Add Cache-Control headers to prevent caching
+    response.headers.set(
+      "Cache-Control",
+      "no-cache, no-store, must-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
 
     return response;
   } catch (error: any) {
@@ -53,12 +59,16 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
         ? "https://commits.facepunch.com/r/rust_reboot"
         : `https://commits.facepunch.com/r/rust_reboot?p=${page}`;
 
-    // console.log(`Fetching page ${page}: ${url}`);
+    console.log(`Fetching page ${page}: ${url}`);
 
     const response = await fetch(url, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -68,15 +78,15 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
     }
 
     const html = await response.text();
-    // console.log(`Fetched HTML content length: ${html.length}`);
+    console.log(`Fetched HTML content length: ${html.length}`);
 
     const $ = cheerio.load(html);
 
     // Selector for commit elements
-    const commitElements = $("div.commit.columns");
-    // console.log(
-    //   `Found ${commitElements.length} commit elements on page ${page}.`
-    // );
+    const commitElements = $(".commit.columns");
+    console.log(
+      `Found ${commitElements.length} commit elements on page ${page}.`
+    );
 
     if (commitElements.length === 0) {
       // No more commits available
@@ -99,9 +109,6 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
       // Repository and branch
       const repo = el.find(".repository .repo a").text().trim();
       const branch = el.find(".repository .branch a").text().trim();
-      if (repo !== "rust_reboot") {
-        return; // Skip this commit if it's not from 'rust_reboot'
-      }
 
       // Changeset
       const changeset = el.find(".changeset a").text().trim();
@@ -127,36 +134,37 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
       // Check if the commit is hidden
       const isHidden = message.includes("█") || message.trim() === "";
 
-      if (!isHidden) {
-        // Initialize commit object without likes and dislikes
-        const commit: Commit = {
-          id,
-          repo,
-          branch,
-          changeset,
-          created: createdRelative,
-          created_at: createdAt,
-          message,
-          user: {
-            name: userName,
-            avatar: userAvatar,
-          },
-          likes: null,
-          dislikes: null,
-        };
+      // Include hidden commits with a placeholder message
+      const commitMessage = isHidden ? "Hidden Commit Message" : message;
 
-        commits.push(commit);
+      // Initialize commit object
+      const commit: Commit = {
+        id,
+        repo,
+        branch,
+        changeset,
+        created: createdRelative,
+        created_at: createdAt,
+        message: commitMessage,
+        user: {
+          name: userName,
+          avatar: userAvatar,
+        },
+        likes: null,
+        dislikes: null,
+      };
 
-        // Fetch likes and dislikes for this commit
-        const likesPromise = fetchLikesDislikes(id).then(
-          ({ likes, dislikes }) => {
-            commit.likes = likes;
-            commit.dislikes = dislikes;
-          }
-        );
+      commits.push(commit);
 
-        commitPromises.push(likesPromise);
-      }
+      // Fetch likes and dislikes for this commit
+      const likesPromise = fetchLikesDislikes(id).then(
+        ({ likes, dislikes }) => {
+          commit.likes = likes;
+          commit.dislikes = dislikes;
+        }
+      );
+
+      commitPromises.push(likesPromise);
     });
 
     page += 1;
@@ -169,32 +177,36 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
 }
 
 function calculateAbsoluteTime(relativeTime: string, now: Date): string {
-  const time = relativeTime.toLowerCase();
-
+  const time = relativeTime.toLowerCase().trim();
   let date: Date | null = null;
 
+  const numberPattern = /(\d+|\b(?:a|an)\b)/;
+  const numberMatch = time.match(numberPattern);
+  const timeNumber = numberMatch
+    ? numberMatch[1] === "a" || numberMatch[1] === "an"
+      ? 1
+      : parseInt(numberMatch[1], 10)
+    : 0;
+
   if (time.includes("minute")) {
-    const minutes = parseInt(time.match(/(\d+)/)?.[0] || "0", 10);
-    date = sub(now, { minutes });
+    date = sub(now, { minutes: timeNumber });
   } else if (time.includes("hour")) {
-    const hours = parseInt(time.match(/(\d+)/)?.[0] || "0", 10);
-    date = sub(now, { hours });
+    date = sub(now, { hours: timeNumber });
   } else if (time.includes("today")) {
     date = now;
   } else if (time.includes("yesterday")) {
     date = sub(now, { days: 1 });
   } else if (time.includes("day")) {
-    const days = parseInt(time.match(/(\d+)/)?.[0] || "0", 10);
-    date = sub(now, { days });
+    date = sub(now, { days: timeNumber });
   } else if (time.includes("month")) {
-    const months = parseInt(time.match(/(\d+)/)?.[0] || "0", 10);
-    date = sub(now, { months });
+    date = sub(now, { months: timeNumber });
   } else if (time.includes("year")) {
-    const years = parseInt(time.match(/(\d+)/)?.[0] || "0", 10);
-    date = sub(now, { years });
+    date = sub(now, { years: timeNumber });
+  } else if (time.includes("just now")) {
+    date = now;
   } else {
-    // If unable to parse, return empty string
-    return "";
+    console.error(`Unable to parse time: ${relativeTime}`);
+    return formatISO(now); // Return the current time as fallback
   }
 
   return formatISO(date);
@@ -204,11 +216,15 @@ async function fetchLikesDislikes(
   commitId: number
 ): Promise<{ likes: number | null; dislikes: number | null }> {
   try {
-    // console.log(`Fetching likes and dislikes for commit ${commitId}`);
+    console.log(`Fetching likes and dislikes for commit ${commitId}`);
     const response = await fetch(`https://commits.facepunch.com/${commitId}`, {
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {

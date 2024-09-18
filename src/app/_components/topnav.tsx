@@ -97,6 +97,15 @@ export function TopNav() {
           </Link>
           <Link
             className={`link ${
+              pathname === "/decay" ? "border-b-2 text-red-600" : ""
+            } mb-2 md:mb-0 md:mr-5`}
+            href="/decay"
+          >
+            Decay
+          </Link>
+
+          <Link
+            className={`link ${
               pathname === "/battlemetrics" ? "border-b-2 text-red-600" : ""
             } mb-2 md:mb-0 md:mr-5`}
             href="/battlemetrics"
@@ -206,6 +215,15 @@ export function TopNav() {
                 } mb-2 md:mb-0 md:mr-5`}
               >
                 Diesel Calculator
+              </span>
+            </Link>
+            <Link onClick={closeMenu} href="/decay">
+              <span
+                className={`link ${
+                  pathname === "/decay" ? "border-b-2 text-red-600" : ""
+                } mb-2 md:mb-0 md:mr-5`}
+              >
+                Decay
               </span>
             </Link>
             <Link onClick={closeMenu} href="/battlemetrics">
