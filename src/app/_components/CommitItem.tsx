@@ -4,45 +4,27 @@ import React from "react";
 import Image from "next/image";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import { CommitItemProps } from "./types";
+import { truncateMessage } from "../utils/stringUtils";
 
-interface Commit {
-  id: number;
-  repo: string;
-  branch: string;
-  changeset: string;
-  created: string;
-  created_at: string; // Absolute timestamp
-  message: string;
-  user: {
-    name: string;
-    avatar: string;
-  };
-  likes?: number | null;
-  dislikes?: number | null;
-}
+const isValidUrl = (url: string | undefined): boolean => {
+  if (!url) return false;
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
-interface CommitItemProps {
-  commit: Commit;
-  isExpanded: boolean;
-  toggleExpand: () => void;
-}
-
-const CommitItem: React.FC<CommitItemProps> = ({
+// Define the component separately
+const CommitItemComponent: React.FC<CommitItemProps> = ({
   commit,
   isExpanded,
   toggleExpand,
 }) => {
   const charLimit = 80; // Set your character limit
   const isMessageLong = commit.message.length > charLimit;
-
-  // Function to truncate the message without cutting off words
-  const truncateMessage = (message: string, limit: number) => {
-    if (message.length <= limit) return message;
-    const truncated = message.slice(0, limit);
-    const lastSpaceIndex = truncated.lastIndexOf(" ");
-    if (lastSpaceIndex === -1) return truncated + "...";
-    return truncated.slice(0, lastSpaceIndex) + "...";
-  };
 
   // Determine the message to display
   const displayMessage = isExpanded
@@ -51,17 +33,26 @@ const CommitItem: React.FC<CommitItemProps> = ({
     ? truncateMessage(commit.message, charLimit)
     : commit.message;
 
+  // Safely parse the date
+  const formattedDate = commit.created_at
+    ? formatDistanceToNow(parseISO(commit.created_at), {
+        addSuffix: true,
+      })
+    : commit.created;
+
   return (
     <div className="border border-gray-700 rounded-lg p-4 sm:p-6 hover:shadow-xl transition-shadow w-full flex flex-col">
       {/* Header */}
       <div className="flex items-center mb-2">
-        {commit.user.avatar ? (
+        {isValidUrl(commit.user.avatar) ? (
           <Image
-            src={commit.user.avatar}
+            src={commit.user.avatar as string}
             alt={`${commit.user.name}'s avatar`}
             width={50}
             height={50}
             className="rounded-full"
+            placeholder="blur"
+            blurDataURL="/images/placeholders/user.png"
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-xl">
@@ -70,13 +61,7 @@ const CommitItem: React.FC<CommitItemProps> = ({
         )}
         <div className="ml-4">
           <p className="text-lg sm:text-xl font-semibold">{commit.user.name}</p>
-          <p className="text-gray-400 text-sm sm:text-base">
-            {commit.created_at
-              ? formatDistanceToNow(parseISO(commit.created_at), {
-                  addSuffix: true,
-                })
-              : commit.created}
-          </p>
+          <p className="text-gray-400 text-sm sm:text-base">{formattedDate}</p>
         </div>
       </div>
       {/* Body */}
@@ -114,5 +99,11 @@ const CommitItem: React.FC<CommitItemProps> = ({
     </div>
   );
 };
+
+// Set the displayName property
+CommitItemComponent.displayName = "CommitItem";
+
+// Wrap the component with React.memo
+const CommitItem = React.memo(CommitItemComponent);
 
 export default CommitItem;

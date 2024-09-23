@@ -4,67 +4,99 @@
 
 import React, { useEffect, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import CommitItem from "./CommitItem"; // Import the updated component
-
-interface Commit {
-  id: number;
-  repo: string;
-  branch: string;
-  changeset: string;
-  created: string;
-  created_at: string; // Absolute timestamp
-  message: string;
-  user: {
-    name: string;
-    avatar: string;
-  };
-  likes?: number | null;
-  dislikes?: number | null;
-}
+import classNames from "classnames";
+import CommitItem from "./CommitItem";
+import { Commit } from "./types";
 
 export default function CommitList() {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [expandedCommitIds, setExpandedCommitIds] = useState<{
-    [key: number]: boolean;
-  }>({});
+  const [expandedCommitIds, setExpandedCommitIds] = useState<Set<number>>(
+    new Set()
+  );
 
   const commitsPerPage = 3;
 
+
   useEffect(() => {
-    fetch("/api/commits", { cache: "no-store" })
-      .then(async (res) => {
+    const fetchCommits = async () => {
+      try {
+        const res = await fetch("/api/commits", { cache: "no-store" });
         if (!res.ok) {
           const data = await res.json();
           throw new Error(data.error || "Failed to fetch commits");
         }
-        return res.json();
-      })
-      .then((data) => setCommits(data))
-      .catch((err) => setError(err.message));
+        const data = await res.json();
+        setCommits(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCommits();
   }, []);
 
-  if (error)
-    return <div className="text-red-500 font-bold">Error: {error}</div>;
-  if (commits.length === 0)
-    return <div className="text-gray-500">Loading...</div>;
-
   // Calculate pagination
+  const totalPages = Math.ceil(commits.length / commitsPerPage);
+
+  // Ensure currentPage is within valid range
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
   const indexOfLastCommit = currentPage * commitsPerPage;
   const indexOfFirstCommit = indexOfLastCommit - commitsPerPage;
   const currentCommits = commits.slice(indexOfFirstCommit, indexOfLastCommit);
-  const totalPages = Math.ceil(commits.length / commitsPerPage);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   // Toggle expanded state for a specific commit
   const toggleExpand = (commitId: number) => {
-    setExpandedCommitIds((prevState) => ({
-      ...prevState,
-      [commitId]: !prevState[commitId],
-    }));
+    setExpandedCommitIds((prevSet) => {
+      const newSet = new Set(prevSet);
+      if (newSet.has(commitId)) {
+        newSet.delete(commitId);
+      } else {
+        newSet.add(commitId);
+      }
+      return newSet;
+    });
   };
+
+  // Conditional rendering based on loading, error, and data state
+  if (loading) {
+    return <div className="text-gray-500">Loading...</div>;
+  }
+  if (error) {
+    return (
+      <div className="text-red-500 font-bold">
+        Error: {error}
+        <button
+          onClick={() => window.location.reload()}
+          className="ml-4 text-blue-500"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+  if (commits.length === 0) {
+    return <div className="text-gray-500">No commits available.</div>;
+  }
 
   return (
     <div className="bg-black min-h-screen text-white">
@@ -77,7 +109,7 @@ export default function CommitList() {
             <CommitItem
               key={commit.id}
               commit={commit}
-              isExpanded={!!expandedCommitIds[commit.id]}
+              isExpanded={expandedCommitIds.has(commit.id)}
               toggleExpand={() => toggleExpand(commit.id)}
             />
           ))}
@@ -88,11 +120,11 @@ export default function CommitList() {
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-            className={`${
-              currentPage === 1
-                ? "text-gray-500 cursor-not-allowed"
-                : "text-white hover:text-gray-300"
-            }`}
+            aria-label="Previous Page"
+            className={classNames({
+              "text-gray-500 cursor-not-allowed": currentPage === 1,
+              "text-white hover:text-gray-300": currentPage !== 1,
+            })}
           >
             <MdChevronLeft className="h-8 w-8 text-red-800" />
           </button>
@@ -103,11 +135,11 @@ export default function CommitList() {
           <button
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className={`${
-              currentPage === totalPages
-                ? "text-gray-500 cursor-not-allowed"
-                : "text-white hover:text-gray-300"
-            }`}
+            aria-label="Next Page"
+            className={classNames({
+              "text-gray-500 cursor-not-allowed": currentPage === totalPages,
+              "text-white hover:text-gray-300": currentPage !== totalPages,
+            })}
           >
             <MdChevronRight className="h-8 w-8 text-red-800" />
           </button>
