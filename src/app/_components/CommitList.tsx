@@ -19,7 +19,6 @@ export default function CommitList() {
 
   const commitsPerPage = 3;
 
-
   useEffect(() => {
     const fetchCommits = async () => {
       try {
