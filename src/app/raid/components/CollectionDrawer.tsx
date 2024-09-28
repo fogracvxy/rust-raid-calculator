@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import CollectionList from "./CollectionList";
 import CollectionSummary from "./CollectionSummary";
 import { CollectionItem, Item, Resource, SortedSulfurCost } from "../types";
@@ -37,7 +36,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
         <div className="flex items-center justify-between h-16">
           <h2 className="text-lg font-bold">Collection Summary</h2>
           <button
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-2  md:py-2 md:px-4 rounded"
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-2 md:py-2 md:px-4 rounded"
             onClick={handleResetAll}
           >
             Reset
@@ -66,11 +65,9 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
             <div className="overflow-y-auto scrollbar-custom pr-4">
               <CollectionSummary
                 collection={collection}
-                handleRemoveItem={handleRemoveItem}
                 calculateCost={calculateCost}
                 resources={resources}
                 sortedOptions={sortedOptions}
-                handleResetAll={handleResetAll}
               />
               <div className="mt-4 flex justify-end"></div>
             </div>

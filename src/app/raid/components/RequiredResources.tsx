@@ -12,13 +12,13 @@ const RequiredResources: React.FC<RequiredResourcesProps> = ({ resources }) => {
     0
   );
   if (totalQuantity === 0) {
-    return null; // If totalQuantity is 0, return nothing
+    return null;
   }
   return (
     <div className="mt-8 ml-10">
       {totalQuantity > 0 && (
         <h2 className="text-xl font-bold mb-2">
-          Required Resources (choose one){" "}
+          Required Resources (choose one)
         </h2>
       )}
       <div className="flex flex-wrap">

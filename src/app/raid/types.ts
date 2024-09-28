@@ -1,3 +1,5 @@
+export type DestructionMethod = "c4" | "bullets" | "rockets" | "satchel";
+
 export interface Item {
   name: string;
   image: string;

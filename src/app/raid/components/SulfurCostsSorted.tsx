@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-
 import { SortedSulfurCost } from "../types";
 
 interface SulfurCostsSortedProps {
@@ -16,7 +15,7 @@ const SulfurCostsSorted: React.FC<SulfurCostsSortedProps> = ({
   );
 
   if (totalQuantity === 0) {
-    return null; // If totalQuantity is 0, return nothing
+    return null;
   }
 
   return (
