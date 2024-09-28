@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
-import { itemsRecycle } from "./items_recycle";
-import { resources } from "./resources";
+import { itemsRecycle } from "./data/items_recycle";
+import { resources } from "./data/resources";
 
 interface ItemRecycle {
   name: string;
@@ -16,8 +16,8 @@ interface Yield {
   scrap?: number | null;
   metal?: number | null;
   highQualityMetal?: number | null;
-  cloth?: number;
-  rope?: number;
+  cloth?: number | null;
+  rope?: number | null;
   other?: string;
 }
 
@@ -30,16 +30,13 @@ const Recycle: React.FC = () => {
   const [mode, setMode] = useState<Mode>("Default");
   const initialized = useRef(false);
 
+  const incrementTimeouts = useRef<{ [key: string]: NodeJS.Timeout }>({});
+  const decrementTimeouts = useRef<{ [key: string]: NodeJS.Timeout }>({});
+
   useEffect(() => {
     if (!initialized.current && typeof window !== "undefined") {
       const storedSelectedItems = localStorage.getItem("selectedItems");
       const storedMode = localStorage.getItem("mode") as Mode | null;
-
-      console.log(
-        "Loading from localStorage:",
-        storedSelectedItems,
-        storedMode
-      );
 
       if (storedSelectedItems) {
         setSelectedItems(JSON.parse(storedSelectedItems));
@@ -59,78 +56,74 @@ const Recycle: React.FC = () => {
 
   useEffect(() => {
     if (initialized.current) {
-      console.log("Saving selectedItems to localStorage:", selectedItems);
       localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
     }
   }, [selectedItems]);
 
   useEffect(() => {
     if (initialized.current) {
-      console.log("Saving mode to localStorage:", mode);
       localStorage.setItem("mode", mode);
     }
   }, [mode]);
 
-  const handleIncrement = (itemName: string) => {
-    let incrementTimeout: NodeJS.Timeout;
+  useEffect(() => {
+    const currentIncrementTimeouts = incrementTimeouts.current;
+    const currentDecrementTimeouts = decrementTimeouts.current;
 
+    return () => {
+      Object.values(currentIncrementTimeouts).forEach(clearTimeout);
+      Object.values(currentDecrementTimeouts).forEach(clearTimeout);
+    };
+  }, []);
+
+  const handleIncrementStart = (itemName: string) => {
     const increment = () => {
       setSelectedItems((prevItems) => {
         const existingItem = prevItems.find((item) => item.name === itemName);
         if (existingItem) {
-          const updatedItems = prevItems.map((item) =>
+          return prevItems.map((item) =>
             item.name === itemName ? { ...item, amount: item.amount + 1 } : item
           );
-          return updatedItems;
         } else {
           return [...prevItems, { name: itemName, amount: 1 }];
         }
       });
 
-      incrementTimeout = setTimeout(increment, 300);
+      incrementTimeouts.current[itemName] = setTimeout(increment, 300);
     };
 
     increment();
-
-    const stopIncrement = () => {
-      clearTimeout(incrementTimeout);
-      window.removeEventListener("mouseup", stopIncrement);
-    };
-
-    window.addEventListener("mouseup", stopIncrement);
   };
 
-  const handleDecrement = (itemName: string) => {
-    let decrementTimeout: NodeJS.Timeout;
+  const handleIncrementStop = (itemName: string) => {
+    clearTimeout(incrementTimeouts.current[itemName]);
+  };
 
+  const handleDecrementStart = (itemName: string) => {
     const decrement = () => {
       setSelectedItems((prevItems) => {
         const existingItem = prevItems.find((item) => item.name === itemName);
         if (existingItem && existingItem.amount > 0) {
-          const updatedItems = prevItems
+          return prevItems
             .map((item) =>
               item.name === itemName
                 ? { ...item, amount: item.amount - 1 }
                 : item
             )
             .filter((item) => item.amount > 0);
-          return updatedItems;
         } else {
           return prevItems;
         }
       });
 
-      decrementTimeout = setTimeout(decrement, 300);
+      decrementTimeouts.current[itemName] = setTimeout(decrement, 300);
     };
 
     decrement();
+  };
 
-    const stopDecrement = () => {
-      clearTimeout(decrementTimeout);
-      window.removeEventListener("mouseup", stopDecrement);
-    };
-
-    window.addEventListener("mouseup", stopDecrement);
+  const handleDecrementStop = (itemName: string) => {
+    clearTimeout(decrementTimeouts.current[itemName]);
   };
 
   const resetSelectedItems = () => {
@@ -138,8 +131,8 @@ const Recycle: React.FC = () => {
     localStorage.removeItem("selectedItems");
   };
 
-  const getTotalYield = () => {
-    let totals: Record<string, number> = {
+  const totalYield = useMemo(() => {
+    const totals: Record<string, number> = {
       totalScrap: 0,
       totalMetal: 0,
       totalCloth: 0,
@@ -156,20 +149,19 @@ const Recycle: React.FC = () => {
             : mode === "Radtown"
             ? "yieldradioactive"
             : "yield";
-        totals.totalScrap +=
-          (selectedItem[yieldType]?.scrap || 0) * item.amount;
-        totals.totalMetal +=
-          (selectedItem[yieldType]?.metal || 0) * item.amount;
-        totals.totalCloth +=
-          (selectedItem[yieldType]?.cloth || 0) * item.amount;
+        const itemYield = selectedItem[yieldType] || {};
+
+        totals.totalScrap += (itemYield.scrap || 0) * item.amount;
+        totals.totalMetal += (itemYield.metal || 0) * item.amount;
+        totals.totalCloth += (itemYield.cloth || 0) * item.amount;
         totals.totalHighQualityMetal +=
-          (selectedItem[yieldType]?.highQualityMetal || 0) * item.amount;
-        totals.totalRope += (selectedItem[yieldType]?.rope || 0) * item.amount;
+          (itemYield.highQualityMetal || 0) * item.amount;
+        totals.totalRope += (itemYield.rope || 0) * item.amount;
       }
     });
 
     return totals;
-  };
+  }, [selectedItems, mode]);
 
   return (
     <div className="container mx-auto px-4 py-8 mb-16">
@@ -194,24 +186,28 @@ const Recycle: React.FC = () => {
         </button>
       </div>
       <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 text-sm lg:text-md">
-        {itemsRecycle.map((item: ItemRecycle, index: number) => {
+        {itemsRecycle.map((item: ItemRecycle) => {
           const selectedItem = selectedItems.find((i) => i.name === item.name);
           const amount = selectedItem ? selectedItem.amount : 0;
 
           return (
-            <div key={index} className="flex flex-col items-center">
+            <div key={item.name} className="flex flex-col items-center">
               <Image src={item.image} alt={item.name} width={50} height={50} />
               <span className="text-center">{item.name}</span>
               <div className="flex items-center mt-2">
                 <button
-                  onMouseDown={() => handleDecrement(item.name)}
+                  onMouseDown={() => handleDecrementStart(item.name)}
+                  onMouseUp={() => handleDecrementStop(item.name)}
+                  onMouseLeave={() => handleDecrementStop(item.name)}
                   className="bg-red-600 px-2 py-1 rounded-l"
                 >
                   -
                 </button>
                 <span className="px-4">{amount}</span>
                 <button
-                  onMouseDown={() => handleIncrement(item.name)}
+                  onMouseDown={() => handleIncrementStart(item.name)}
+                  onMouseUp={() => handleIncrementStop(item.name)}
+                  onMouseLeave={() => handleIncrementStop(item.name)}
                   className="bg-green-500 px-2 py-1 rounded-r"
                 >
                   +
@@ -228,7 +224,7 @@ const Recycle: React.FC = () => {
           </h2>
           <div className="flex items-center justify-center space-x-4 mb-4">
             {resources.map((resource) => {
-              const totalResource = getTotalYield()[`total${resource.name}`];
+              const totalResource = totalYield[`total${resource.name}`];
               return (
                 <div key={resource.name} className="relative">
                   <Image
