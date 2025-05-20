@@ -4,6 +4,7 @@ import Image from "next/image";
 import { itemsRecycle } from "./data/items_recycle";
 import { resources } from "./data/resources";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackFeatureUsage, trackSettingChange, trackCalculatorUsage } from "../utils/analytics";
 
 interface ItemRecycle {
   name: string;
@@ -55,6 +56,9 @@ const Recycle: React.FC = () => {
       }
 
       initialized.current = true;
+      
+      // Track page view
+      trackCalculatorUsage("recycle");
     }
   }, []);
 
@@ -92,10 +96,12 @@ const Recycle: React.FC = () => {
     setSelectedItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.name === itemName);
       if (existingItem) {
+        trackFeatureUsage("recycle_item_adjust", `increment_${itemName}`);
         return prevItems.map((item) =>
           item.name === itemName ? { ...item, amount: item.amount + 1 } : item
         );
       } else {
+        trackFeatureUsage("recycle_item_add", itemName);
         return [...prevItems, { name: itemName, amount: 1 }];
       }
     });
@@ -112,6 +118,7 @@ const Recycle: React.FC = () => {
     setSelectedItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.name === itemName);
       if (existingItem && existingItem.amount > 0) {
+        trackFeatureUsage("recycle_item_adjust", `decrement_${itemName}`);
         return prevItems
           .map((item) =>
             item.name === itemName
@@ -126,8 +133,28 @@ const Recycle: React.FC = () => {
   };
 
   const resetSelectedItems = () => {
+    if (selectedItems.length > 0) {
+      trackFeatureUsage("recycle_reset", `items_count_${selectedItems.length}`);
+    }
     setSelectedItems([]);
     localStorage.removeItem("selectedItems");
+  };
+
+  const handleModeChange = (newMode: Mode) => {
+    trackSettingChange("recycle_mode", newMode);
+    setMode(newMode);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    trackSettingChange("recycle_category", category);
+    setSelectedCategory(category);
+  };
+
+  const handleSearch = (term: string) => {
+    if (term.length > 2) {
+      trackFeatureUsage("recycle_search", term);
+    }
+    setSearchTerm(term);
   };
 
   const totalYield = useMemo(() => {
@@ -246,7 +273,7 @@ const Recycle: React.FC = () => {
           <div className="relative">
             <select
               value={mode}
-              onChange={(e) => setMode(e.target.value as Mode)}
+              onChange={(e) => handleModeChange(e.target.value as Mode)}
               className="py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white appearance-none focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
             >
               <option value="Default">Default</option>
@@ -286,7 +313,7 @@ const Recycle: React.FC = () => {
             <input
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search items..."
               className="w-full py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
             />
@@ -300,7 +327,7 @@ const Recycle: React.FC = () => {
           <div className="relative">
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               className="py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white appearance-none focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
             >
               {categories.map(category => (

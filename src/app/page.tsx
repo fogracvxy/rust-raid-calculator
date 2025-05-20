@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Hourglass } from "react-loader-spinner";
 import CommitList from "./_components/CommitList";
+import { trackCalculatorUsage } from "./utils/analytics";
+
 interface CountdownTime {
   days: number;
   hours: number;
@@ -142,7 +144,13 @@ export default function Home() {
   };
 
   const handleEnterCalculator = () => {
+    trackCalculatorUsage("raid");
     router.push("/raid"); // Navigate to '/raid' route
+  };
+
+  const handleNavigate = (tool: string) => {
+    trackCalculatorUsage(tool);
+    router.push(`/${tool}`);
   };
 
   const isCountdownZero =
@@ -187,7 +195,7 @@ export default function Home() {
               Raid Calculator
             </button>
             <button
-              onClick={() => router.push("/battlemetrics")}
+              onClick={() => handleNavigate("battlemetrics")}
               className="border border-gray-700 hover:border-red-600 text-gray-300 hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-900/80 flex items-center group"
             >
               <svg className="w-5 h-5 mr-2 transition-colors group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -312,12 +320,12 @@ export default function Home() {
 
       {/* Force Wipe Countdown with better Rust styling */}
       <div className="w-full max-w-6xl mb-16 relative z-10">
-        <div className="bg-gradient-to-r from-gray-900 via-black to-gray-900 rounded-xl p-8 shadow-lg border border-gray-800 relative overflow-hidden">
+        <div className="bg-gradient-to-r from-gray-900 via-black to-gray-900 rounded-xl p-4 sm:p-8 shadow-lg border border-gray-800 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-800 via-red-600 to-red-800"></div>
           
-          <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center">
-            <svg className="h-6 w-6 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 flex items-center justify-center">
+            <svg className="h-5 w-5 sm:h-6 sm:w-6 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             NEXT FORCE WIPE
@@ -336,45 +344,52 @@ export default function Home() {
               />
             </div>
           ) : (
-            <div className="flex items-center justify-center space-x-4 md:space-x-6">
+            <div className="grid grid-cols-4 gap-1 sm:gap-3 md:flex md:items-center md:justify-center md:space-x-6">
+              {/* Days */}
               <div className="flex flex-col items-center">
-                <div className="bg-gradient-to-b from-red-700 to-red-900 w-16 md:w-20 h-16 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
-                  <span className="text-2xl md:text-3xl font-bold font-mono">{countDownTime.days}</span>
+                <div className="bg-gradient-to-b from-red-700 to-red-900 w-full h-14 sm:h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold font-mono">{countDownTime.days}</span>
                 </div>
-                <span className="mt-2 text-gray-400 text-sm md:text-base">Days</span>
+                <span className="mt-1 sm:mt-2 text-gray-400 text-xs sm:text-sm md:text-base">Days</span>
               </div>
               
-              <div className="relative h-12 flex items-center mx-1">
+              {/* Separator - hidden on smallest screens */}
+              <div className="hidden md:flex relative h-12 items-center mx-1">
                 <div className="h-8 w-1 bg-red-800 rounded-full"></div>
               </div>
               
+              {/* Hours */}
               <div className="flex flex-col items-center">
-                <div className="bg-gradient-to-b from-red-700 to-red-900 w-16 md:w-20 h-16 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
-                  <span className="text-2xl md:text-3xl font-bold font-mono">{countDownTime.hours}</span>
+                <div className="bg-gradient-to-b from-red-700 to-red-900 w-full h-14 sm:h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold font-mono">{countDownTime.hours}</span>
                 </div>
-                <span className="mt-2 text-gray-400 text-sm md:text-base">Hours</span>
+                <span className="mt-1 sm:mt-2 text-gray-400 text-xs sm:text-sm md:text-base">Hours</span>
               </div>
               
-              <div className="relative h-12 flex items-center mx-1">
+              {/* Separator - hidden on smallest screens */}
+              <div className="hidden md:flex relative h-12 items-center mx-1">
                 <div className="h-8 w-1 bg-red-800 rounded-full"></div>
               </div>
               
+              {/* Minutes */}
               <div className="flex flex-col items-center">
-                <div className="bg-gradient-to-b from-red-700 to-red-900 w-16 md:w-20 h-16 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
-                  <span className="text-2xl md:text-3xl font-bold font-mono">{countDownTime.minutes}</span>
+                <div className="bg-gradient-to-b from-red-700 to-red-900 w-full h-14 sm:h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold font-mono">{countDownTime.minutes}</span>
                 </div>
-                <span className="mt-2 text-gray-400 text-sm md:text-base">Minutes</span>
+                <span className="mt-1 sm:mt-2 text-gray-400 text-xs sm:text-sm md:text-base">Min</span>
               </div>
               
-              <div className="relative h-12 flex items-center mx-1">
+              {/* Separator - hidden on smallest screens */}
+              <div className="hidden md:flex relative h-12 items-center mx-1">
                 <div className="h-8 w-1 bg-red-800 rounded-full"></div>
               </div>
               
+              {/* Seconds */}
               <div className="flex flex-col items-center">
-                <div className="bg-gradient-to-b from-red-700 to-red-900 w-16 md:w-20 h-16 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
-                  <span className="text-2xl md:text-3xl font-bold font-mono">{countDownTime.seconds}</span>
+                <div className="bg-gradient-to-b from-red-700 to-red-900 w-full h-14 sm:h-16 md:w-20 md:h-20 rounded-lg flex items-center justify-center shadow-lg shadow-red-800/30 border border-red-600/30">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold font-mono">{countDownTime.seconds}</span>
                 </div>
-                <span className="mt-2 text-gray-400 text-sm md:text-base">Seconds</span>
+                <span className="mt-1 sm:mt-2 text-gray-400 text-xs sm:text-sm md:text-base">Sec</span>
               </div>
             </div>
           )}
@@ -403,7 +418,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Raid Calculator</h3>
               <p className="text-gray-300 mb-4">Calculate the exact resources needed for your next raid</p>
               <button 
-                onClick={() => router.push('/raid')}
+                onClick={() => handleNavigate("raid")}
                 className="text-sm text-red-300 hover:text-white font-medium flex items-center group-hover:text-red-400"
               >
                 Try it now
@@ -432,7 +447,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Recycle Calculator</h3>
               <p className="text-gray-300 mb-4">Maximize your recycling efficiency and resource management</p>
               <button 
-                onClick={() => router.push('/recycle')}
+                onClick={() => handleNavigate("recycle")}
                 className="text-sm text-red-300 hover:text-white font-medium flex items-center group-hover:text-red-400"
               >
                 Try it now
@@ -461,7 +476,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Excavator Calculator</h3>
               <p className="text-gray-300 mb-4">Optimize your fuel usage and resource extraction with the excavator</p>
               <button 
-                onClick={() => router.push('/excavator')}
+                onClick={() => handleNavigate("excavator")}
                 className="text-sm text-red-300 hover:text-white font-medium flex items-center group-hover:text-red-400"
               >
                 Try it now
@@ -490,7 +505,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Server Tracker</h3>
               <p className="text-gray-300 mb-4">Keep track of your favorite Rust servers and player counts</p>
               <button 
-                onClick={() => router.push('/battlemetrics')}
+                onClick={() => handleNavigate("battlemetrics")}
                 className="text-sm text-red-300 hover:text-white font-medium flex items-center group-hover:text-red-400"
               >
                 Try it now
