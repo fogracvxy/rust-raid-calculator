@@ -1,6 +1,6 @@
 // CommitItem.tsx
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
@@ -23,6 +23,17 @@ const CommitItemComponent: React.FC<CommitItemProps> = ({
   isExpanded,
   toggleExpand,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  useEffect(() => {
+    // Set a small delay to ensure smooth appearance
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   const charLimit = 80; // Set your character limit
   const isMessageLong = commit.message.length > charLimit;
 
@@ -41,60 +52,81 @@ const CommitItemComponent: React.FC<CommitItemProps> = ({
     : commit.created;
 
   return (
-    <div className="border border-gray-700 rounded-lg p-4 sm:p-6 hover:shadow-xl transition-shadow w-full flex flex-col">
-      {/* Header */}
-      <div className="flex items-center mb-2">
-        {isValidUrl(commit.user.avatar) ? (
-          <Image
-            src={commit.user.avatar as string}
-            alt={`${commit.user.name}'s avatar`}
-            width={50}
-            height={50}
-            className="rounded-full"
-            placeholder="blur"
-            blurDataURL="/images/placeholders/user.png"
-          />
-        ) : (
-          <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-xl">
-            {commit.user.name.charAt(0)}
-          </div>
-        )}
-        <div className="ml-4">
-          <p className="text-lg sm:text-xl font-semibold">{commit.user.name}</p>
-          <p className="text-gray-400 text-sm sm:text-base">{formattedDate}</p>
-        </div>
-      </div>
-      {/* Body */}
-      <div className="flex-grow">
-        <div className="text-lg sm:text-xl font-bold mb-2">
-          {displayMessage}
-        </div>
-        <p className="text-gray-400 text-sm sm:text-base">
-          <strong>Repo:</strong> {commit.repo} | <strong>Branch:</strong>{" "}
-          {commit.branch}
-        </p>
-      </div>
-      {/* Footer */}
-      <div className="flex items-center justify-between mt-2">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center text-green-400">
-            <FaThumbsUp className="h-5 w-5 mr-1" />
-            <span className="font-medium">{commit.likes ?? 0}</span>
-          </div>
-          <div className="flex items-center text-red-500">
-            <FaThumbsDown className="h-5 w-5 mr-1" />
-            <span className="font-medium">{commit.dislikes ?? 0}</span>
+    <div 
+      className={`border border-gray-800 rounded-lg bg-black hover:bg-gray-900 transition-all duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0 scale-95'}`} 
+      style={{ width: '100%', maxWidth: '100%' }}
+    >
+      <div className="p-4 flex flex-col" style={{ height: '180px', width: '100%' }}>
+        {/* Header */}
+        <div className="flex items-center mb-2 w-full">
+          {isValidUrl(commit.user.avatar) ? (
+            <div className="w-8 h-8 flex-shrink-0">
+              <Image
+                src={commit.user.avatar as string}
+                alt={`${commit.user.name}'s avatar`}
+                width={32}
+                height={32}
+                className="rounded-full"
+                placeholder="blur"
+                blurDataURL="/images/placeholders/user.png"
+              />
+            </div>
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-sm flex-shrink-0">
+              {commit.user.name.charAt(0)}
+            </div>
+          )}
+          <div className="ml-2 overflow-hidden flex-1 min-w-0">
+            <p className="text-sm font-semibold text-white truncate">{commit.user.name}</p>
+            <p className="text-gray-400 text-xs truncate">{formattedDate}</p>
           </div>
         </div>
-        {/* Conditionally render "View More" button */}
-        {isMessageLong && (
-          <button
-            onClick={toggleExpand}
-            className="text-blue-500 hover:text-blue-300 text-sm sm:text-base focus:outline-none"
+        
+        {/* Repo/Branch info - now at the top */}
+        <div className="text-gray-400 text-xs truncate mb-2 w-full">
+          <strong>Repo:</strong> {commit.repo} | <strong>Branch:</strong> {commit.branch}
+        </div>
+        
+        {/* Message container - with scrolling */}
+        <div className="flex-grow overflow-hidden w-full">
+          <div 
+            className="text-white font-bold text-sm overflow-auto pr-1"
+            style={{ 
+              height: '80px',
+              width: '100%',
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#4a5568 #1a202c',
+              wordBreak: 'break-word',
+              whiteSpace: 'pre-wrap'
+            }}
           >
-            {isExpanded ? "Show Less" : "View More"}
-          </button>
-        )}
+            {displayMessage}
+          </div>
+        </div>
+          
+        {/* Footer with likes/dislikes */}
+        <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-800 w-full">
+          <div className="flex items-center space-x-3 flex-shrink-0">
+            <div className="flex items-center text-green-400">
+              <FaThumbsUp className="h-3 w-3 mr-1" />
+              <span className="font-medium text-xs">{commit.likes ?? 0}</span>
+            </div>
+            <div className="flex items-center text-red-500">
+              <FaThumbsDown className="h-3 w-3 mr-1" />
+              <span className="font-medium text-xs">{commit.dislikes ?? 0}</span>
+            </div>
+          </div>
+          
+          {/* View More button */}
+          {isMessageLong && (
+            <button
+              onClick={toggleExpand}
+              className="text-blue-500 hover:text-blue-300 text-xs focus:outline-none flex-shrink-0"
+            >
+              {isExpanded ? "Show Less" : "View More"}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -133,16 +133,17 @@ export default function DecayCalculator() {
         <title>Rust Wall Decay Calculator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div className="text-white shadow-lg rounded-lg p-6 md:p-8 max-w-md w-full border border-gray-300">
-        <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-red-600">
+      
+      <div className="text-white rounded-lg p-6 md:p-8 max-w-md w-full border border-gray-800  backdrop-blur-sm shadow-[0_0_15px_rgba(255,0,0,0.15)]">
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-red-600 tracking-wide">
           Rust Wall Decay Calculator
         </h1>
 
         {/* Material Selection */}
-        <div className="mb-4">
+        <div className="mb-6">
           <label
             htmlFor="material"
-            className="block text-lg font-medium mb-2 text-gray-200"
+            className="block text-lg font-medium mb-2 text-gray-200 text-left"
           >
             Select Material:
           </label>
@@ -151,7 +152,7 @@ export default function DecayCalculator() {
               id="material"
               value={selectedMaterial ? selectedMaterial.name : ""}
               onChange={handleMaterialChange}
-              className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-10 rounded leading-tight focus:outline-none focus:border-blue-500 text-black"
+              className="block appearance-none w-full bg-gray-800 border border-gray-700 hover:border-gray-600 px-4 py-3 pr-10 rounded-md leading-tight focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-transparent text-white"
             >
               <option value="">-- Choose a Material --</option>
               {materials.map((material) => (
@@ -160,7 +161,7 @@ export default function DecayCalculator() {
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-black">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,13 +175,17 @@ export default function DecayCalculator() {
         </div>
 
         {/* Current HP Input */}
-        <div className="mb-4">
+        <div className="mb-6">
           <label
             htmlFor="currentHp"
-            className="block text-lg font-medium mb-2 text-gray-200"
+            className="block text-lg font-medium mb-2 text-gray-200 text-left"
           >
             Enter Current HP{" "}
-            {selectedMaterial && `(Max ${selectedMaterial.maxHp})`}:
+            {selectedMaterial && (
+              <span className="text-red-500 font-bold">
+                (Max {selectedMaterial.maxHp})
+              </span>
+            )}:
           </label>
           <input
             id="currentHp"
@@ -188,7 +193,7 @@ export default function DecayCalculator() {
             inputMode="decimal"
             value={currentHp === 0 && error === "" ? "" : currentHp}
             onChange={handleHpChange}
-            className="border border-gray-300 text-black rounded px-4 py-2 w-full text-center focus:outline-none focus:border-blue-500"
+            className="border border-gray-700 bg-gray-800 text-white rounded-md px-4 py-3 w-full text-center focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-transparent transition-all"
             min="0"
             disabled={!selectedMaterial}
             aria-disabled={!selectedMaterial}
@@ -200,7 +205,7 @@ export default function DecayCalculator() {
             }
           />
           {error && (
-            <div id="hpError" className="text-red-500 mt-2">
+            <div id="hpError" className="text-red-500 mt-2 text-sm font-semibold">
               {error}
             </div>
           )}
@@ -208,12 +213,19 @@ export default function DecayCalculator() {
 
         {/* Time Left Display */}
         {decayInfo.timeLeft && !error && (
-          <div className="mt-6 text-xl font-semibold text-gray-200">
-            <p>Time Left Until Decay:</p>
-            <p>{decayInfo.timeLeft}</p>
+          <div className="mt-8 p-4 rounded-md border border-gray-700 bg-gray-800/50">
+            <div className="text-xl font-semibold text-red-500 mb-2">
+              Time Left Until Decay:
+            </div>
+            <div className="text-2xl font-bold text-white bg-gray-800 py-2 px-4 rounded-md inline-block">
+              {decayInfo.timeLeft}
+            </div>
+            
             {decayInfo.decayDateTime && (
-              <div className="mt-4 text-lg text-gray-200">
-                Expected Decay Time: {decayInfo.decayDateTime}
+              <div className="mt-4 text-sm text-gray-300 border-t border-gray-700 pt-4">
+                <span className="text-gray-400">Expected Decay Time:</span>
+                <br />
+                <span className="font-mono">{decayInfo.decayDateTime}</span>
               </div>
             )}
           </div>
@@ -221,10 +233,15 @@ export default function DecayCalculator() {
 
         {/* Show invalid HP message if error exists */}
         {error && (
-          <div className="mt-6 text-xl font-semibold text-red-500">
+          <div className="mt-6 text-lg font-semibold text-red-500 p-3 border border-red-900/50 rounded-md bg-red-900/10">
             <p>{error}</p>
           </div>
         )}
+        
+        {/* Footer */}
+        <div className="mt-8 text-xs text-gray-500 border-t border-gray-800 pt-4">
+          Select a material type and enter the current HP to calculate decay time.
+        </div>
       </div>
     </div>
   );

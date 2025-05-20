@@ -1,3 +1,6 @@
+// This component has been deprecated and replaced by inline implementation in CollectionDrawer.tsx
+// Keeping this file for reference or if we need to revert back.
+
 // CollectionSummary.tsx
 import React from "react";
 import BestOptionsList from "./BestOptionsList";

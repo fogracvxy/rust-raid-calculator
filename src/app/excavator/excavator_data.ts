@@ -27,6 +27,11 @@ export const excavatorData: { name: string; amount: number; image: string }[] =
       amount: 10000,
       image: "/images/resources/stones.png",
     },
+    {
+      name: "Airdrop",
+      amount: 0,
+      image: "/images/supply-drop.png",
+    },
   ];
 
 // Quarry data for different types of quarries

@@ -75,3 +75,13 @@ body {
 .scrollbar-custom::-webkit-scrollbar-track {
   background: #444; /* Color of the scrollbar track */
 }
+
+/* Custom animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(45deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(45deg);
+  }
+}

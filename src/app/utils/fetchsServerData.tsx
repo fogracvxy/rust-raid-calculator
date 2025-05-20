@@ -10,32 +10,43 @@ export interface ServerData {
       rust_headerimage: string;
       rust_queued_players: number;
       rust_url: string;
-      rust_maps: {
-        url: string;
-        thumbnailUrl: string;
-        mapUrl: string;
+      rust_maps?: {
+        url?: string;
+        thumbnailUrl?: string;
+        mapUrl?: string;
       };
     };
   };
 }
 
-const serverUrls = [
-  "https://api.battlemetrics.com/servers/4233468",
-  "https://api.battlemetrics.com/servers/3332713",
-  "https://api.battlemetrics.com/servers/9565288",
+// Featured server IDs - these are displayed by default
+export const serverIds = [
+  "32281678",
+  "3332713",
+  "9565288",
 ];
+
+// Create API URLs from server IDs
+const serverUrls = serverIds.map(id => `https://api.battlemetrics.com/servers/${id}`);
 
 export const fetchServerData = async (): Promise<ServerData[] | null> => {
   try {
-    const promises = serverUrls.map(async (url) => {
+    const promises = serverUrls.map(async (url, index) => {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Failed to fetch data from ${url}`);
       }
       const responseData = await response.json();
       const serverAttributes = responseData?.data?.attributes;
+      const serverId = serverIds[index]; // Get the corresponding server ID
 
       if (serverAttributes) {
+        // Fix for map thumbnail URLs - ensure we capture it properly
+        const rustMaps = serverAttributes.details?.rust_maps || {};
+        
+        // Create a default thumbnail URL based on server ID
+        const defaultMapThumbnail = `/images/default-map-${serverId}.jpg`;
+        
         const serverData: ServerData = {
           attributes: {
             players: serverAttributes.players,
@@ -51,10 +62,9 @@ export const fetchServerData = async (): Promise<ServerData[] | null> => {
               rust_headerimage:
                 serverAttributes.details?.rust_headerimage ?? "",
               rust_maps: {
-                url: serverAttributes.details?.rust_maps?.url ?? "",
-                thumbnailUrl:
-                  serverAttributes.details?.rust_maps?.thumbnailUrl ?? "",
-                mapUrl: serverAttributes.details?.rust_maps?.mapUrl ?? "",
+                url: rustMaps.url ?? "",
+                thumbnailUrl: rustMaps.thumbnailUrl ?? defaultMapThumbnail,
+                mapUrl: rustMaps.mapUrl ?? "",
               },
             },
           },

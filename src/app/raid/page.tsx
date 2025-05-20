@@ -3,16 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { items } from "./items";
 import CategoryButtons from "./components/CategoryButtons";
 import ItemGrid from "./components/ItemGrid";
-
 import ResetButton from "./components/ResetButton";
 import { Item, CollectionItem, SortedSulfurCost } from "./types";
 import CollectionDrawer from "./components/CollectionDrawer";
+import { motion } from "framer-motion";
 
 const DestructionUI = () => {
   const [collection, setCollection] = useState<CollectionItem[]>([]);
   const [selectedMethod, setSelectedMethod] =
     useState<keyof Item["destructionOptions"]>("c4");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const initialized = useRef(false);
 
   useEffect(() => {
@@ -36,6 +37,8 @@ const DestructionUI = () => {
       }
 
       initialized.current = true;
+      // Add a small delay to simulate loading and avoid UI flashing
+      setTimeout(() => setIsLoading(false), 300);
     }
   }, []);
 
@@ -184,34 +187,89 @@ const DestructionUI = () => {
     .map(([item, cost]) => ({ item, quantity: cost }))
     .sort((a, b) => a.quantity - b.quantity);
 
-  return (
-    <div className="container mx-auto px-4 py-8 mb-16">
-      {" "}
-      {/* Reduced bottom margin */}
-      <CategoryButtons
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-      />
-      {!activeCategory && (
-        <div className="text-center my-8">
-          <p className="text-red-600 text-lg">Choose a category to begin!</p>
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 border-t-4 border-red-600 border-solid rounded-full animate-spin"></div>
+          <p className="mt-4 text-gray-400">Loading Raid Calculator...</p>
         </div>
-      )}
-      <ItemGrid
-        category={activeCategory}
-        items={items}
-        collection={collection}
-        handleAddItem={handleAddItem}
-        handleRemoveItem={handleRemoveItem}
-      />
-      <CollectionDrawer
-        collection={collection}
-        handleRemoveItem={handleRemoveItem}
-        calculateCost={calculateCost}
-        resources={resources}
-        sortedOptions={sortedOptions}
-        handleResetAll={handleResetAll}
-      />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen  backdrop-blur-sm">
+      <div className="container mx-auto px-4 py-8 mb-16">
+        <header className="mb-10 text-center">
+          <motion.h1 
+            className="text-3xl md:text-4xl font-bold mb-2 text-red-600 tracking-wide"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Rust Raid Calculator
+          </motion.h1>
+          <motion.p 
+            className="text-gray-400 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Select items to calculate the most efficient raiding strategy
+          </motion.p>
+        </header>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <CategoryButtons
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+          />
+        </motion.div>
+        
+        {!activeCategory && (
+          <motion.div 
+            className="text-center my-12 py-16 border border-gray-800 rounded-lg bg-gray-900/50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-16 w-16 mx-auto text-red-600 mb-4 opacity-70" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <p className="text-red-600 text-lg font-medium mb-2">Choose a category to begin!</p>
+            <p className="text-gray-500 max-w-md mx-auto">Select a structure category above to view available items for your raid calculations</p>
+          </motion.div>
+        )}
+        
+        <ItemGrid
+          category={activeCategory}
+          items={items}
+          collection={collection}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+        />
+        
+        <CollectionDrawer
+          collection={collection}
+          handleRemoveItem={handleRemoveItem}
+          handleAddItem={handleAddItem}
+          calculateCost={calculateCost}
+          resources={resources}
+          sortedOptions={sortedOptions}
+          handleResetAll={handleResetAll}
+        />
+      </div>
     </div>
   );
 };
