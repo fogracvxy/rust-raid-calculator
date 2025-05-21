@@ -59,6 +59,9 @@ const Recycle: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const lastClickTime = useRef<Record<string, number>>({});
   const [expandedResourceDetail, setExpandedResourceDetail] = useState<string | null>(null);
+  const [showAutoRecycleInfo, setShowAutoRecycleInfo] = useState(false);
+  const [mobileResourceDetail, setMobileResourceDetail] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!initialized.current && typeof window !== "undefined") {
@@ -106,6 +109,13 @@ const Recycle: React.FC = () => {
       localStorage.setItem("recursiveRecycling", JSON.stringify(recursiveRecycling));
     }
   }, [recursiveRecycling]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Get unique categories from items
   const categories = useMemo(() => {
@@ -341,7 +351,7 @@ const Recycle: React.FC = () => {
     
     return details;
   }, [totalYield, recursiveRecycling]);
-  
+
   // Calculate the total number of items selected
   const totalItemsCount = useMemo(() => {
     return selectedItems.reduce((acc, item) => acc + item.amount, 0);
@@ -461,7 +471,7 @@ const Recycle: React.FC = () => {
           </div>
           
           {/* Recursive Recycling Toggle - Fixed Switch */}
-          <div className="flex items-center bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md">
+          <div className="flex items-center bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md gap-2">
             <label className="inline-flex items-center cursor-pointer">
               <input 
                 type="checkbox"
@@ -471,15 +481,21 @@ const Recycle: React.FC = () => {
               />
               <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
               <span className="ml-2 text-sm text-white">Auto-recycle components</span>
-              <div className="group relative ml-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none mb-2 w-52 text-center">
-                  Automatically convert components like Rope → Cloth and Tech Trash → Scrap + HQM
-                </div>
-              </div>
             </label>
+            {/* Info icon, separated from toggle */}
+            <button
+              type="button"
+              aria-label="Show auto-recycle info"
+              className="ml-2 p-1 rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
+              onClick={e => {
+                e.stopPropagation();
+                setShowAutoRecycleInfo(true);
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
           </div>
           
           <button
@@ -501,6 +517,38 @@ const Recycle: React.FC = () => {
             </div>
           )}
         </div>
+        
+        {/* Auto-recycle info modal/tooltip */}
+        {showAutoRecycleInfo && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 md:bg-opacity-0 md:items-end md:justify-end"
+            onClick={() => setShowAutoRecycleInfo(false)}
+            aria-modal="true"
+            role="dialog"
+          >
+            <div
+              className="bg-gray-900 text-white rounded-lg shadow-2xl p-6 max-w-xs w-full mx-4 md:mx-0 md:absolute md:bottom-16 md:right-8 border border-red-700"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-red-400">Auto-recycle Info</span>
+                <button
+                  className="text-gray-400 hover:text-white focus:outline-none"
+                  aria-label="Close info"
+                  onClick={() => setShowAutoRecycleInfo(false)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="text-sm">
+                Automatically convert components like <b>Rope</b> → <b>Cloth</b> and <b>Tech Trash</b> → <b>Scrap + HQM</b>.<br />
+                When enabled, all possible sub-components are recursively recycled for maximum yield.
+              </div>
+            </div>
+          </div>
+        )}
         
         {/* Search and Filtering */}
         <div className="flex flex-col md:flex-row justify-center gap-3 mb-6">
@@ -646,19 +694,19 @@ const Recycle: React.FC = () => {
                   
                   {/* Resource icons */}
                   {resourceIcons.length > 0 && (
-                    <div className="flex justify-center space-x-1 mt-1 mb-2">
+                  <div className="flex justify-center space-x-1 mt-1 mb-2">
                       {resourceIcons.slice(0, 3).map((icon, index) => (
                         <div key={index} className="relative group">
-                          <div className="w-5 h-5 relative">
-                            <Image 
+                        <div className="w-5 h-5 relative flex items-center justify-center">
+                          <Image 
                               src={icon.src} 
                               alt={icon.alt} 
-                              width={20} 
-                              height={20} 
-                              priority={index === 0}
-                            />
-                          </div>
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                            width={20} 
+                            height={20} 
+                              style={{ width: 20, height: 20 }}
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                             {icon.alt === "HQM" && currentYield.highQualityMetal && `${currentYield.highQualityMetal} ${icon.alt}`}
                             {icon.alt === "Scrap" && currentYield.scrap && `${currentYield.scrap} ${icon.alt}`}
                             {icon.alt === "Metal" && currentYield.metal && `${currentYield.metal} ${icon.alt}`}
@@ -667,20 +715,20 @@ const Recycle: React.FC = () => {
                             {icon.alt === "Tech Trash" && currentYield.techTrash && `${currentYield.techTrash} ${icon.alt}`}
                             {icon.alt === "Tarp" && currentYield.tarp && `${currentYield.tarp} ${icon.alt}`}
                             {icon.alt === "Sewing Kit" && currentYield.sewingKit && `${currentYield.sewingKit} ${icon.alt}`}
-                          </div>
+                      </div>
                         </div>
                       ))}
                       {resourceIcons.length > 3 && (
-                        <div className="relative group">
+                      <div className="relative group">
                           <div className="w-5 h-5 relative flex items-center justify-center bg-gray-800 rounded-full">
                             <span className="text-xs text-gray-300">+{resourceIcons.length - 3}</span>
-                          </div>
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                        </div>
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                             {resourceIcons.slice(3).map((icon, i) => (
                               <div key={i} className="flex items-center gap-1 mb-1 last:mb-0">
                                 <div className="w-3 h-3 relative">
                                   <Image src={icon.src} alt={icon.alt} width={12} height={12} />
-                                </div>
+                        </div>
                                 <span>
                                   {icon.alt === "HQM" && currentYield.highQualityMetal && `${currentYield.highQualityMetal} ${icon.alt}`}
                                   {icon.alt === "Scrap" && currentYield.scrap && `${currentYield.scrap} ${icon.alt}`}
@@ -691,13 +739,13 @@ const Recycle: React.FC = () => {
                                   {icon.alt === "Tarp" && currentYield.tarp && `${currentYield.tarp} ${icon.alt}`}
                                   {icon.alt === "Sewing Kit" && currentYield.sewingKit && `${currentYield.sewingKit} ${icon.alt}`}
                                 </span>
-                              </div>
+                      </div>
                             ))}
-                          </div>
                         </div>
-                      )}
-                    </div>
-                  )}
+                      </div>
+                    )}
+                      </div>
+                    )}
                   
                   {/* Quantity Controls - Simplified, using onClick instead of touch/mouse events */}
                   <div className="flex items-center mt-auto w-full">
@@ -834,13 +882,14 @@ const Recycle: React.FC = () => {
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
-                      <div className="relative h-10 w-10 mr-2">
+                      <div className="relative h-10 w-10 mr-2 flex items-center justify-center">
                         <Image
                           src={resource.image}
-                          fill
-                          sizes="40px"
+                          width={20}
+                          height={20}
                           alt={resourceName}
                           className="object-contain"
+                          style={{ width: 20, height: 20 }}
                         />
                         {hasRecycledComponents && (
                           <div className="absolute -top-1 -right-1 bg-red-600 rounded-full h-4 w-4 flex items-center justify-center">
@@ -855,24 +904,32 @@ const Recycle: React.FC = () => {
                         <div className="text-white font-bold text-lg flex items-center">
                           {totalResource}
                           {hasRecycledComponents && (
-                            <span 
-                              className="ml-1 text-xs font-normal text-red-400 cursor-help"
-                              onClick={(e) => {
-                                e.stopPropagation(); 
-                                handleResourceClick(resourceName);
+                            <button
+                              className="ml-1 text-xs font-normal text-red-400 focus:outline-none flex items-center justify-center"
+                              style={{ width: 20, height: 20 }}
+                              aria-label="Show recycled component details"
+                              onClick={e => {
+                                e.stopPropagation();
+                                if (isMobile) {
+                                  setMobileResourceDetail(resourceName);
+                                } else {
+                                  handleResourceClick(resourceName);
+                                }
                               }}
+                              tabIndex={0}
+                              type="button"
                             >
-                              *
-                            </span>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                              </svg>
+                            </button>
                           )}
                         </div>
                         
                         {/* Detailed hover/click panel for recycled components */}
                         {hasRecycledComponents && (expandedResourceDetail === resourceName || undefined) && (
                           <div 
-                            className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded transition-opacity p-2 w-60 shadow-xl border border-red-900"
-                            onClick={(e) => e.stopPropagation()}
-                          >
+                            className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/resource:opacity-100 transition-opacity pointer-events-none p-3 w-64 max-w-xs shadow-2xl border border-red-900 hidden md:block" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.45)' }}>
                             <div className="font-medium text-red-400 border-b border-gray-800 pb-1 mb-1 flex justify-between items-center">
                               <span>Recycled Components</span>
                               <button 
@@ -905,7 +962,7 @@ const Recycle: React.FC = () => {
                         
                         {/* Hover-only panel (larger screens) */}
                         {hasRecycledComponents && expandedResourceDetail !== resourceName && (
-                          <div className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/resource:opacity-100 transition-opacity pointer-events-none p-2 w-60 shadow-xl border border-red-900 hidden md:block">
+                          <div className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/resource:opacity-100 transition-opacity pointer-events-none p-3 w-64 max-w-xs shadow-2xl border border-red-900 hidden md:block" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.45)' }}>
                             <div className="font-medium text-red-400 border-b border-gray-800 pb-1 mb-1 flex justify-between items-center">
                               <span>Recycled Components</span>
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -930,13 +987,6 @@ const Recycle: React.FC = () => {
                             </div>
                           </div>
                         )}
-                        
-                        {/* Mobile hint text */}
-                        {hasRecycledComponents && (
-                          <div className="text-xs text-red-400/70 md:hidden mt-1">
-                            Tap * for details
-                          </div>
-                        )}
                       </div>
                     </motion.div>
                   );
@@ -945,6 +995,60 @@ const Recycle: React.FC = () => {
             </div>
           </div>
         </motion.div>
+      )}
+      
+      {/* Render the mobile modal for resource details */}
+      {isMobile && mobileResourceDetail && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+          onClick={() => setMobileResourceDetail(null)}
+          aria-modal="true"
+          role="dialog"
+        >
+          <div
+            className="bg-gray-900 text-white rounded-lg shadow-2xl p-6 max-w-xs w-full mx-4 border border-red-700"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-semibold text-red-400">Recycled Components</span>
+              <button
+                className="text-gray-400 hover:text-white focus:outline-none"
+                aria-label="Close details"
+                onClick={() => setMobileResourceDetail(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* Modal content: same as desktop panel */}
+            {(() => {
+              const recycledDetails = recycledComponentDetails[mobileResourceDetail] || [];
+              const totalResource = totalYield[`total${mobileResourceDetail}`] as number;
+              const baseAmount = totalResource - recycledDetails.reduce((sum, detail) => sum + detail.sourceAmount, 0);
+              return (
+                <React.Fragment>
+                  {baseAmount > 0 && (
+                    <div className="flex justify-between py-1">
+                      <span>Direct yield:</span>
+                      <span className="font-medium">{baseAmount}</span>
+                    </div>
+                  )}
+                  {recycledDetails.map((detail, index) => (
+                    <div key={index} className="flex justify-between py-1 border-t border-gray-800">
+                      <span className="text-gray-300">{detail.sourceName}:</span>
+                      <span className="font-medium text-red-300">+{detail.sourceAmount}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between pt-1 mt-1 border-t border-gray-700">
+                    <span>Total:</span>
+                    <span className="font-bold">{totalResource}</span>
+                  </div>
+                </React.Fragment>
+              );
+            })()}
+          </div>
+        </div>
       )}
     </motion.div>
   );
