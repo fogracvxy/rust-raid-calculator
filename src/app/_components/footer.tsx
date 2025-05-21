@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 
 export function Footer() {
   const date = new Date();
@@ -87,40 +88,51 @@ export function Footer() {
              <div>
                <ul className="space-y-3">
                  <li>
-                   <a href="/raid" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                   <Link href="/raid" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                      Raid Calculator
-                   </a>
+                   </Link>
                  </li>
                  <li>
-                   <a href="/recycle" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                   <Link href="/recycle" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                      Recycle Calculator
-                   </a>
+                   </Link>
                  </li>
                  <li>
-                   <a href="/excavator" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                   <Link href="/excavator" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                      Excavator Calculator
-                   </a>
+                   </Link>
+                 </li>
+                 <li>
+                   <Link href="/commits" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                     <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
+                     Dev Updates
+                   </Link>
                  </li>
                </ul>
              </div>
              <div>
                <ul className="space-y-3">
                  <li>
-                   <a href="/decay" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                   <Link href="/decay" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                      Decay Timer
-                   </a>
+                   </Link>
                  </li>
                  <li>
-                   <a href="/battlemetrics" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                   <Link href="/battlemetrics" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                      Server Tracker
-                   </a>
+                   </Link>
                  </li>
-                 
+                 <li>
+                   <Link href="/workbench" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                     <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
+                     Workbench
+                   </Link>
+                 </li>
                </ul>
              </div>
            </div>
@@ -132,7 +144,7 @@ export function Footer() {
            </h3>
            <ul className="space-y-3">
              <li>
-               <a href="https://rustlabs.com/" target="_blank" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+               <a href="https://rustlabs.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                  <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                  Rust Labs
                  <svg className="w-3 h-3 ml-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,7 +153,7 @@ export function Footer() {
                </a>
              </li>
              <li>
-               <a href="https://www.rustafied.com/" target="_blank" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+               <a href="https://www.rustafied.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
                  <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
                  Rustafied
                  <svg className="w-3 h-3 ml-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,7 +161,15 @@ export function Footer() {
                  </svg>
                </a>
              </li>
-             
+             <li>
+               <a href="https://rust.facepunch.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-colors flex items-center group">
+                 <div className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2 group-hover:scale-125 transition-transform"></div>
+                 Official Rust Site
+                 <svg className="w-3 h-3 ml-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                 </svg>
+               </a>
+             </li>
            </ul>
          </div>
          
@@ -163,16 +183,30 @@ export function Footer() {
              <p className="text-gray-400 mb-4 text-sm leading-relaxed">
                Built with React, Next.js, and Tailwind CSS. Continually updated to reflect the latest changes in Rust.
              </p>
+
+             {/* Disclaimer section */}
+             <div className="text-xs text-gray-500 border-t border-gray-800 pt-3 mt-3">
+              <p>
+                Rust® is a registered trademark of Facepunch Studios. This site is not affiliated with or endorsed by Facepunch.
+              </p>
+             </div>
+             
              <div className="border-t border-gray-800 mt-4 pt-4">
-               <h4 className="text-gray-300 font-medium mb-3">Support</h4>
+               <h4 className="text-gray-300 font-medium mb-3">Legal & Support</h4>
                <div className="space-y-2">
-                 <a href="#" className="text-gray-400 hover:text-red-500 transition-colors flex items-center">
+                 <Link href="/legal/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors flex items-center">
                    <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                    </svg>
-                   FAQ
-                 </a>
-                 <a href="#" className="text-gray-400 hover:text-red-500 transition-colors flex items-center">
+                   Privacy Policy
+                 </Link>
+                 <Link href="/legal/terms-of-service" className="text-gray-400 hover:text-red-500 transition-colors flex items-center">
+                   <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                   </svg>
+                   Terms of Service
+                 </Link>
+                 <a href="mailto:contact@yourdomain.com" className="text-gray-400 hover:text-red-500 transition-colors flex items-center">
                    <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                    </svg>
@@ -190,9 +224,9 @@ export function Footer() {
            © {new Date().getFullYear()} Rust Tools by MSpudicDesign. All rights reserved.
          </p>
          <div className="flex space-x-6">
-           <a href="#" className="text-gray-500 hover:text-gray-400 text-sm">Privacy</a>
-           <a href="#" className="text-gray-500 hover:text-gray-400 text-sm">Terms</a>
-           <a href="#" className="text-gray-500 hover:text-gray-400 text-sm">Cookies</a>
+           <Link href="/legal/privacy-policy" className="text-gray-500 hover:text-gray-400 text-sm">Privacy</Link>
+           <Link href="/legal/terms-of-service" className="text-gray-500 hover:text-gray-400 text-sm">Terms</Link>
+           <Link href="/sitemap.xml" target="_blank" className="text-gray-500 hover:text-gray-400 text-sm">Sitemap</Link>
          </div>
        </div>
      </div>

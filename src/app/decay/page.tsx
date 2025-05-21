@@ -379,42 +379,42 @@ export default function DecayCalculator() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center text-center bg-black min-h-screen p-4">
+    <div className="flex flex-col justify-center items-center text-center bg-black min-h-screen p-2 sm:p-4">
       <Head>
         <title>Rust Wall Decay Calculator</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       </Head>
       <ToastContainer position="top-right" theme="dark" />
       
-      <div className="text-white rounded-lg p-6 md:p-8 max-w-lg w-full border border-gray-800 backdrop-blur-sm shadow-[0_0_25px_rgba(255,0,0,0.15)]">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-red-600 tracking-wide">
+      <div className="text-white rounded-lg p-4 sm:p-6 md:p-8 max-w-lg w-full border border-gray-800 backdrop-blur-sm shadow-[0_0_25px_rgba(255,0,0,0.15)]">
+        <div className="flex flex-wrap items-center justify-between mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600 tracking-wide mb-2 sm:mb-0">
             Rust Decay Calculator
           </h1>
-          <div className="flex space-x-2">
+          <div className="flex space-x-3 sm:space-x-2">
             <button 
               onClick={() => setShowCompare(!showCompare)}
-              className="p-2 text-gray-400 hover:text-white transition-colors"
+              className="p-2.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-full sm:rounded-md bg-gray-800/50 hover:bg-gray-700/60"
               aria-label="Compare materials"
               title="Compare materials"
             >
-              <FaExchangeAlt size={20} />
+              <FaExchangeAlt size={18} />
             </button>
             <button 
               onClick={toggleNotification}
-              className={`p-2 transition-colors ${notification ? 'text-red-500' : 'text-gray-400 hover:text-white'}`}
+              className={`p-2.5 sm:p-2 transition-colors rounded-full sm:rounded-md bg-gray-800/50 hover:bg-gray-700/60 ${notification ? 'text-red-500' : 'text-gray-400 hover:text-white'}`}
               aria-label={notification ? "Disable notifications" : "Enable notifications"}
               title={notification ? "Disable notifications" : "Enable notifications"}
             >
-              <FaBell size={20} />
+              <FaBell size={18} />
             </button>
             <button 
               onClick={() => setShowInfo(!showInfo)}
-              className="p-2 text-gray-400 hover:text-white transition-colors"
+              className="p-2.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-full sm:rounded-md bg-gray-800/50 hover:bg-gray-700/60"
               aria-label="Show information about decay"
               title="About decay"
             >
-              <FaInfo size={20} />
+              <FaInfo size={18} />
             </button>
           </div>
         </div>
@@ -424,7 +424,7 @@ export default function DecayCalculator() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-gray-900/60 p-4 rounded-md mb-6 text-left text-sm"
+            className="bg-gray-900/60 p-4 rounded-md mb-4 sm:mb-6 text-left text-sm"
           >
             <h2 className="font-bold text-red-500 mb-2">How Decay Works:</h2>
             <p className="mb-2 text-gray-300">
@@ -446,15 +446,15 @@ export default function DecayCalculator() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="mb-6 overflow-x-auto"
+            className="mb-4 sm:mb-6 overflow-x-auto bg-gray-900/30 rounded-md p-2"
           >
             <table className="w-full text-sm text-left text-gray-300">
               <thead className="text-xs uppercase bg-gray-800 text-gray-400">
                 <tr>
-                  <th scope="col" className="px-4 py-3">Material</th>
-                  <th scope="col" className="px-4 py-3">Max HP</th>
-                  <th scope="col" className="px-4 py-3">Decay Time</th>
-                  <th scope="col" className="px-4 py-3">HP/Hour</th>
+                  <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">Material</th>
+                  <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">Max HP</th>
+                  <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">Decay Time</th>
+                  <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">HP/Hour</th>
                 </tr>
               </thead>
               <tbody>
@@ -465,10 +465,10 @@ export default function DecayCalculator() {
                     onClick={() => handleMaterialChange(material.name)}
                     style={{cursor: 'pointer'}}
                   >
-                    <td className="px-4 py-2 font-medium whitespace-nowrap">{material.name}</td>
-                    <td className="px-4 py-2">{material.maxHp}</td>
-                    <td className="px-4 py-2">{material.decayTime}h</td>
-                    <td className="px-4 py-2">{(material.maxHp / material.decayTime).toFixed(1)}</td>
+                    <td className="px-2 sm:px-4 py-2 font-medium whitespace-nowrap">{material.name}</td>
+                    <td className="px-2 sm:px-4 py-2">{material.maxHp}</td>
+                    <td className="px-2 sm:px-4 py-2">{material.decayTime}h</td>
+                    <td className="px-2 sm:px-4 py-2">{(material.maxHp / material.decayTime).toFixed(1)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -477,20 +477,20 @@ export default function DecayCalculator() {
         )}
 
         {/* Material Selection */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <label
             htmlFor="material-select"
-            className="block text-lg font-medium mb-2 text-gray-200 text-left"
+            className="block text-base sm:text-lg font-medium mb-2 text-gray-200 text-left"
           >
             Select Material:
           </label>
-          <div className="grid grid-cols-5 gap-2 mb-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-2">
             {materials.map((material) => (
               <button
                 key={material.name}
                 id={material.name === selectedMaterial?.name ? "material-select" : undefined}
                 onClick={() => handleMaterialChange(material.name)}
-                className={`p-2 rounded-md text-xs md:text-sm transition-all ${
+                className={`p-3 sm:p-2 rounded-md text-sm transition-all ${
                   selectedMaterial?.name === material.name 
                     ? 'bg-gray-700 ring-2 ring-red-500 text-white' 
                     : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
@@ -507,25 +507,25 @@ export default function DecayCalculator() {
 
         {/* Input Mode Toggle & HP Input */}
         {selectedMaterial && (
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-2">
+          <div className="mb-4 sm:mb-6">
+            <div className="flex flex-wrap justify-between items-center mb-2">
               <label
                 htmlFor="currentHp"
-                className="block text-lg font-medium text-gray-200 text-left"
+                className="block text-base sm:text-lg font-medium text-gray-200 text-left mb-2 sm:mb-0"
               >
                 {inputMode === "absolute" ? "Current HP:" : "Current HP Percentage:"}
               </label>
-              <div className="flex space-x-2">
+              <div className="flex w-full sm:w-auto justify-end sm:justify-normal space-x-2 mt-1 sm:mt-0">
                 <button
                   onClick={resetToMax}
-                  className="text-sm px-3 py-1 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-md transition-colors"
+                  className="flex-1 sm:flex-none text-sm px-3 py-2 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-md transition-colors flex items-center justify-center"
                   title="Reset to maximum HP"
                 >
-                  <FaUndo size={14} />
+                  <FaUndo size={14} className="mr-1.5" /> Reset
                 </button>
                 <button
                   onClick={toggleInputMode}
-                  className="text-sm px-3 py-1 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-md transition-colors"
+                  className="flex-1 sm:flex-none text-sm px-3 py-2 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-md transition-colors flex items-center justify-center"
                 >
                   Switch to {inputMode === "absolute" ? "%" : "HP"}
                 </button>
@@ -600,48 +600,46 @@ export default function DecayCalculator() {
           </div>
         )}
 
-       
-
         {/* Time Left Display */}
         {decayInfo.timeLeft && !error && (
           <motion.div
             variants={containerAnimation}
             initial="hidden"
             animate="visible"
-            className="mt-8 p-5 rounded-md border border-gray-700 bg-gray-800/50"
+            className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-md border border-gray-700 bg-gray-800/50"
           >
-            <div className="flex items-center justify-center text-xl font-semibold text-red-500 mb-3">
+            <div className="flex items-center justify-center text-lg sm:text-xl font-semibold text-red-500 mb-3">
               <FaClock className="mr-2" /> Time Until Decay:
             </div>
             
             {/* Live Countdown Timer */}
             {countdown && (
-              <div className="text-3xl md:text-4xl font-bold text-white bg-gray-800 py-3 px-5 rounded-md inline-block font-mono">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white bg-gray-800 py-2 sm:py-3 px-4 sm:px-5 rounded-md inline-block font-mono">
                 {countdown}
               </div>
             )}
             
-            <div className="mt-2 text-lg text-gray-300">
+            <div className="mt-2 text-base sm:text-lg text-gray-300">
               {decayInfo.timeLeft}
             </div>
             
             {decayInfo.relativeTime && (
-              <div className="mt-2 text-lg text-gray-300">
+              <div className="mt-2 text-base sm:text-lg text-gray-300">
                 {decayInfo.relativeTime}
               </div>
             )}
             
             {decayInfo.decayDateTime && (
-              <div className="mt-5 text-sm text-gray-300 border-t border-gray-700 pt-4">
+              <div className="mt-4 sm:mt-5 text-sm text-gray-300 border-t border-gray-700 pt-4">
                 <div className="flex items-center justify-center text-gray-400 mb-1">
                   <FaCalendarAlt className="mr-2" /> Expected Decay Time:
                 </div>
-                <span className="font-mono text-white">{decayInfo.decayDateTime}</span>
+                <span className="font-mono text-white break-words">{decayInfo.decayDateTime}</span>
                 
                 {/* Share button */}
                 <button 
                   onClick={shareCalculation}
-                  className="mt-4 flex items-center justify-center mx-auto px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-md text-sm transition-colors"
+                  className="mt-4 flex items-center justify-center mx-auto px-4 py-2.5 bg-gray-700 hover:bg-gray-600 rounded-md text-sm transition-colors w-full sm:w-auto"
                 >
                   <FaShareAlt className="mr-2" /> Share Calculation
                 </button>
@@ -652,14 +650,14 @@ export default function DecayCalculator() {
 
         {/* No material or HP selected message */}
         {!selectedMaterial && (
-          <div className="mt-8 p-5 rounded-md border border-gray-700 bg-gray-800/50 text-gray-400">
+          <div className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-md border border-gray-700 bg-gray-800/50 text-gray-400">
             <FaQuestionCircle size={36} className="mx-auto mb-3" />
             <p>Please select a material type and enter the current HP to calculate decay time.</p>
           </div>
         )}
         
         {/* Footer */}
-        <div className="mt-8 text-xs text-gray-500 border-t border-gray-800 pt-4">
+        <div className="mt-6 sm:mt-8 text-xs text-gray-500 border-t border-gray-800 pt-4">
           All decay times are based on standard Rust decay rates and displayed in your local timezone.
         </div>
       </div>

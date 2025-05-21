@@ -8,6 +8,9 @@ const nextConfig = {
       "puppeteer-extra-plugin-recaptcha",
     ],
   },
+  env: {
+    GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
+  },
   images: {
     remotePatterns: [
       {

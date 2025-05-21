@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://rust-calculator.vercel.app/sitemap.xml
+
+# Optional: Prevent crawling of admin areas
+# Disallow: /admin/ 

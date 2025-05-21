@@ -342,19 +342,20 @@ export default function CommitsPage() {
               </p>
             </div>
             
-            <div className="mt-4 md:mt-0 flex items-center">
+            <div className="mt-4 md:mt-0 flex flex-wrap items-center gap-3">
+              {/* Refresh Button */}
               <button
                 onClick={() => fetchWithCache(true)}
                 className={`group flex items-center h-9 px-3 py-1.5 rounded-md relative transition-all duration-200 ${
                   cooldownRemaining > 0 && !loading 
                     ? 'bg-gray-800/30 text-gray-500 border border-gray-700/30' 
-                    : 'bg-gray-800/50 hover:bg-gray-700/70 text-gray-300 hover:text-white border border-gray-700/50 hover:border-gray-600'
+                    : 'bg-gradient-to-b from-gray-800 to-gray-900 text-gray-300 hover:text-white border border-gray-700/50 hover:border-red-600/30 hover:shadow-sm hover:shadow-red-900/10'
                 }`}
                 disabled={loading || cooldownRemaining > 0}
                 title={cooldownRemaining > 0 ? `Available in ${formatCooldown(cooldownRemaining)}` : "Refresh commits data"}
               >
                 <svg 
-                  className={`h-3.5 w-3.5 ${loading ? 'animate-spin text-red-500' : cooldownRemaining > 0 ? 'text-gray-600' : 'text-gray-400 group-hover:text-red-400'}`} 
+                  className={`h-3.5 w-3.5 ${loading ? 'animate-spin text-red-500' : cooldownRemaining > 0 ? 'text-gray-600' : 'text-red-400 group-hover:text-red-400'}`} 
                   xmlns="http://www.w3.org/2000/svg" 
                   fill="none" 
                   viewBox="0 0 24 24" 
@@ -382,20 +383,33 @@ export default function CommitsPage() {
                 )}
               </button>
               
+              {/* Back to Calculator Button */}
               <Link 
                 href="/"
-                className="flex items-center px-4 py-2 rounded-md bg-red-900/20 hover:bg-red-800/40 transition-colors border border-red-900/30 text-red-400"
+                className="flex items-center h-9 px-4 py-1.5 rounded-md bg-gradient-to-br from-red-900/40 to-red-800/30 hover:from-red-800/50 hover:to-red-700/40 transition-all duration-200 text-red-400 hover:text-red-300 border border-red-900/30 hover:border-red-700/50 shadow-sm hover:shadow hover:shadow-red-900/10"
               >
-                <span>Back to Calculator</span>
+                <svg 
+                  className="w-3.5 h-3.5 mr-1.5" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span className="text-sm font-medium">Calculator</span>
               </Link>
+              
+              {/* Facepunch Link */}
               <a 
                 href="https://commits.facepunch.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="ml-3 flex items-center text-gray-400 hover:text-white transition-colors"
+                className="h-9 flex items-center px-3 py-1.5 rounded-md border border-gray-800 hover:border-gray-700 bg-black hover:bg-gray-900 text-gray-400 hover:text-white transition-all duration-200"
               >
-                <FaExternalLinkAlt className="mr-1" />
-                <span className="text-sm">View on Facepunch</span>
+                <FaExternalLinkAlt className="h-3 w-3 mr-1.5" />
+                <span className="text-sm font-medium hidden sm:inline">View on Facepunch</span>
+                <span className="text-sm font-medium sm:hidden">Facepunch</span>
               </a>
             </div>
           </div>
