@@ -60,9 +60,20 @@ export const defaultMetadata: Metadata = {
     canonical: siteConfig.url,
   },
   icons: {
-    icon: ["/icon.ico"],
-    apple: ["/apple-touch-icon.png"], // Create this image
-    shortcut: ["/favicon.ico"],
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      { url: "/favicon/safari-pinned-tab.svg", rel: "mask-icon" },
+      { url: "/favicon/site.webmanifest", rel: "manifest" },
+    ],
   },
   viewport: {
     width: "device-width",

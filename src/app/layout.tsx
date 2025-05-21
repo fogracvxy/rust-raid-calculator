@@ -30,7 +30,13 @@ export default function RootLayout({
       <head>
         {/* Favicon links for better browser compatibility */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon/favicon-16x16.png" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicon/favicon-32x32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#b91c1c" />
+        <meta name="msapplication-TileColor" content="#b91c1c" />
+        <meta name="theme-color" content="#000000" />
         
         {/* Preconnect to domains for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
