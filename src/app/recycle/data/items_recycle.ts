@@ -276,4 +276,66 @@ export const itemsRecycle = [
     },
     image: "/images/components/techparts.png",
   },
+  {
+    name: "CCTV Camera",
+    yield: {
+      scrap: null,
+      metal: null,
+      highQualityMetal:2,
+      techTrash: 2,
+      other: "Component",
+    },
+    yieldradioactive: {
+      scrap: 24,
+      highQualityMetal: 2,
+      techTrash: 2,
+    },
+    yieldsafezone: {
+      scrap: null,
+      highQualityMetal: 2,
+      techTrash: 2,
+    },
+    image: "/images/components/cctv.camera.png",
+  },
+  {
+    name: "Targeting Computer",
+    yield: {
+      metal: null,
+      highQualityMetal: 2,
+      techTrash: 2,
+      other: "Component",
+    },
+    yieldradioactive: {
+      highQualityMetal: 2,
+      techTrash: 2,
+    },
+    yieldsafezone: {
+      highQualityMetal: 2,
+      techTrash: 2,
+    },
+    image: "/images/components/targeting.computer.png",
+  },
+  {
+    name: "Hazmat Suit",
+    yield: {
+      scrap: null,
+      metal: null,
+      highQualityMetal: 5,
+      cloth: null,
+      tarp: 3,
+      sewingKit: 2,
+      other: "Clothing",
+    },
+    yieldradioactive: {
+      highQualityMetal: 5,
+      tarp: 3,
+      sewingKit: 2,
+    },
+    yieldsafezone: {
+      highQualityMetal: 4,
+      tarp: 2,
+      sewingKit: 2,
+    },
+    image: "/images/clothing/hazmatsuit.png",
+  },
 ];

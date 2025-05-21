@@ -20,16 +20,37 @@ interface Yield {
   highQualityMetal?: number | null;
   cloth?: number | null;
   rope?: number | null;
+  techTrash?: number | null;
+  tarp?: number | null;
+  sewingKit?: number | null;
   other?: string;
 }
 
 type Mode = "Safezone" | "Radtown" | "Default";
+
+interface RecursiveContributions {
+  [resource: string]: { sourcePath: string, amount: number }[];
+}
+
+interface TotalYieldResult {
+  [key: string]: number | Record<string, { sourcePath: string, amount: number }[]> | undefined;
+  totalScrap: number;
+  totalMetal: number;
+  totalCloth: number;
+  totalHighQualityMetal: number;
+  totalRope: number;
+  totalTechTrash: number;
+  totalTarp: number;
+  totalSewingKit: number;
+  recursiveContributions?: Record<string, { sourcePath: string, amount: number }[]>;
+}
 
 const Recycle: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<
     { name: string; amount: number }[]
   >([]);
   const [mode, setMode] = useState<Mode>("Default");
+  const [recursiveRecycling, setRecursiveRecycling] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [editingItemName, setEditingItemName] = useState<string | null>(null);
@@ -37,11 +58,13 @@ const Recycle: React.FC = () => {
   const initialized = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastClickTime = useRef<Record<string, number>>({});
+  const [expandedResourceDetail, setExpandedResourceDetail] = useState<string | null>(null);
 
   useEffect(() => {
     if (!initialized.current && typeof window !== "undefined") {
       const storedSelectedItems = localStorage.getItem("selectedItems");
       const storedMode = localStorage.getItem("mode") as Mode | null;
+      const storedRecursiveRecycling = localStorage.getItem("recursiveRecycling");
 
       if (storedSelectedItems) {
         setSelectedItems(JSON.parse(storedSelectedItems));
@@ -53,6 +76,10 @@ const Recycle: React.FC = () => {
         storedMode === "Default"
       ) {
         setMode(storedMode);
+      }
+
+      if (storedRecursiveRecycling) {
+        setRecursiveRecycling(JSON.parse(storedRecursiveRecycling));
       }
 
       initialized.current = true;
@@ -73,6 +100,12 @@ const Recycle: React.FC = () => {
       localStorage.setItem("mode", mode);
     }
   }, [mode]);
+
+  useEffect(() => {
+    if (initialized.current) {
+      localStorage.setItem("recursiveRecycling", JSON.stringify(recursiveRecycling));
+    }
+  }, [recursiveRecycling]);
 
   // Get unique categories from items
   const categories = useMemo(() => {
@@ -157,47 +190,158 @@ const Recycle: React.FC = () => {
     setSearchTerm(term);
   };
 
-  const totalYield = useMemo(() => {
+  const handleRecursiveRecyclingChange = (checked: boolean) => {
+    trackSettingChange("recycle_recursive", checked ? "enabled" : "disabled");
+    setRecursiveRecycling(checked);
+  };
+
+  // Helper function to get item yield based on mode
+  const getItemYield = (itemName: string, mode: Mode) => {
+    const item = itemsRecycle.find(i => i.name === itemName);
+    if (!item) return null;
+    
+    const yieldType = mode === "Safezone" 
+      ? "yieldsafezone" 
+      : mode === "Radtown" 
+        ? "yieldradioactive" 
+        : "yield";
+    
+    return item[yieldType] || item.yield;
+  };
+  
+  // Calculate the total yield including recursive components
+  const totalYield = useMemo<TotalYieldResult>(() => {
+    // Set up base totals
     const totals: Record<string, number> = {
       totalScrap: 0,
       totalMetal: 0,
       totalCloth: 0,
       totalHighQualityMetal: 0,
       totalRope: 0,
+      totalTechTrash: 0,
+      totalTarp: 0,
+      totalSewingKit: 0,
     };
-
-    selectedItems.forEach((item) => {
-      const selectedItem = itemsRecycle.find((i) => i.name === item.name);
-      if (selectedItem) {
-        const yieldType =
-          mode === "Safezone"
-            ? "yieldsafezone"
-            : mode === "Radtown"
-            ? "yieldradioactive"
-            : "yield";
-        const itemYield = selectedItem[yieldType] || {};
-
-        totals.totalScrap += (itemYield.scrap || 0) * item.amount;
-        totals.totalMetal += (itemYield.metal || 0) * item.amount;
-        totals.totalCloth += (itemYield.cloth || 0) * item.amount;
-        totals.totalHighQualityMetal +=
-          (itemYield.highQualityMetal || 0) * item.amount;
-        totals.totalRope += (itemYield.rope || 0) * item.amount;
-      }
+    
+    // Keep track of processing chains to prevent infinite recursion
+    const processedChains = new Set<string>();
+    
+    // Track recursive contributions
+    const recursiveContributions: Record<string, { sourcePath: string, amount: number }[]> = {};
+    
+    // Recursive function to process an item and all its component yields
+    const processItem = (
+      itemName: string, 
+      itemAmount: number,
+      parentInfo: { item: string, amount: number, yieldPerItem: number } | null = null
+    ) => {
+      // Create a unique chain identifier to prevent cycles
+      const chainId = parentInfo ? 
+        `${parentInfo.item}->${itemName}->${itemAmount}` : 
+        `${itemName}->${itemAmount}`;
+        
+      if (processedChains.has(chainId)) return;
+      processedChains.add(chainId);
+      
+      // Get the item's yield based on current mode
+      const itemYield = getItemYield(itemName, mode);
+      if (!itemYield) return;
+      
+      // Process base resources
+      const baseResources = {
+        Scrap: (itemYield.scrap || 0) * itemAmount,
+        Metal: (itemYield.metal || 0) * itemAmount,
+        Cloth: (itemYield.cloth || 0) * itemAmount,
+        HighQualityMetal: (itemYield.highQualityMetal || 0) * itemAmount
+      };
+      
+      // Add base resources to totals
+      Object.entries(baseResources).forEach(([resource, amount]) => {
+        if (amount > 0) {
+          totals[`total${resource}`] += amount;
+          
+          // If this came from a parent recyclable component, track the source
+          if (parentInfo) {
+            if (!recursiveContributions[resource]) {
+              recursiveContributions[resource] = [];
+            }
+            
+            recursiveContributions[resource].push({
+              sourcePath: `${parentInfo.item} → ${parentInfo.yieldPerItem * parentInfo.amount}× ${itemName}`,
+              amount: amount
+            });
+          }
+        }
+      });
+      
+      // Process component yields (rope, tech trash, etc.)
+      const components = {
+        'Rope': itemYield.rope || 0,
+        'Tech Trash': itemYield.techTrash || 0,
+        'Tarp': itemYield.tarp || 0,
+        'Sewing Kit': itemYield.sewingKit || 0
+      };
+      
+      // Add components to totals and potentially process them recursively
+      Object.entries(components).forEach(([component, amountPerItem]) => {
+        if (amountPerItem <= 0) return;
+        
+        // Calculate total yield of this component type
+        const totalComponentAmount = amountPerItem * itemAmount;
+        
+        // Add to appropriate total
+        const totalKey = component === 'Tech Trash' ? 'totalTechTrash' : 
+                       component === 'Sewing Kit' ? 'totalSewingKit' : 
+                       `total${component}`;
+        totals[totalKey] += totalComponentAmount;
+        
+        // If recursive recycling is enabled, process this component recursively
+        if (recursiveRecycling) {
+          processItem(
+            component, 
+            totalComponentAmount,
+            {
+              item: itemName,
+              amount: itemAmount,
+              yieldPerItem: amountPerItem
+            }
+          );
+        }
+      });
+    };
+    
+    // Process each selected item
+    selectedItems.forEach(selectedItem => {
+      processItem(selectedItem.name, selectedItem.amount);
     });
+    
+    return { ...totals, recursiveContributions } as TotalYieldResult;
+  }, [selectedItems, mode, recursiveRecycling]);
 
-    return totals;
-  }, [selectedItems, mode]);
-
-  // Filter items based on search term and category
-  const filteredItems = useMemo(() => {
-    return itemsRecycle.filter((item) => {
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || item.yield.other === selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchTerm, selectedCategory]);
-
+  // Build the detailed breakdown of recycled components
+  const recycledComponentDetails = useMemo(() => {
+    const details: Record<string, { sourceName: string, sourceAmount: number }[]> = {
+      Cloth: [],
+      Scrap: [],
+      HighQualityMetal: [],
+      Metal: []
+    };
+    
+    // If we have recursive contributions from the calculation, use those
+    if (recursiveRecycling && totalYield.recursiveContributions) {
+      Object.entries(totalYield.recursiveContributions).forEach(([resource, contributions]) => {
+        contributions.forEach(contribution => {
+          details[resource].push({
+            sourceName: contribution.sourcePath,
+            sourceAmount: contribution.amount
+          });
+        });
+      });
+    }
+    
+    return details;
+  }, [totalYield, recursiveRecycling]);
+  
   // Calculate the total number of items selected
   const totalItemsCount = useMemo(() => {
     return selectedItems.reduce((acc, item) => acc + item.amount, 0);
@@ -253,6 +397,35 @@ const Recycle: React.FC = () => {
     }
   }, [editingItemName]);
 
+  const handleResourceClick = (resourceName: string) => {
+    if (expandedResourceDetail === resourceName) {
+      setExpandedResourceDetail(null);
+    } else {
+      setExpandedResourceDetail(resourceName);
+    }
+  };
+
+  // Close expanded resource when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setExpandedResourceDetail(null);
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  // Filter items based on search term and category
+  const filteredItems = useMemo(() => {
+    return itemsRecycle.filter((item) => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "All" || item.yield.other === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchTerm, selectedCategory]);
+
   return (
     <motion.div 
       className="container mx-auto px-4 py-6 mb-24 md:mb-16"
@@ -285,6 +458,28 @@ const Recycle: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
+          </div>
+          
+          {/* Recursive Recycling Toggle - Fixed Switch */}
+          <div className="flex items-center bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md">
+            <label className="inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox"
+                checked={recursiveRecycling}
+                onChange={(e) => handleRecursiveRecyclingChange(e.target.checked)}
+                className="sr-only peer" 
+              />
+              <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+              <span className="ml-2 text-sm text-white">Auto-recycle components</span>
+              <div className="group relative ml-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none mb-2 w-52 text-center">
+                  Automatically convert components like Rope → Cloth and Tech Trash → Scrap + HQM
+                </div>
+              </div>
+            </label>
           </div>
           
           <button
@@ -465,6 +660,21 @@ const Recycle: React.FC = () => {
                         </div>
                       </div>
                     )}
+                    {currentYield.techTrash && (
+                      <div className="relative group">
+                        <div className="w-5 h-5 relative">
+                          <Image 
+                            src="/images/components/techparts.png" 
+                            alt="Tech Trash" 
+                            width={20} 
+                            height={20}
+                          />
+                        </div>
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          {currentYield.techTrash} tech trash
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   {/* Quantity Controls - Simplified, using onClick instead of touch/mouse events */}
@@ -553,6 +763,17 @@ const Recycle: React.FC = () => {
                   }>{mode}</span>
                   <span className="mx-2 text-gray-500">•</span>
                   <span>Recycle Summary</span>
+                  {recursiveRecycling && (
+                    <>
+                      <span className="mx-2 text-gray-500">•</span>
+                      <span className="text-red-400 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Auto-recycled
+                      </span>
+                    </>
+                  )}
                 </h2>
                 <p className="text-sm text-gray-400">
                   Total Items: {totalItemsCount} • Different Types: {selectedItems.length}
@@ -561,13 +782,32 @@ const Recycle: React.FC = () => {
               
               <div className="flex items-center flex-wrap justify-center gap-2 md:gap-4">
                 {resources.map((resource) => {
-                  const totalResource = totalYield[`total${resource.name}`];
+                  const resourceName = resource.name;
+                  const totalResource = totalYield[`total${resourceName}`] as number;
+                  
+                  // Skip rope and tech trash in summary when recursive recycling is enabled
+                  if (recursiveRecycling && (
+                    resourceName === "Rope" || 
+                    resourceName === "TechTrash" || 
+                    resourceName === "Tarp" || 
+                    resourceName === "SewingKit"
+                  )) {
+                    return null;
+                  }
+                  
                   if (!totalResource) return null;
+                  
+                  // Check if this resource has recycled components
+                  const recycledDetails = recycledComponentDetails[resourceName] || [];
+                  const hasRecycledComponents = recycledDetails.length > 0;
+                  
+                  // Calculate base resource amount (without recycled components)
+                  const baseAmount = totalResource - recycledDetails.reduce((sum, detail) => sum + detail.sourceAmount, 0);
                   
                   return (
                     <motion.div 
-                      key={resource.name} 
-                      className="flex items-center bg-black bg-opacity-50 rounded-lg p-2 shadow-md"
+                      key={resourceName} 
+                      className={`flex items-center ${hasRecycledComponents ? 'bg-gradient-to-r from-black to-red-900/30' : 'bg-black bg-opacity-50'} rounded-lg p-2 shadow-md group/resource`}
                       initial={{ scale: 0.9 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -577,13 +817,104 @@ const Recycle: React.FC = () => {
                           src={resource.image}
                           fill
                           sizes="40px"
-                          alt={resource.name}
+                          alt={resourceName}
                           className="object-contain"
                         />
+                        {hasRecycledComponents && (
+                          <div className="absolute -top-1 -right-1 bg-red-600 rounded-full h-4 w-4 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                          </div>
+                        )}
                       </div>
-                      <div>
-                        <div className="text-gray-400 text-xs">{resource.name}</div>
-                        <div className="text-white font-bold text-lg">{totalResource}</div>
+                      <div className="relative">
+                        <div className="text-gray-400 text-xs">{resourceName}</div>
+                        <div className="text-white font-bold text-lg flex items-center">
+                          {totalResource}
+                          {hasRecycledComponents && (
+                            <span 
+                              className="ml-1 text-xs font-normal text-red-400 cursor-help"
+                              onClick={(e) => {
+                                e.stopPropagation(); 
+                                handleResourceClick(resourceName);
+                              }}
+                            >
+                              *
+                            </span>
+                          )}
+                        </div>
+                        
+                        {/* Detailed hover/click panel for recycled components */}
+                        {hasRecycledComponents && (expandedResourceDetail === resourceName || undefined) && (
+                          <div 
+                            className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded transition-opacity p-2 w-60 shadow-xl border border-red-900"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <div className="font-medium text-red-400 border-b border-gray-800 pb-1 mb-1 flex justify-between items-center">
+                              <span>Recycled Components</span>
+                              <button 
+                                className="text-gray-400 hover:text-white"
+                                onClick={() => setExpandedResourceDetail(null)}
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </button>
+                            </div>
+                            {baseAmount > 0 && (
+                              <div className="flex justify-between py-1">
+                                <span>Direct yield:</span>
+                                <span className="font-medium">{baseAmount}</span>
+                              </div>
+                            )}
+                            {recycledDetails.map((detail, index) => (
+                              <div key={index} className="flex justify-between py-1 border-t border-gray-800">
+                                <span className="text-gray-300">{detail.sourceName}:</span>
+                                <span className="font-medium text-red-300">+{detail.sourceAmount}</span>
+                              </div>
+                            ))}
+                            <div className="flex justify-between pt-1 mt-1 border-t border-gray-700">
+                              <span>Total:</span>
+                              <span className="font-bold">{totalResource}</span>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Hover-only panel (larger screens) */}
+                        {hasRecycledComponents && expandedResourceDetail !== resourceName && (
+                          <div className="absolute z-30 bottom-full left-0 transform -translate-y-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/resource:opacity-100 transition-opacity pointer-events-none p-2 w-60 shadow-xl border border-red-900 hidden md:block">
+                            <div className="font-medium text-red-400 border-b border-gray-800 pb-1 mb-1 flex justify-between items-center">
+                              <span>Recycled Components</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                              </svg>
+                            </div>
+                            {baseAmount > 0 && (
+                              <div className="flex justify-between py-1">
+                                <span>Direct yield:</span>
+                                <span className="font-medium">{baseAmount}</span>
+                              </div>
+                            )}
+                            {recycledDetails.map((detail, index) => (
+                              <div key={index} className="flex justify-between py-1 border-t border-gray-800">
+                                <span className="text-gray-300">{detail.sourceName}:</span>
+                                <span className="font-medium text-red-300">+{detail.sourceAmount}</span>
+                              </div>
+                            ))}
+                            <div className="flex justify-between pt-1 mt-1 border-t border-gray-700">
+                              <span>Total:</span>
+                              <span className="font-bold">{totalResource}</span>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Mobile hint text */}
+                        {hasRecycledComponents && (
+                          <div className="text-xs text-red-400/70 md:hidden mt-1">
+                            Tap * for details
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   );

@@ -96,6 +96,107 @@ export const items = [
     },
   },
   {
+    name: "Chainlink Fence",
+    image: "/images/wall.frame.fence.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 20,
+      rockets: 1,
+      satchel: 2,
+    },
+    category: "Walls",
+    bestOption: {
+      c4: 0,
+      bullets: 20,
+      rockets: 0,
+      satchel: 0,
+    },
+  },
+  {
+    name: "Metal Window Bars",
+    image: "/images/wall.window.bars.metal.png",
+    destructionOptions: {
+      c4: 2,
+      bullets: 200,
+      rockets: 4,
+      satchel: 12,
+    },
+    category: "Walls",
+  },
+  {
+    name: "Metal Vertical Embrasure",
+    image: "/images/shutter.metal.embrasure.b.png",
+    destructionOptions: {
+      c4: 2,
+      bullets: 173,
+      rockets: 4,
+      satchel: 13,
+    },
+    category: "Walls",
+  },
+  {
+    name: "Metal Horizontal Embrasure",
+    image: "/images/shutter.metal.embrasure.a.png",
+    destructionOptions: {
+      c4: 2,
+      bullets: 173,
+      rockets: 4,
+      satchel: 13,
+    },
+    category: "Walls",
+  },
+  {
+    name: "Prison Cell Wall",
+    image: "/images/wall.frame.cell.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 75,
+      rockets: 2,
+      satchel: 5,
+    },
+    category: "Walls",
+    bestOption: {
+      c4: 1,
+      bullets: 0,
+      rockets: 0,
+      satchel: 0,
+    },
+  },
+  {
+    name: "Chainlink Fence Gate",
+    image: "/images/wall.frame.fence.gate.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 15,
+      rockets: 3,
+      satchel: 1,
+    },
+    category: "Doors",
+    bestOption: {
+      c4: 0,
+      bullets: 15,
+      rockets: 0,
+      satchel: 0,
+    },
+  },
+  {
+    name: "Prison Cell Gate",
+    image: "/images/wall.frame.cell.gate.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 75,
+      rockets: 2,
+      satchel: 5,
+    },
+    category: "Doors",
+    bestOption: {
+      c4: 1,
+      bullets: 0,
+      rockets: 0,
+      satchel: 0,
+    },
+  },
+  {
     name: "Sheet Metal Door",
     image: "/images/door.hinged.metal.png",
     destructionOptions: {
@@ -169,6 +270,17 @@ export const items = [
     category: "Doors",
   },
   {
+    name: "Ladder Hatch Triangle",
+    image: "/images/floor.triangle.ladder.hatch.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 63,
+      rockets: 2,
+      satchel: 4,
+    },
+    category: "Doors",
+  },
+  {
     name: "Metal Shop Front",
     image: "/images/wall.frame.shopfront.metal.png",
     destructionOptions: {
@@ -220,6 +332,17 @@ export const items = [
       bullets: 34,
       rockets: 2,
       satchel: 1,
+    },
+    category: "Defenses",
+  },
+  {
+    name: "Metal Barricade",
+    image: "/images/barricade.metal.png",
+    destructionOptions: {
+      c4: 1,
+      bullets: 111,
+      rockets: 3,
+      satchel: 4,
     },
     category: "Defenses",
   },

@@ -19,4 +19,16 @@ export const resources = [
     name: "Rope",
     image: "/images/components/rope.png",
   },
+  {
+    name: "TechTrash",
+    image: "/images/components/techparts.png",
+  },
+  {
+    name: "Tarp",
+    image: "/images/components/tarp.png",
+  },
+  {
+    name: "SewingKit",
+    image: "/images/components/sewingkit.png", 
+  },
 ];
