@@ -286,7 +286,6 @@ export const itemsRecycle = [
       other: "Component",
     },
     yieldradioactive: {
-      scrap: 24,
       highQualityMetal: 2,
       techTrash: 2,
     },

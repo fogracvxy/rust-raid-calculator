@@ -553,6 +553,68 @@ const Recycle: React.FC = () => {
                 ? item.yieldradioactive || item.yield 
                 : item.yield;
 
+            // Determine which icons to show for this item
+            const resourceIcons = [];
+            
+            // Add HQM icon if item yields it
+            if (currentYield.highQualityMetal) {
+              resourceIcons.push({
+                src: "/images/resources/metal.refined.png",
+                alt: "HQM"
+              });
+            }
+            
+            // Add component icons for Hazmat Suit and similar items
+            if (currentYield.tarp) {
+              resourceIcons.push({
+                src: "/images/components/tarp.png",
+                alt: "Tarp"
+              });
+            }
+            
+            if (currentYield.sewingKit) {
+              resourceIcons.push({
+                src: "/images/components/sewingkit.png",
+                alt: "Sewing Kit"
+              });
+            }
+            
+            // Add other resource icons
+            if (currentYield.scrap) {
+              resourceIcons.push({
+                src: "/images/resources/scrap.png",
+                alt: "Scrap"
+              });
+            }
+            
+            if (currentYield.metal) {
+              resourceIcons.push({
+                src: "/images/resources/metal.fragments.png",
+                alt: "Metal"
+              });
+            }
+            
+            if (currentYield.cloth) {
+              resourceIcons.push({
+                src: "/images/resources/cloth.png",
+                alt: "Cloth"
+              });
+            }
+            
+            if (currentYield.rope) {
+              resourceIcons.push({
+                src: "/images/components/rope.png",
+                alt: "Rope"
+              });
+            }
+            
+            if (currentYield.techTrash) {
+              resourceIcons.push({
+                src: "/images/components/techparts.png",
+                alt: "Tech Trash"
+              });
+            }
+
             return (
               <motion.div
                 key={item.name}
@@ -582,100 +644,60 @@ const Recycle: React.FC = () => {
                   </div>
                   <h3 className="text-white text-sm font-medium text-center mb-1">{item.name}</h3>
                   
-                  {/* Resource yields preview */}
-                  <div className="flex justify-center space-x-1 mt-1 mb-2">
-                    {currentYield.scrap && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/resources/scrap.png" 
-                            alt="Scrap" 
-                            width={20} 
-                            height={20} 
-                            priority
-                          />
+                  {/* Resource icons */}
+                  {resourceIcons.length > 0 && (
+                    <div className="flex justify-center space-x-1 mt-1 mb-2">
+                      {resourceIcons.slice(0, 3).map((icon, index) => (
+                        <div key={index} className="relative group">
+                          <div className="w-5 h-5 relative">
+                            <Image 
+                              src={icon.src} 
+                              alt={icon.alt} 
+                              width={20} 
+                              height={20} 
+                              priority={index === 0}
+                            />
+                          </div>
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                            {icon.alt === "HQM" && currentYield.highQualityMetal && `${currentYield.highQualityMetal} ${icon.alt}`}
+                            {icon.alt === "Scrap" && currentYield.scrap && `${currentYield.scrap} ${icon.alt}`}
+                            {icon.alt === "Metal" && currentYield.metal && `${currentYield.metal} ${icon.alt}`}
+                            {icon.alt === "Cloth" && currentYield.cloth && `${currentYield.cloth} ${icon.alt}`}
+                            {icon.alt === "Rope" && currentYield.rope && `${currentYield.rope} ${icon.alt}`}
+                            {icon.alt === "Tech Trash" && currentYield.techTrash && `${currentYield.techTrash} ${icon.alt}`}
+                            {icon.alt === "Tarp" && currentYield.tarp && `${currentYield.tarp} ${icon.alt}`}
+                            {icon.alt === "Sewing Kit" && currentYield.sewingKit && `${currentYield.sewingKit} ${icon.alt}`}
+                          </div>
                         </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.scrap} scrap
+                      ))}
+                      {resourceIcons.length > 3 && (
+                        <div className="relative group">
+                          <div className="w-5 h-5 relative flex items-center justify-center bg-gray-800 rounded-full">
+                            <span className="text-xs text-gray-300">+{resourceIcons.length - 3}</span>
+                          </div>
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                            {resourceIcons.slice(3).map((icon, i) => (
+                              <div key={i} className="flex items-center gap-1 mb-1 last:mb-0">
+                                <div className="w-3 h-3 relative">
+                                  <Image src={icon.src} alt={icon.alt} width={12} height={12} />
+                                </div>
+                                <span>
+                                  {icon.alt === "HQM" && currentYield.highQualityMetal && `${currentYield.highQualityMetal} ${icon.alt}`}
+                                  {icon.alt === "Scrap" && currentYield.scrap && `${currentYield.scrap} ${icon.alt}`}
+                                  {icon.alt === "Metal" && currentYield.metal && `${currentYield.metal} ${icon.alt}`}
+                                  {icon.alt === "Cloth" && currentYield.cloth && `${currentYield.cloth} ${icon.alt}`}
+                                  {icon.alt === "Rope" && currentYield.rope && `${currentYield.rope} ${icon.alt}`}
+                                  {icon.alt === "Tech Trash" && currentYield.techTrash && `${currentYield.techTrash} ${icon.alt}`}
+                                  {icon.alt === "Tarp" && currentYield.tarp && `${currentYield.tarp} ${icon.alt}`}
+                                  {icon.alt === "Sewing Kit" && currentYield.sewingKit && `${currentYield.sewingKit} ${icon.alt}`}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                    {currentYield.metal && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/resources/metal.fragments.png" 
-                            alt="Metal" 
-                            width={20} 
-                            height={20}
-                          />
-                        </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.metal} metal
-                        </div>
-                      </div>
-                    )}
-                    {currentYield.highQualityMetal && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/resources/metal.refined.png" 
-                            alt="HQM" 
-                            width={20} 
-                            height={20}
-                          />
-                        </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.highQualityMetal} HQM
-                        </div>
-                      </div>
-                    )}
-                    {currentYield.cloth && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/resources/cloth.png" 
-                            alt="Cloth" 
-                            width={20} 
-                            height={20}
-                          />
-                        </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.cloth} cloth
-                        </div>
-                      </div>
-                    )}
-                    {currentYield.rope && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/components/rope.png" 
-                            alt="Rope" 
-                            width={20} 
-                            height={20}
-                          />
-                        </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.rope} rope
-                        </div>
-                      </div>
-                    )}
-                    {currentYield.techTrash && (
-                      <div className="relative group">
-                        <div className="w-5 h-5 relative">
-                          <Image 
-                            src="/images/components/techparts.png" 
-                            alt="Tech Trash" 
-                            width={20} 
-                            height={20}
-                          />
-                        </div>
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-1.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          {currentYield.techTrash} tech trash
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                   
                   {/* Quantity Controls - Simplified, using onClick instead of touch/mouse events */}
                   <div className="flex items-center mt-auto w-full">
