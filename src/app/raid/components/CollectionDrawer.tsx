@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { CollectionItem, Item, Resource, SortedSulfurCost } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,10 +23,46 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
   handleResetAll,
 }) => {
   const [activeTab, setActiveTab] = useState<'collection' | 'analysis' | 'strategy'>('collection');
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   if (collection.length === 0) {
     return null;
   }
+
+  // Handle mouse/touch down for drag scrolling
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    
+    // Get the correct client X whether it's a touch or mouse event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    
+    setStartX(clientX);
+    if (tabsContainerRef.current) {
+      setScrollLeft(tabsContainerRef.current.scrollLeft);
+    }
+  };
+
+  // Handle mouse/touch move for drag scrolling
+  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    // Get the correct client X whether it's a touch or mouse event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    
+    if (tabsContainerRef.current) {
+      const x = clientX - startX;
+      tabsContainerRef.current.scrollLeft = scrollLeft - x;
+    }
+  };
+
+  // Handle mouse/touch up to end drag scrolling
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   // Group items by category
   const groupedItems = collection.reduce((acc, { item, quantity }) => {
@@ -109,11 +145,26 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Header with tabs */}
+      {/* Header with tabs - Now with horizontal scrolling */}
       <div className="border-b border-gray-800">
-        <div className="flex">
+        <div 
+          className="flex overflow-x-auto scrollbar-hide" 
+          ref={tabsContainerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onTouchStart={handleMouseDown}
+          onTouchMove={handleMouseMove}
+          onTouchEnd={handleMouseUp}
+          style={{ 
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+        >
           <button 
-            className={`flex items-center px-6 py-4 relative ${activeTab === 'collection' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
+            className={`flex items-center px-6 py-4 relative whitespace-nowrap ${activeTab === 'collection' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
             onClick={() => setActiveTab('collection')}
           >
             <svg 
@@ -132,7 +183,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
           </button>
           
           <button 
-            className={`flex items-center px-6 py-4 relative ${activeTab === 'analysis' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
+            className={`flex items-center px-6 py-4 relative whitespace-nowrap ${activeTab === 'analysis' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
             onClick={() => setActiveTab('analysis')}
           >
             <svg 
@@ -148,7 +199,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
           </button>
           
           <button 
-            className={`flex items-center px-6 py-4 relative ${activeTab === 'strategy' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
+            className={`flex items-center px-6 py-4 relative whitespace-nowrap ${activeTab === 'strategy' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
             onClick={() => setActiveTab('strategy')}
           >
             <svg 
@@ -163,7 +214,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
             {activeTab === 'strategy' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-red-600"></div>}
           </button>
           
-          <div className="ml-auto flex items-center px-4">
+          <div className="ml-auto flex items-center px-4 whitespace-nowrap">
             <button
               className="bg-red-700 hover:bg-red-600 text-white text-sm py-1.5 px-3 rounded-md transition-colors flex items-center"
               onClick={handleResetAll}
@@ -175,6 +226,11 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
             </button>
           </div>
         </div>
+      </div>
+      
+      {/* Add a hint for mobile users to let them know they can scroll */}
+      <div className="bg-gray-900/50 text-gray-400 text-xs text-center py-1 border-b border-gray-800 md:hidden">
+        <span>Swipe tabs horizontally ↔️ to see more</span>
       </div>
       
       {/* Collection Items Tab */}

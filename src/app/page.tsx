@@ -288,32 +288,7 @@ export default function Home() {
             </div>
             
             {/* Circuit board decorative element */}
-            <div className="absolute -right-10 -bottom-6 w-20 h-20 opacity-30">
-              <svg viewBox="0 0 80 80" className="w-full h-full text-red-800">
-                <g stroke="currentColor" strokeWidth="1" fill="none">
-                  <path d="M10,10 L70,10 L70,70 L10,70 Z" />
-                  <path d="M20,10 L20,70" />
-                  <path d="M30,10 L30,70" />
-                  <path d="M40,10 L40,70" />
-                  <path d="M50,10 L50,70" />
-                  <path d="M60,10 L60,70" />
-                  <path d="M10,20 L70,20" />
-                  <path d="M10,30 L70,30" />
-                  <path d="M10,40 L70,40" />
-                  <path d="M10,50 L70,50" />
-                  <path d="M10,60 L70,60" />
-                  <circle cx="20" cy="20" r="3" />
-                  <circle cx="40" cy="20" r="3" />
-                  <circle cx="60" cy="20" r="3" />
-                  <circle cx="20" cy="40" r="3" />
-                  <circle cx="40" cy="40" r="3" />
-                  <circle cx="60" cy="40" r="3" />
-                  <circle cx="20" cy="60" r="3" />
-                  <circle cx="40" cy="60" r="3" />
-                  <circle cx="60" cy="60" r="3" />
-                </g>
-              </svg>
-            </div>
+        
           </div>
         </div>
       </div>

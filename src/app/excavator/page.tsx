@@ -15,6 +15,7 @@ export default function YieldCalculator() {
     amount: number;
     image: string;
     time?: string;
+    total?: number;
   }
 
   const [dieselFuel, setDieselFuel] = useState(1);
@@ -26,6 +27,7 @@ export default function YieldCalculator() {
   const decrementTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [timePerFuelInSeconds, setTimePerFuelInSeconds] = useState(0);
+  const lastClickTime = useRef<Record<string, number>>({});
 
   // Update time per fuel when selected operation changes
   useEffect(() => {
@@ -51,40 +53,76 @@ export default function YieldCalculator() {
     }
   }, [isEditing]);
 
-  const handleIncrement = () => {
-    const increment = () => {
-      setDieselFuel((prev) => prev + 1);
-      incrementTimeoutRef.current = setTimeout(increment, 300);
-    };
-
-    increment();
-
-    const stopIncrement = () => {
+  // Clean up timeouts on unmount
+  useEffect(() => {
+    return () => {
       if (incrementTimeoutRef.current) {
         clearTimeout(incrementTimeoutRef.current);
       }
-      window.removeEventListener("mouseup", stopIncrement);
-    };
-
-    window.addEventListener("mouseup", stopIncrement);
-  };
-
-  const handleDecrement = () => {
-    const decrement = () => {
-      setDieselFuel((prev) => Math.max(1, prev - 1));
-      decrementTimeoutRef.current = setTimeout(decrement, 300);
-    };
-
-    decrement();
-
-    const stopDecrement = () => {
       if (decrementTimeoutRef.current) {
         clearTimeout(decrementTimeoutRef.current);
       }
-      window.removeEventListener("mouseup", stopDecrement);
     };
+  }, []);
 
-    window.addEventListener("mouseup", stopDecrement);
+  const handleIncrement = () => {
+    // Prevent rapid consecutive clicks
+    const now = Date.now();
+    if (now - (lastClickTime.current["increment"] || 0) < 300) {
+      return;
+    }
+    lastClickTime.current["increment"] = now;
+
+    setDieselFuel((prev) => prev + 1);
+    
+    // Only run on desktop/mouse events
+    if (!('ontouchstart' in window)) {
+      const increment = () => {
+        setDieselFuel((prev) => prev + 1);
+        incrementTimeoutRef.current = setTimeout(increment, 300);
+      };
+      
+      incrementTimeoutRef.current = setTimeout(increment, 300);
+      
+      const stopIncrement = () => {
+        if (incrementTimeoutRef.current) {
+          clearTimeout(incrementTimeoutRef.current);
+        }
+        window.removeEventListener("mouseup", stopIncrement);
+      };
+      
+      window.addEventListener("mouseup", stopIncrement);
+    }
+  };
+
+  const handleDecrement = () => {
+    // Prevent rapid consecutive clicks
+    const now = Date.now();
+    if (now - (lastClickTime.current["decrement"] || 0) < 300) {
+      return;
+    }
+    lastClickTime.current["decrement"] = now;
+
+    setDieselFuel((prev) => Math.max(1, prev - 1));
+    
+    // Only run on desktop/mouse events
+    if (!('ontouchstart' in window)) {
+      const decrement = () => {
+        setDieselFuel((prev) => Math.max(1, prev - 1));
+        decrementTimeoutRef.current = setTimeout(decrement, 300);
+      };
+      
+      decrementTimeoutRef.current = setTimeout(decrement, 300);
+      
+      const stopDecrement = () => {
+        if (decrementTimeoutRef.current) {
+          clearTimeout(decrementTimeoutRef.current);
+        }
+        window.removeEventListener("mouseup", stopDecrement);
+      };
+      
+      window.addEventListener("mouseup", stopDecrement);
+    }
   };
 
   const handleDirectInput = (value: string) => {
@@ -415,13 +453,16 @@ export default function YieldCalculator() {
                     const displayAmount = item.name === "Airdrop" 
                       ? Math.floor(dieselFuel / 5) // Number of supply drops (1 per 5 diesel)
                       : item.amount * dieselFuel;
+                      
+                    // Add orange border for Airdrop
+                    const borderClass = item.name === "Airdrop" 
+                      ? "border-2 border-orange-500" 
+                      : "border border-gray-800 hover:border-gray-700";
 
                     return (
                       <motion.div
                         key={item.name}
-                        className={`bg-gray-900/40 backdrop-blur-sm rounded-lg p-4 border border-gray-800 hover:border-gray-700 transition-all shadow-md ${
-                          item.name === "Airdrop" ? "border-amber-800" : ""
-                        }`}
+                        className={`bg-gray-900/40 backdrop-blur-sm rounded-lg p-4 ${borderClass} transition-all shadow-md`}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
