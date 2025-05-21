@@ -66,8 +66,11 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     logError("Error fetching commits", error);
+    
+    // Enhanced error handling - return proper error object
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Error fetching commits", message: errorMessage },
       { status: 500 }
     );
   }
@@ -129,12 +132,13 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
         const createdRelative = getText($commit, ".time");
         const createdAt = calculateAbsoluteTime(createdRelative);
         const message = getText($commit, ".commits-message");
-        const userName = getText($commit, ".author a:first-child");
+        
+        // Get author name using the new method
+        const userName = getAuthorName($commit);
 
         let userAvatar = $commit.find(".author .avatar img").attr("src") || "";
         if (!userAvatar) {
-          userAvatar =
-            $commit.find(".column.is-1 .avatar img").attr("src") || "";
+          userAvatar = $commit.find(".column.is-1 .avatar img").attr("src") || "";
         }
 
         // Check if the commit is hidden
@@ -190,6 +194,81 @@ async function fetchLatestCommits(limit: number): Promise<Commit[]> {
 function getText(element: cheerio.Cheerio<Element>, selector: string): string {
   return element.find(selector).text().trim();
 }
+
+/**
+ * Extracts the username from an author div by looking at the a element's text content
+ * @param element - The Cheerio element to search within.
+ * @returns The author name or an empty string if not found.
+ */
+function getAuthorName(element: cheerio.Cheerio<Element>): string {
+  // Look for the href element inside the author div, then extract its text content
+  const authorElement = element.find('.author a');
+  if (authorElement.length) {
+    return authorElement.text().trim();
+  }
+  
+  // Try to find the author node from direct parent-child structure (as seen in HTML image)
+  try {
+    // This approach matches the HTML structure in the shared screenshot
+    const authorDiv = element.find('.author').first();
+    if (authorDiv.length) {
+      const authorLink = authorDiv.find('a').first();
+      if (authorLink.length) {
+        const name = authorLink.text().trim();
+        if (name) return name;
+      }
+    }
+    
+    // Try to get the name from a more direct path (structure shown in image)
+    const alternativeLink = element.find('a[href^="/"]').filter(function() {
+      // Get links that are not image containers
+      const child = element.find(this).children();
+      return !child.is('img');
+    });
+    
+    if (alternativeLink.length) {
+      const name = alternativeLink.first().text().trim();
+      if (name) return name;
+    }
+    
+    // Try every a element that doesn't contain an image
+    let authorName = '';
+    element.find('a').each((_, el) => {
+      const $el = cheerio.load(el).root();
+      if (!$el.find('img').length) {
+        const text = $el.text().trim();
+        if (text && !authorName) {
+          authorName = text;
+        }
+      }
+    });
+    
+    if (authorName) return authorName;
+  } catch (err) {
+    console.error("Error extracting author name:", err);
+  }
+  
+  // New approach: try to find direct text in the HTML, using the structure from the image
+  try {
+    // Specifically target anchor tags within the author div
+    const anchors = element.find('.author').find('a');
+    if (anchors.length > 0) {
+      for (let i = 0; i < anchors.length; i++) {
+        const anchor = element.find(anchors[i]);
+        // Skip if it's an image link
+        if (anchor.find('img').length === 0) {
+          const text = anchor.text().trim();
+          if (text) return text;
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Error with alternate author extraction:", err);
+  }
+  
+  return 'Unknown Author';
+}
+
 /**
  * Calculates the absolute time from a relative time string.
  * @param relativeTime - The relative time string (e.g., "2 hours ago").

@@ -96,3 +96,41 @@ body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Animation delays for loading spinners */
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Commit page scrollbar styling */
+.commits-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 #1a202c;
+}
+
+.commits-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.commits-scroll::-webkit-scrollbar-track {
+  background: #1a202c;
+  border-radius: 4px;
+}
+
+.commits-scroll::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+
+.commits-scroll::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
