@@ -38,6 +38,24 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#b91c1c" />
         <meta name="theme-color" content="#000000" />
         
+        {/* Explicit Open Graph tags for better WhatsApp compatibility */}
+        <meta property="og:title" content="Rust Tools Suite - Raid Calculator and Tools" />
+        <meta property="og:description" content="Comprehensive tools for Rust players including raid calculator, recycling optimizer, decay timer, and server tracker." />
+        <meta property="og:image" content={`${siteConfig.url}/images/og-image.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:url" content={siteConfig.url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Rust Tools Suite" />
+        
+        {/* Twitter Card tags for better sharing */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Rust Tools Suite - Raid Calculator and Tools" />
+        <meta name="twitter:description" content="Comprehensive tools for Rust players including raid calculator, recycling optimizer, decay timer, and server tracker." />
+        <meta name="twitter:image" content={`${siteConfig.url}/images/twitter-image.png`} />
+        <meta name="twitter:site" content={siteConfig.twitterHandle} />
+        <meta name="twitter:creator" content={siteConfig.twitterHandle} />
+        
         {/* Preconnect to domains for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

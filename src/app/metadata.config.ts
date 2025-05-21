@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 // Base URL for the site
 export const siteConfig = {
   name: "Rust Tools Suite",
-  url: "https://rust-calculator.vercel.app", // Replace with your actual domain
+  url: "https://rust-raid-calculator.vercel.app", // Updated to the actual domain
   description: "Comprehensive tools for Rust players including raid calculator, recycling optimizer, decay timer, and server tracker.",
   author: "MSpudicDesign",
   twitterHandle: "@MSpudicDesign", // Replace with your actual Twitter handle
