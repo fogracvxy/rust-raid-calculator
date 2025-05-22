@@ -299,17 +299,19 @@ export const itemsRecycle = [
   {
     name: "Targeting Computer",
     yield: {
-      metal: null,
+      metal: 60,
       highQualityMetal: 2,
       techTrash: 2,
       other: "Component",
     },
     yieldradioactive: {
+      metal: 60,
       highQualityMetal: 2,
-      techTrash: 2,
+      techTrash: 3,
     },
     yieldsafezone: {
-      highQualityMetal: 2,
+      metal: 40,
+      highQualityMetal: 1,
       techTrash: 2,
     },
     image: "/images/components/targeting.computer.png",
