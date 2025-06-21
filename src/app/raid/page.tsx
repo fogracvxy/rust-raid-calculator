@@ -163,7 +163,7 @@ const DestructionUI = () => {
       case "satchel":
         return 480;
       case "bullets":
-        return 25;
+        return 50;
       default:
         return 0;
     }
