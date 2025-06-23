@@ -156,6 +156,7 @@ export function TopNav() {
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/raid", label: "Calculator" },
+    { path: "/crafting", label: "Crafting" },
     { path: "/recycle", label: "Recycle" },
     { path: "/excavator", label: "Diesel Calculator" },
     { path: "/decay", label: "Decay" },

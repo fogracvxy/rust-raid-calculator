@@ -75,10 +75,6 @@ export const defaultMetadata: Metadata = {
       { url: "/favicon/site.webmanifest", rel: "manifest" },
     ],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   verification: {
     // Add your verification strings when available
     google: "google-site-verification=your-code",
