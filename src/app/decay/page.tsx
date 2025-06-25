@@ -333,7 +333,7 @@ export default function DecayCalculator() {
             // Show decay notification
             new Notification("Rust Decay Alert", {
               body: `Your ${selectedMaterial.name} structure has decayed!`,
-              icon: "/favicon.ico"
+              icon: "/favicon/favicon.ico"
             });
           }
           return;

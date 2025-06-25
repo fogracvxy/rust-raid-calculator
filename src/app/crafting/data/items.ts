@@ -1,116 +1,59 @@
-import type { ItemShortname, Item } from "../types/item";
+import type { IFuseOptions } from "fuse.js";
+import type { Item, ItemShortname } from "../types/item.types";
+import { ammunitionItems } from "./item-category/ammunition-items";
+import { attireItems } from "./item-category/attire-items";
+import { componentItems } from "./item-category/component-items";
+import { constructionItems } from "./item-category/construction-items";
+import { electricalItems } from "./item-category/electrical-items";
+import { foodItems } from "./item-category/food-items";
+import { funItems } from "./item-category/fun-items";
+import { itemItems } from "./item-category/item-items";
+import { medicalItems } from "./item-category/medical-items";
+import { miscItems } from "./item-category/misc-items";
+import { resourceItems } from "./item-category/resource-items";
+import { toolItems } from "./item-category/tool-items";
+import { trapItems } from "./item-category/trap-items";
+import { weaponItems } from "./item-category/weapon-items";
 
 export const items: {
   [K in ItemShortname]: Item<K>;
 } = {
-  sulfur: {
-    shortname: "sulfur",
-    name: "Sulfur",
-    image: "/images/sulfur.png",
-  },
-  "fat.animal": {
-    shortname: "fat.animal",
-    name: "Animal Fat",
-    image: "/images/fat.animal.png",
-  },
-  charcoal: {
-    shortname: "charcoal",
-    name: "Charcoal",
-    image: "/images/charcoal.png",
-  },
-  cloth: {
-    shortname: "cloth",
-    name: "Cloth",
-    image: "/images/resources/cloth.png",
-  },
-  "metal.fragments": {
-    shortname: "metal.fragments",
-    name: "Metal Fragments",
-    image: "/images/resources/metal.fragments.png",
-  },
-  "metal.refined": {
-    shortname: "metal.refined",
-    name: "High Quality Metal",
-    image: "/images/resources/metal.refined.png",
-  },
-  techparts: {
-    shortname: "techparts",
-    name: "Tech Parts",
-    image: "/images/components/techparts.png",
-  },
+  ...ammunitionItems,
+  ...attireItems,
+  ...componentItems,
+  ...constructionItems,
+  ...electricalItems,
+  ...foodItems,
+  ...funItems,
+  ...itemItems,
+  ...medicalItems,
+  ...miscItems,
+  ...resourceItems,
+  ...toolItems,
+  ...trapItems,
+  ...weaponItems,
+};
 
-  lowgradefuel: {
-    shortname: "lowgradefuel",
-    name: "Low Grade Fuel",
-    image: "/images/resources/lowgradefuel.png",
-    crafting: {
-      time: 5,
-      yield: 4,
-      ingredients: [
-        { shortname: "fat.animal", amount: 3 },
-        { shortname: "cloth", amount: 1 },
-      ],
-    },
-  },
-  explosives: {
-    shortname: "explosives",
-    name: "Explosives",
-    image: "/images/resources/explosives.png",
-    crafting: {
-      workbenchLevel: 3,
-      time: 5,
-      yield: 1,
-      ingredients: [
-        { shortname: "sulfur", amount: 10 },
-        { shortname: "lowgradefuel", amount: 3 },
-        { shortname: "gunpowder", amount: 50 },
-        { shortname: "metal.fragments", amount: 10 },
-      ],
-    },
-  },
-  gunpowder: {
-    shortname: "gunpowder",
-    name: "Gunpowder",
-    image: "/images/gunpowder.png",
-    crafting: {
-      workbenchLevel: 1,
-      time: 2,
-      yield: 10,
-      ingredients: [
-        { shortname: "charcoal", amount: 30 },
-        { shortname: "sulfur", amount: 20 },
-      ],
-    },
-  },
+export const itemList = Object.values(items).toSorted((a, b) => a.name.localeCompare(b.name)) as Item[];
+export const itemShortnames = (Object.keys(items) as ItemShortname[]).toSorted((a, b) => a.localeCompare(b));
 
-  "ammo.rifle.explosive": {
-    shortname: "ammo.rifle.explosive",
-    name: "Explosive 5.56 Rifle Ammo",
-    image: "/images/bullet.png",
-    crafting: {
-      workbenchLevel: 3,
-      time: 3,
-      yield: 2,
-      ingredients: [
-        { shortname: "sulfur", amount: 10 },
-        { shortname: "gunpowder", amount: 20 },
-        { shortname: "metal.fragments", amount: 10 },
-      ],
-    },
-  },
-  "explosive.timed": {
-    shortname: "explosive.timed",
-    name: "Timed Explosive Charge (C4)",
-    image: "/images/c4.png",
-    crafting: {
-      workbenchLevel: 3,
-      time: 30,
-      yield: 1,
-      ingredients: [
-        { shortname: "cloth", amount: 5 },
-        { shortname: "explosives", amount: 20 },
-        { shortname: "techparts", amount: 2 },
-      ],
-    },
-  },
+export const craftableItemList = itemList.filter(
+  (item): item is typeof item & { crafting: NonNullable<(typeof item)["crafting"]> } => {
+    return item.crafting !== undefined;
+  }
+);
+export const ingredientItems = itemList.filter((item, _index, arr) => {
+  return arr.some(
+    (i) => i.shortname !== item.shortname && i.crafting?.ingredients.some((ing) => ing.shortname === item.shortname)
+  );
+});
+
+export const itemFuzzyOptions: IFuseOptions<Item> = {
+  keys: [
+    { name: "shortname", weight: 10, getFn: (item) => item.shortname },
+    { name: "name", weight: 10, getFn: (item) => item.name },
+    { name: "keywords", weight: 5, getFn: (item) => item.keywords ?? [] },
+    { name: "category", weight: 1, getFn: (item) => item.category },
+  ],
+  isCaseSensitive: false,
 };

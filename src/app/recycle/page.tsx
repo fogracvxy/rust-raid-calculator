@@ -5,6 +5,8 @@ import { itemsRecycle } from "./data/items_recycle";
 import { resources } from "./data/resources";
 import { motion, AnimatePresence } from "framer-motion";
 import { trackFeatureUsage, trackSettingChange, trackCalculatorUsage } from "../utils/analytics";
+import Switch from "../components/switch";
+import TextInput from "../components/text-input";
 
 interface ItemRecycle {
   name: string;
@@ -59,7 +61,6 @@ const Recycle: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const lastClickTime = useRef<Record<string, number>>({});
   const [expandedResourceDetail, setExpandedResourceDetail] = useState<string | null>(null);
-  const [showAutoRecycleInfo, setShowAutoRecycleInfo] = useState(false);
   const [mobileResourceDetail, setMobileResourceDetail] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -471,32 +472,15 @@ const Recycle: React.FC = () => {
           </div>
           
           {/* Recursive Recycling Toggle - Fixed Switch */}
-          <div className="flex items-center bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md gap-2">
-            <label className="inline-flex items-center cursor-pointer">
-              <input 
-                type="checkbox"
-                checked={recursiveRecycling}
-                onChange={(e) => handleRecursiveRecyclingChange(e.target.checked)}
-                className="sr-only peer" 
-              />
-              <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
-              <span className="ml-2 text-sm text-white">Auto-recycle components</span>
-            </label>
-            {/* Info icon, separated from toggle */}
-            <button
-              type="button"
-              aria-label="Show auto-recycle info"
-              className="ml-2 p-1 rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
-              onClick={e => {
-                e.stopPropagation();
-                setShowAutoRecycleInfo(true);
-              }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </button>
-          </div>
+          <Switch
+            className="bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md"
+            checked={recursiveRecycling}
+            onChange={handleRecursiveRecyclingChange}
+            label="Auto-recycle components"
+            infoTitle="Auto-recycle Info"
+            info={<>Automatically convert components like <b>Rope</b> → <b>Cloth</b> and <b>Tech Trash</b> → <b>Scrap + HQM</b>.<br />
+              When enabled, all possible sub-components are recursively recycled for maximum yield.</>}
+          />
           
           <button
             onClick={resetSelectedItems}
@@ -518,54 +502,13 @@ const Recycle: React.FC = () => {
           )}
         </div>
         
-        {/* Auto-recycle info modal/tooltip */}
-        {showAutoRecycleInfo && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 md:bg-opacity-0 md:items-end md:justify-end"
-            onClick={() => setShowAutoRecycleInfo(false)}
-            aria-modal="true"
-            role="dialog"
-          >
-            <div
-              className="bg-gray-900 text-white rounded-lg shadow-2xl p-6 max-w-xs w-full mx-4 md:mx-0 md:absolute md:bottom-16 md:right-8 border border-red-700"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-red-400">Auto-recycle Info</span>
-                <button
-                  className="text-gray-400 hover:text-white focus:outline-none"
-                  aria-label="Close info"
-                  onClick={() => setShowAutoRecycleInfo(false)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="text-sm">
-                Automatically convert components like <b>Rope</b> → <b>Cloth</b> and <b>Tech Trash</b> → <b>Scrap + HQM</b>.<br />
-                When enabled, all possible sub-components are recursively recycled for maximum yield.
-              </div>
-            </div>
-          </div>
-        )}
-        
         {/* Search and Filtering */}
         <div className="flex flex-col md:flex-row justify-center gap-3 mb-6">
-          <div className="relative flex-grow max-w-md">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Search items..."
-              className="w-full py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
-            />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-          </div>
+          <TextInput
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search items..."
+          />
           
           <div className="relative">
             <select
