@@ -73,7 +73,23 @@ export default function CraftingCalculator() {
     >
       <div className="bg-gradient-to-r from-gray-900 to-black py-6 px-4 rounded-lg border border-gray-800 shadow-2xl mb-8">
         <h1 className="text-3xl font-bold mb-2 text-center text-white">Crafting Calculator</h1>
-        <p className="text-gray-400 text-center text-sm mb-6">Plan which resources you need to craft a set of items.</p>
+        <p className="text-gray-400 text-center text-sm mb-6">
+          Plan which resources you need to craft a set of items.
+        </p>
+        <div className="hidden md:flex flex-col gap-3 mb-6">
+          <p className="text-center">Keyboard Shortcuts</p>
+          <p className="text-gray-400 text-center text-sm">
+            Search Bar: <kbd className="bg-gray-800 px-2 py-1 rounded">↑</kbd>{" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">↓</kbd> to navigate,{" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">Enter</kbd> to select and start editing the quantity.
+          </p>
+          <p className="text-gray-400 text-center text-sm">
+            Quantity: <kbd className="bg-gray-800 px-2 py-1 rounded">↑</kbd>{" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">↓</kbd> to increase/decrease (hold {" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">Shift</kbd> for higher steps),{" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">Enter</kbd> to confirm and go back to the search input.
+          </p>
+        </div>
 
         <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
           <Switch
