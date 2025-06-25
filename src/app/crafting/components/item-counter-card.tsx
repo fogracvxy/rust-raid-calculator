@@ -16,18 +16,36 @@ export interface ItemCounterCardProps {
   onCounterKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const ItemCounterCard = ({ shortname, value, onChange, onRemove, showActualYield = false, counterInputRef, onCounterKeyDown }: ItemCounterCardProps) => {
+const ItemCounterCard = ({
+  shortname,
+  value,
+  onChange,
+  onRemove,
+  showActualYield = false,
+  counterInputRef,
+  onCounterKeyDown,
+}: ItemCounterCardProps) => {
   const item = items[shortname];
   const readOnly = !onChange;
 
   return (
-    <div className="relative bg-gray-900 px-2 py-4 rounded-lg shadow-md flex flex-col items-center border border-gray-800 hover:border-gray-700">
+    <div
+      className={cn(
+        "relative bg-gray-900 px-2 py-4 rounded-lg shadow-md flex flex-col items-center border border-gray-800 hover:border-gray-700"
+      )}
+    >
       {!readOnly && onRemove && (
         <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-400" onClick={onRemove}>
           <BiX className="h-4 w-4" />
         </button>
       )}
-      <div className="bg-black/50 p-2 rounded-full">
+      <div
+        className={cn("bg-black/50 p-2 rounded-full", {
+          "outline outline-2 outline-orange-800": item.crafting?.workbenchLevel === 1,
+          "outline outline-2 outline-blue-800": item.crafting?.workbenchLevel === 2,
+          "outline outline-2 outline-green-800": item.crafting?.workbenchLevel === 3,
+        })}
+      >
         <Image src={item.image} alt={item.name} width={48} height={48} />
       </div>
       <h3 className="text-white font-semibold my-2 text-center">{item.name}</h3>

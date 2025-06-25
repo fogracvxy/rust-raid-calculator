@@ -146,7 +146,7 @@ export default function CraftingCalculator() {
         <ItemPicker
           title={
             <>
-              <LuPackagePlus /> Excess
+              <LuPackagePlus /> Excess Resources
             </>
           }
           value={excess}
