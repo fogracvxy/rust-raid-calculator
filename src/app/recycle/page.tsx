@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { trackFeatureUsage, trackSettingChange, trackCalculatorUsage } from "../utils/analytics";
 import Switch from "../components/switch";
 import TextInput from "../components/text-input";
+import SelectInput from "../components/select-input";
 
 interface ItemRecycle {
   name: string;
@@ -454,22 +455,20 @@ const Recycle: React.FC = () => {
         
         {/* Mode Selection and Reset Button */}
         <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
-          <div className="relative">
-            <select
-              value={mode}
-              onChange={(e) => handleModeChange(e.target.value as Mode)}
-              className="py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white appearance-none focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
-            >
-              <option value="Default">Default</option>
-              <option value="Safezone">Safezone</option>
-              <option value="Radtown">Radtown</option>
-            </select>
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <SelectInput
+            value={mode}
+            onChange={handleModeChange}
+            options={[
+              { label: "Default", value: "Default" },
+              { label: "Safezone", value: "Safezone" },
+              { label: "Radtown", value: "Radtown" },
+            ]}
+            left={
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
-            </div>
-          </div>
+            }
+          />
           
           {/* Recursive Recycling Toggle - Fixed Switch */}
           <Switch
@@ -509,23 +508,16 @@ const Recycle: React.FC = () => {
             onChange={handleSearch}
             placeholder="Search items..."
           />
-          
-          <div className="relative">
-            <select
-              value={selectedCategory}
-              onChange={(e) => handleCategoryChange(e.target.value)}
-              className="py-2 pl-10 pr-4 bg-black border border-gray-700 rounded-md text-white appearance-none focus:ring-1 focus:ring-red-500 focus:border-red-500 focus:outline-none transition-all"
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <SelectInput
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            options={categories.map(category => ({ label: category, value: category }))}
+            left={
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
               </svg>
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
       

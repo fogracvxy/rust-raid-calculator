@@ -3,7 +3,7 @@ import type { ClassNames } from "@/app/types/classnames.types";
 import cn from "classnames";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
-import { itemFuzzyOptions, itemList } from "../data/items";
+import { itemFuzzyOptions, itemList, items } from "../data/items";
 import type { Item, ItemShortname } from "../types/item.types";
 import ItemCounterCard from "./item-counter-card";
 
@@ -20,7 +20,7 @@ export interface ItemPickerProps {
   emptyPlaceholder?: React.ReactNode;
   showActualYield?: boolean;
   data?: Item[];
-  view?: "grid";
+  view?: "grid" | "list";
   className?: string;
   classNames?: ClassNames<"root">;
 }
@@ -117,6 +117,37 @@ const ItemPicker = ({
                   );
                 })}
               </div>
+            )}
+            {view === "list" && (
+              <table className="w-full text-sm text-left text-gray-300">
+                <thead className="text-xs uppercase bg-gray-800 text-gray-400">
+                  <tr className="bg-gray-800 text-gray-300">
+                    <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">
+                      Item
+                    </th>
+                    <th scope="col" className="px-2 sm:px-4 py-2 sm:py-3">
+                      Quantity
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {value.map(({ item, quantity }) => (
+                    <tr key={item} className="border-b border-gray-700">
+                      <td className="px-2 sm:px-4 py-2 font-medium whitespace-nowrap">
+                        <Image
+                          src={items[item].image}
+                          alt={items[item].name}
+                          width={24}
+                          height={24}
+                          className="inline-block mr-2"
+                        />
+                        {items[item].name}
+                      </td>
+                      <td className="px-2 sm:px-4 py-2">{quantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
           </>
         )}

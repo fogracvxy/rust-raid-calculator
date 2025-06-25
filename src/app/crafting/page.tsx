@@ -10,6 +10,8 @@ import ItemPicker, { type ItemPickerValue } from "./components/item-picker";
 import { calculateMultiCraftingBreakdown, type Inventory } from "./utils/calculate-crafting-breakdown";
 import { craftableItemList, ingredientItems } from "./data/items";
 import { LuPackagePlus } from "react-icons/lu";
+import SelectInput from "../components/select-input";
+import { BsGrid, BsList } from "react-icons/bs";
 
 export default function CraftingCalculator() {
   const [disallowScraps, setDisallowScraps] = useState<boolean>(true);
@@ -97,6 +99,7 @@ export default function CraftingCalculator() {
             </>
           }
           data={craftItemOptions}
+          view="grid"
         />
         <ItemPicker
           value={inventoryItems}
@@ -108,6 +111,7 @@ export default function CraftingCalculator() {
               <MdOutlineInventory2 /> Inventory
             </>
           }
+          view="grid"
         />
       </div>
 
@@ -121,6 +125,7 @@ export default function CraftingCalculator() {
           value={requiredItems}
           emptyPlaceholder="No resources needed."
           className="mt-6"
+          view="list"
         />
         <ItemPicker
           title={
@@ -131,6 +136,7 @@ export default function CraftingCalculator() {
           value={excess}
           emptyPlaceholder="No excess resources."
           className="mt-6"
+          view="list"
         />
       </div>
     </motion.div>
