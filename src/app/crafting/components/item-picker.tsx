@@ -2,7 +2,7 @@ import SearchInput, { type SearchInputProps } from "@/app/components/search-inpu
 import type { ClassNames } from "@/app/types/classnames.types";
 import cn from "classnames";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { itemFuzzyOptions, itemList, items } from "../data/items";
 import type { Item, ItemShortname } from "../types/item.types";
 import ItemCounterCard from "./item-counter-card";
@@ -46,17 +46,30 @@ const ItemPicker = ({
   className,
   classNames = {},
 }: ItemPickerProps) => {
-  const [craftSearchTerm, setCraftSearchTerm] = useState<string>("");
-  const handleCraftItemSelect = (item: Item) => {
+  const [lastItemAdded, setLastItemAdded] = useState<ItemShortname | null>(null);
+  const itemInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const handleItemSelect = (item: Item) => {
     const newItem: ItemPickerValue = { item: item.shortname, quantity: 1 };
     onChange?.([...value, newItem]);
   };
-  const searchableCraftItems = useMemo(() => {
-    const selectedCraftItemShortnames = value.map((i) => i.item);
-    return data.filter((item) => !selectedCraftItemShortnames.includes(item.shortname));
+  const searchableItems = useMemo(() => {
+    const selectedItemShortnames = value.map((i) => i.item);
+    return data.filter((item) => !selectedItemShortnames.includes(item.shortname));
   }, [value, data]);
 
   const readOnly = !onChange;
+
+  useEffect(() => {
+    if (!lastItemAdded) return;
+    const timeout = setTimeout(() => {
+      itemInputRefs.current[lastItemAdded]?.focus();
+      itemInputRefs.current[lastItemAdded]?.select();
+    });
+    return () => clearTimeout(timeout);
+  }, [lastItemAdded]);
 
   return (
     <div
@@ -70,11 +83,16 @@ const ItemPicker = ({
         <h2 className="flex items-center gap-3 text-xl font-bold text-white">{title || "Items"}</h2>
         {!readOnly && (
           <SearchInput
-            value={craftSearchTerm}
-            onChange={setCraftSearchTerm}
-            onSelect={handleCraftItemSelect}
+            inputRef={searchInputRef}
+            value={searchTerm}
+            onChange={setSearchTerm}
+            onSelect={(item) => {
+              handleItemSelect(item);
+              setSearchTerm("");
+              setLastItemAdded(item.shortname);
+            }}
             placeholder={searchPlaceholder || "Search items..."}
-            data={searchableCraftItems}
+            data={searchableItems}
             getValue={(item) => item.shortname}
             renderOption={SearchItemRenderer}
             fuzzyOptions={itemFuzzyOptions}
@@ -113,6 +131,22 @@ const ItemPicker = ({
                           : undefined
                       }
                       showActualYield={showActualYield}
+                      counterInputRef={(el) => {
+                        itemInputRefs.current[item] = el;
+                      }}
+                      onCounterKeyDown={(e) => {
+                        switch (e.key) {
+                          case "Enter": {
+                            searchInputRef.current?.focus();
+                          }
+                          case "Backspace": {
+                            if (e.currentTarget.value === "" && onChange) {
+                              onChange(value.filter((i) => i.item !== item));
+                            }
+                            break;
+                          }
+                        }
+                      }}
                     />
                   );
                 })}
@@ -143,7 +177,7 @@ const ItemPicker = ({
                         />
                         {items[item].name}
                       </td>
-                      <td className="px-2 sm:px-4 py-2">{quantity}</td>
+                      <td className="px-2 sm:px-4 py-2">{quantity.toLocaleString("en")}</td>
                     </tr>
                   ))}
                 </tbody>

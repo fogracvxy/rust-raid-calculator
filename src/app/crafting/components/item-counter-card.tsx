@@ -12,9 +12,11 @@ export interface ItemCounterCardProps {
   onRemove?: () => void;
   onChange?: (value: number) => void;
   showActualYield?: boolean;
+  counterInputRef?: React.ComponentPropsWithRef<typeof CounterInput>["ref"];
+  onCounterKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const ItemCounterCard = ({ shortname, value, onChange, onRemove, showActualYield = false }: ItemCounterCardProps) => {
+const ItemCounterCard = ({ shortname, value, onChange, onRemove, showActualYield = false, counterInputRef, onCounterKeyDown }: ItemCounterCardProps) => {
   const item = items[shortname];
   const readOnly = !onChange;
 
@@ -48,6 +50,7 @@ const ItemCounterCard = ({ shortname, value, onChange, onRemove, showActualYield
             </button>
           )}
           <CounterInput
+            ref={counterInputRef}
             className="mt-1"
             value={value}
             onChange={(newQuantity) => {
@@ -55,6 +58,7 @@ const ItemCounterCard = ({ shortname, value, onChange, onRemove, showActualYield
             }}
             min={1}
             max={9_999_999}
+            onKeyDown={onCounterKeyDown}
           />
         </>
       )}

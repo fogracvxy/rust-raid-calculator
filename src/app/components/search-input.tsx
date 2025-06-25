@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect, type Ref, type LegacyRef } from "react";
 import TextInput, { type TextInputProps } from "./text-input";
 import type { ClassNames } from "../types/classnames.types";
 import cn from "classnames";
@@ -11,6 +11,7 @@ export interface SearchInputProps<T = any> extends Omit<TextInputProps, "classNa
   onSelect?: (item: T) => void | { value?: string; focused?: boolean };
   renderOption?: (params: { item: T }) => React.ReactNode;
   fuzzyOptions?: IFuseOptions<T>;
+  inputRef?: LegacyRef<HTMLInputElement>; // forwardRef doesn't work with generics
   className?: string;
   classNames?: ClassNames<"root" | "dropdown" | "option"> & {
     input?: TextInputProps["classNames"];
@@ -28,10 +29,13 @@ const SearchInput = <T,>({
   onSelect,
   renderOption,
   fuzzyOptions = {},
+  inputRef,
   ...rest
 }: SearchInputProps<T>) => {
-  const textInputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
+
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const focusedIndexRef = useRef<HTMLDivElement>(null);
 
   const fuse = useMemo(() => {
     return new Fuse(data, fuzzyOptions);
@@ -45,15 +49,7 @@ const SearchInput = <T,>({
 
   const handleSelect = (item: T) => {
     if (onSelect) {
-      const { value: nextValue = value, focused: nextFocused = false } = onSelect(item) ?? {};
-      setTimeout(() => {
-        if (nextFocused) {
-          textInputRef.current?.focus();
-        } else {
-          textInputRef.current?.blur();
-        }
-      }, 0);
-      onChange?.(nextValue ?? "");
+      onSelect(item) ?? {};
     } else if (onChange) {
       onChange(getValue(item));
     }
@@ -65,19 +61,60 @@ const SearchInput = <T,>({
     }
   }, [data.length, isFocused]);
 
+  useEffect(() => {
+    if (focusedIndex == null) return;
+    focusedIndexRef.current?.scrollIntoView({ block: "nearest" });
+  }, [focusedIndex]);
+
   return (
     <div className={cn("relative", className, classNames.root)}>
       <TextInput
-        ref={textInputRef}
+        {...rest}
+        ref={inputRef}
         value={value}
-        onChange={onChange}
+        onChange={(v) => {
+          onChange?.(v);
+          setFocusedIndex(0);
+        }}
         placeholder={placeholder}
         classNames={classNames.input}
         disabled={!data.length}
-        onFocus={() => setIsFocused(true)}
+        onFocus={() => {
+          setIsFocused(true);
+          setFocusedIndex(0);
+        }}
         onBlur={() => setIsFocused(false)}
         autoComplete="off"
-        {...rest}
+        onKeyDown={(e) => {
+          switch (e.key) {
+            case "ArrowDown": {
+              e.preventDefault();
+              if (filteredData.length === 0) return;
+              setFocusedIndex((prev) => (prev === null ? 0 : Math.min(prev + 1, filteredData.length - 1)));
+              break;
+            }
+            case "ArrowUp": {
+              e.preventDefault();
+              if (filteredData.length === 0) return;
+              setFocusedIndex((prev) => (prev === null ? filteredData.length - 1 : Math.max(prev - 1, 0)));
+              break;
+            }
+            case "Enter": {
+              e.preventDefault();
+              if (focusedIndex !== null && filteredData[focusedIndex]) {
+                handleSelect(filteredData[focusedIndex]);
+                setIsFocused(false);
+                setFocusedIndex(null);
+              }
+              break;
+            }
+            case "Escape": {
+              e.preventDefault();
+              setFocusedIndex(null);
+              break;
+            }
+          }
+        }}
       />
       {isFocused && (
         <div
@@ -89,10 +126,13 @@ const SearchInput = <T,>({
           {filteredData.length === 0 ? (
             <div className={cn("p-2 text-gray-500")}>No results found</div>
           ) : (
-            filteredData.map((item) => (
+            filteredData.map((item, i) => (
               <div
+                ref={i === focusedIndex ? focusedIndexRef : null}
                 key={getValue(item)}
-                className={cn("cursor-pointer px-3 py-2 hover:bg-gray-800", classNames.option)}
+                className={cn("cursor-pointer px-3 py-2 hover:bg-gray-800", classNames.option, {
+                  "bg-gray-700": focusedIndex === i,
+                })}
                 onMouseDown={() => handleSelect(item)}
               >
                 {renderOption?.({ item }) ?? getValue(item)}
