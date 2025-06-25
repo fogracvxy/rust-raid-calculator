@@ -37,7 +37,6 @@ const CounterInput = forwardRef<HTMLInputElement, CounterInputProps>(
     const [lastValue, setLastValue] = React.useState<number>(value);
 
     useEffect(() => {
-      console.log("CounterInput value changed:", value);
       setRawValue(`${value}`);
     }, [value]);
 

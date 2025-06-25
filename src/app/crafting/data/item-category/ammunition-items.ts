@@ -18,7 +18,8 @@ export type AmmunitionItemShortname =
   | "catapult.ammo.explosive"
   | "ammo.rocket.basic"
   | "ammo.rocket.sam"
-  | "submarine.torpedo.straight";
+  | "submarine.torpedo.straight"
+  | "ammo.pistol.fire";
 
 export const ammunitionItems: {
   [K in AmmunitionItemShortname]: Item<K> & { category: AmmunitionItemCategory };
@@ -267,6 +268,21 @@ export const ammunitionItems: {
       ingredients: [
         { shortname: "metalpipe", amount: 1 },
         { shortname: "gunpowder", amount: 30 },
+      ],
+    },
+  },
+  "ammo.pistol.fire": {
+    shortname: "ammo.pistol.fire",
+    name: "Incendiary Pistol Bullet",
+    category: "ammunition",
+    image: "/images/ammunition/ammo.pistol.fire.png",
+    crafting: {
+      workbenchLevel: 2,
+      yield: 3,
+      ingredients: [
+        { shortname: "metal.fragments", amount: 10 },
+        { shortname: "gunpowder", amount: 10 },
+        { shortname: "sulfur", amount: 5 },
       ],
     },
   },
