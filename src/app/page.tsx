@@ -233,7 +233,8 @@ export default function Home() {
                   alt="Rust RAID Calculator App"
                   width={380}
                   height={780}
-                  className="relative z-10 object-contain"
+                  className="relative z-10 object-contain w-auto"
+                  priority
                 />
                 
                 {/* Interactive UI elements overlaid on device */}
@@ -296,7 +297,7 @@ export default function Home() {
       {/* Force Wipe Countdown with better Rust styling */}
       <div className="w-full max-w-6xl mb-16 relative z-10">
         <div className="bg-gradient-to-r from-gray-900 via-black to-gray-900 rounded-xl p-4 sm:p-8 shadow-lg border border-gray-800 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
+          <div className="absolute inset-0 opacity-5 mix-blend-overlay"></div>
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-800 via-red-600 to-red-800"></div>
           
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 flex items-center justify-center">
@@ -527,7 +528,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Raids Calculated Stat */}
           <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 border border-gray-800 shadow-lg relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
+            <div className="absolute inset-0 opacity-5 mix-blend-overlay"></div>
             <div className="absolute top-0 right-0 h-20 w-20 bg-red-600/10 rounded-full -mt-10 -mr-10"></div>
             
             <div className="relative z-10">
@@ -552,7 +553,7 @@ export default function Home() {
           
           {/* Sulfur Saved Stat - more Rust-specific */}
           <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 border border-gray-800 shadow-lg relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
+            <div className="absolute inset-0 opacity-5 mix-blend-overlay"></div>
             <div className="absolute top-0 right-0 h-20 w-20 bg-red-600/10 rounded-full -mt-10 -mr-10"></div>
             
             <div className="relative z-10">
@@ -577,7 +578,7 @@ export default function Home() {
           
           {/* Scrap Recycled - more Rust-specific */}
           <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 border border-gray-800 shadow-lg relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
+            <div className="absolute inset-0 opacity-5 mix-blend-overlay"></div>
             <div className="absolute top-0 right-0 h-20 w-20 bg-red-600/10 rounded-full -mt-10 -mr-10"></div>
             
             <div className="relative z-10">
@@ -602,7 +603,7 @@ export default function Home() {
           
           {/* Weekly Active Players - more relevant to server tracking */}
           <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-6 border border-gray-800 shadow-lg relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay"></div>
+            <div className="absolute inset-0 opacity-5 mix-blend-overlay"></div>
             <div className="absolute top-0 right-0 h-20 w-20 bg-red-600/10 rounded-full -mt-10 -mr-10"></div>
             
             <div className="relative z-10">

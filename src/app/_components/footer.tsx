@@ -11,7 +11,7 @@ export function Footer() {
      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-800/50 to-transparent"></div>
      
      {/* Rust texture overlay */}
-     <div className="absolute inset-0 bg-[url('/images/rust-texture.jpg')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+     <div className="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none"></div>
      
      {/* Circuit pattern accent */}
      <div className="absolute top-8 right-8 w-72 h-72 opacity-5 pointer-events-none">

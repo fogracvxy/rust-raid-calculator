@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "./_components/topnav";
@@ -19,6 +19,13 @@ import "react-toastify/dist/ReactToastify.css";
 // Use the default metadata from our config
 export const metadata: Metadata = defaultMetadata;
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -29,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Favicon links for better browser compatibility */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon/favicon-16x16.png" sizes="16x16" type="image/png" />
         <link rel="icon" href="/favicon/favicon-32x32.png" sizes="32x32" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
