@@ -130,51 +130,50 @@ const SearchInput = <T,>({
           }
         }}
       />
-      <div
-        ref={dropdownRef}
-        className={cn(
-          "absolute left-0 right-0 z-10 bg-gradient-to-t from-gray-900 to-black rounded border border-gray-800 shadow-2xl mt-1 max-h-60 overflow-auto",
-          classNames.dropdown,
-          {
-            hidden: !isFocused,
-          }
-        )}
-      >
-        <div className={cn("p-2 text-gray-500", { hidden: filteredData.length > 0 })}>No results found</div>
+      {isFocused && (
         <div
-          style={{
-            height: `${rowVirtualizer.getTotalSize()}px`,
-            position: "relative",
-          }}
+          ref={dropdownRef}
+          className={cn(
+            "absolute left-0 right-0 z-10 bg-gradient-to-t from-gray-900 to-black rounded border border-gray-800 shadow-2xl mt-1 max-h-60 overflow-auto",
+            classNames.dropdown
+          )}
         >
-          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-            const item = filteredData[virtualRow.index];
-            return (
-              <div
-                key={getValue(item)}
-                data-index={virtualRow.index}
-                ref={(el) => {
-                  rowVirtualizer.measureElement(el);
-                  if (virtualRow.index === focusedIndex) {
-                    focusedIndexRef.current = el;
-                  }
-                }}
-                className={cn(
-                  "cursor-pointer px-3 py-2 hover:bg-gray-800 absolute left-0 right-0 whitespace-normal break-words leading-snug",
-                  classNames.option,
-                  { "bg-gray-700": focusedIndex === virtualRow.index }
-                )}
-                style={{
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-                onMouseDown={() => handleSelect(item)}
-              >
-                {renderOption?.({ item }) ?? getValue(item)}
-              </div>
-            );
-          })}
+          {filteredData.length === 0 && <div className={cn("p-2 text-gray-500")}>No results found</div>}
+          <div
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              position: "relative",
+            }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const item = filteredData[virtualRow.index];
+              return (
+                <div
+                  key={getValue(item)}
+                  data-index={virtualRow.index}
+                  ref={(el) => {
+                    rowVirtualizer.measureElement(el);
+                    if (virtualRow.index === focusedIndex) {
+                      focusedIndexRef.current = el;
+                    }
+                  }}
+                  className={cn(
+                    "cursor-pointer px-3 py-2 hover:bg-gray-800 absolute left-0 right-0 whitespace-normal break-words leading-snug",
+                    classNames.option,
+                    { "bg-gray-700": focusedIndex === virtualRow.index }
+                  )}
+                  style={{
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                  onMouseDown={() => handleSelect(item)}
+                >
+                  {renderOption?.({ item }) ?? getValue(item)}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
