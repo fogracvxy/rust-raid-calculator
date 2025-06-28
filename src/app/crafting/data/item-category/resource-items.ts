@@ -14,7 +14,9 @@ export type ResourceItemShortname =
   | "wood"
   | "stones"
   | "scrap"
-  | "cctv.camera";
+  | "cctv.camera"
+  | "nucleus"
+  | "bone.fragments";
 
 export const resourceItems: {
   [K in ResourceItemShortname]: Item<K> & { category: ResourceItemCategory };
@@ -121,5 +123,17 @@ export const resourceItems: {
     name: "CCTV Camera",
     category: "resource",
     image: "/images/resources/cctv.camera.png",
+  },
+  nucleus: {
+    shortname: "nucleus",
+    name: "Beehive Nucleus",
+    category: "resource",
+    image: "/images/resources/nucleus.png",
+  },
+  "bone.fragments": {
+    shortname: "bone.fragments",
+    name: "Bone Fragments",
+    category: "resource",
+    image: "/images/resources/bone.fragments.png",
   },
 };

@@ -1,7 +1,7 @@
 import type { Item } from "../../types/item.types";
 
 export type ItemItemCategory = "item";
-export type ItemItemShortname = "stash.small";
+export type ItemItemShortname = "stash.small" | "venom.snake";
 
 export const itemItems: {
   [K in ItemItemShortname]: Item<K> & { category: ItemItemCategory };
@@ -15,5 +15,11 @@ export const itemItems: {
       yield: 1,
       ingredients: [{ shortname: "cloth", amount: 10 }],
     },
+  },
+  "venom.snake": {
+    shortname: "venom.snake",
+    name: "Snake Venom",
+    category: "item",
+    image: "/images/items/venom.snake.png",
   },
 };

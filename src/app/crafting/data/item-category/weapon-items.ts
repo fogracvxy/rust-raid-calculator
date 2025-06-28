@@ -10,7 +10,8 @@ export type WeaponItemShortname =
   | "homingmissile.launcher"
   | "spear.wooden"
   | "spear.stone"
-  | "rifle.semiauto";
+  | "rifle.semiauto"
+  | "grenade.bee";
 
 export const weaponItems: {
   [K in WeaponItemShortname]: Item<K> & { category: WeaponItemCategory };
@@ -140,4 +141,18 @@ export const weaponItems: {
       ],
     },
   },
+  "grenade.bee": {
+    shortname: "grenade.bee",
+    name: "Bee Grenade",
+    category: "weapon",
+    image: "/images/weapon/grenade.bee.png",
+    crafting: {
+      workbenchLevel: 1,
+      yield: 1,
+      ingredients: [
+        { shortname: "cloth", amount: 30 },
+        { shortname: "nucleus", amount: 1 },
+      ],
+    },
+  }
 };
