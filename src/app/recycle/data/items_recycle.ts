@@ -337,6 +337,6 @@ export const itemsRecycle = [
       tarp: 2,
       sewingKit: 2,
     },
-    image: "/images/clothing/hazmatsuit.png",
+    image: "/images/attire/hazmatsuit.png",
   },
 ];
