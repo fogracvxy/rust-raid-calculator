@@ -20,6 +20,7 @@ export type AmmunitionItemShortname =
   | "ammo.rocket.mlrs"
   | "ammo.rocket.sam"
   | "ammo.rocket.seeker"
+  | "ammo.rocket.smoke"
   | "ammo.shotgun.fire"
   | "ammo.shotgun.slug"
   | "ammo.shotgun"
@@ -366,6 +367,12 @@ export const ammunitionItems: {
         },
       ],
     },
+  },
+  "ammo.rocket.smoke": {
+    name: "Smoke Rocket WIP!!!!",
+    shortname: "ammo.rocket.smoke",
+    category: "ammunition",
+    image: "/images/ammunition/ammo.rocket.smoke.png",
   },
   "ammo.shotgun": {
     shortname: "ammo.shotgun",
