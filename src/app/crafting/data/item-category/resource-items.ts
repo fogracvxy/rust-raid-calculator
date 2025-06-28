@@ -23,19 +23,19 @@ export const resourceItems: {
     shortname: "sulfur",
     name: "Sulfur",
     category: "resource",
-    image: "/images/sulfur.png",
+    image: "/images/resources/sulfur.png",
   },
   "fat.animal": {
     shortname: "fat.animal",
     name: "Animal Fat",
     category: "resource",
-    image: "/images/fat.animal.png",
+    image: "/images/resources/fat.animal.png",
   },
   charcoal: {
     shortname: "charcoal",
     name: "Charcoal",
     category: "resource",
-    image: "/images/charcoal.png",
+    image: "/images/resources/charcoal.png",
   },
   cloth: {
     shortname: "cloth",
@@ -88,7 +88,7 @@ export const resourceItems: {
     shortname: "gunpowder",
     name: "Gunpowder",
     category: "resource",
-    image: "/images/gunpowder.png",
+    image: "/images/resources/gunpowder.png",
     crafting: {
       workbenchLevel: 1,
       yield: 10,

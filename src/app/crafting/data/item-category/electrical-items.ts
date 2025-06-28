@@ -10,7 +10,7 @@ export const electricalItems: {
     shortname: "autoturret",
     name: "Auto Turret",
     category: "electrical",
-    image: "/images/autoturret.png",
+    image: "/images/electrical/autoturret.png",
     crafting: {
       yield: 1,
       workbenchLevel: 2,

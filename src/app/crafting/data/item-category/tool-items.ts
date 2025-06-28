@@ -11,7 +11,7 @@ export const toolItems: {
     name: "Timed Explosive Charge",
     category: "tool",
     keywords: ["C4"],
-    image: "/images/c4.png",
+    image: "/images/tools/c4.png",
     crafting: {
       workbenchLevel: 3,
       yield: 1,
@@ -26,7 +26,7 @@ export const toolItems: {
     shortname: "explosive.satchel",
     name: "Satchel Charge",
     category: "tool",
-    image: "/images/satchel.png",
+    image: "/images/tools/satchel.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,

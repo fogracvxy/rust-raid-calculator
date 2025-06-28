@@ -220,7 +220,7 @@ export default function YieldCalculator() {
     {
       id: "Excavator",
       name: "Excavator",
-      icon: "/images/diesel_barrel.png"
+      icon: "/images/resources/diesel_barrel.png"
     },
     {
       id: "HQM Quarry",
@@ -230,7 +230,7 @@ export default function YieldCalculator() {
     {
       id: "Sulfur Quarry",
       name: "Sulfur Quarry",
-      icon: "/images/sulfur.ore.png"
+      icon: "/images/resources/sulfur.ore.png"
     },
     {
       id: "Stone Quarry",

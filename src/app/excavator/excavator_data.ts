@@ -5,7 +5,7 @@ export const excavatorData: { name: string; amount: number; image: string }[] =
     {
       name: "Diesel Fuel",
       amount: 1,
-      image: "/images/diesel_barrel.png",
+      image: "/images/resources/diesel_barrel.png",
     },
     {
       name: "High Quality Metal",
@@ -15,7 +15,7 @@ export const excavatorData: { name: string; amount: number; image: string }[] =
     {
       name: "Sulfur Ore",
       amount: 2000,
-      image: "/images/sulfur.ore.png",
+      image: "/images/resources/sulfur.ore.png",
     },
     {
       name: "Metal Fragments",
@@ -30,7 +30,7 @@ export const excavatorData: { name: string; amount: number; image: string }[] =
     {
       name: "Airdrop",
       amount: 0,
-      image: "/images/supply-drop.png",
+      image: "/images/resources/supply-drop.png",
     },
   ];
 
@@ -51,7 +51,7 @@ export const quarryData: {
       },
     ],
     timePerFuelInSeconds: 130, // 2 minutes 10 seconds per diesel fuel
-    fuel: "/images/diesel_barrel.png",
+    fuel: "/images/resources/diesel_barrel.png",
   },
   {
     type: "Sulfur Quarry",
@@ -59,11 +59,11 @@ export const quarryData: {
       {
         name: "Sulfur Ore",
         amount: 1000,
-        image: "/images/sulfur.ore.png",
+        image: "/images/resources/sulfur.ore.png",
       },
     ],
     timePerFuelInSeconds: 130,
-    fuel: "/images/diesel_barrel.png",
+    fuel: "/images/resources/diesel_barrel.png",
   },
   {
     type: "Stone Quarry",
@@ -80,6 +80,6 @@ export const quarryData: {
       },
     ],
     timePerFuelInSeconds: 130,
-    fuel: "/images/diesel_barrel.png",
+    fuel: "/images/resources/diesel_barrel.png",
   },
 ];

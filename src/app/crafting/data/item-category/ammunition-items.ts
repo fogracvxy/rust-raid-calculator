@@ -28,7 +28,7 @@ export const ammunitionItems: {
     shortname: "ammo.rifle.explosive",
     name: "Explosive 5.56 Rifle Ammo",
     category: "ammunition",
-    image: "/images/bullets.png",
+    image: "/images/ammunition/ammo.rifle.explosive.png",
     crafting: {
       workbenchLevel: 3,
       yield: 2,
