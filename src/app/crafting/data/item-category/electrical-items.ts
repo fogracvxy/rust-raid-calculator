@@ -63,10 +63,10 @@ export type ElectricalItemShortname =
   | "rf_pager"
   | "searchlight"
   | "sign.neon.125x125"
-  | "sign.neon.125x215.animated"
   | "sign.neon.125x215"
-  | "sign.neon.xl.animated"
+  | "sign.neon.125x215.animated"
   | "sign.neon.xl"
+  | "sign.neon.xl.animated"
   | "smart.alarm"
   | "smart.switch"
   | "storage.monitor"
@@ -85,15 +85,15 @@ export const electricalItems: {
     category: "electrical",
     image: "/images/electrical/autoturret.png",
     crafting: {
-      yield: 1,
       workbenchLevel: 2,
+      yield: 1,
       ingredients: [
         {
-          shortname: "cctv.camera",
+          shortname: "targeting.computer",
           amount: 1,
         },
         {
-          shortname: "targeting.computer",
+          shortname: "cctv.camera",
           amount: 1,
         },
         {
@@ -1340,7 +1340,7 @@ export const electricalItems: {
     category: "electrical",
     image: "/images/electrical/xmas.lightstring.advanced.png",
     crafting: {
-      yield: 1,
+      yield: 10,
       ingredients: [
         {
           shortname: "metal.fragments",

@@ -20,8 +20,8 @@ export type AttireItemShortname =
   | "bone.armor.suit"
   | "boots.frog"
   | "bucket.helmet"
-  | "burlap.gloves.new"
   | "burlap.gloves"
+  | "burlap.gloves.new"
   | "burlap.headwrap"
   | "burlap.shirt"
   | "burlap.shoes"
@@ -68,11 +68,11 @@ export type AttireItemShortname =
   | "hat.tigermask"
   | "hat.wellipets"
   | "hat.wolf"
+  | "hazmatsuit"
+  | "hazmatsuit.arcticsuit"
   | "hazmatsuit_scientist_arctic"
   | "hazmatsuit_scientist_nvgm"
   | "hazmatsuit_scientist_peacekeeper"
-  | "hazmatsuit.arcticsuit"
-  | "hazmatsuit"
   | "heavy.plate.helmet"
   | "heavy.plate.jacket"
   | "heavy.plate.pants"
@@ -85,10 +85,10 @@ export type AttireItemShortname =
   | "horse.saddlebag"
   | "horse.shoes.advanced"
   | "horse.shoes.basic"
-  | "jacket.snow"
   | "jacket"
-  | "jumpsuit.suit.blue"
+  | "jacket.snow"
   | "jumpsuit.suit"
+  | "jumpsuit.suit.blue"
   | "jumpsuit.waterwellnpc"
   | "largebackpack"
   | "lumberjack hoodie"
@@ -98,12 +98,11 @@ export type AttireItemShortname =
   | "metal.plate.torso"
   | "metal.shield"
   | "movembermoustache"
-  | "movembermoustachecard"
   | "mummymask"
   | "nightvisiongoggles"
   | "oubreak_scientist"
-  | "pants.shorts"
   | "pants"
+  | "pants.shorts"
   | "parachute"
   | "partyhat"
   | "prisonerhood"
@@ -121,10 +120,9 @@ export type AttireItemShortname =
   | "shirt.tanktop"
   | "shoes.boots"
   | "smallbackpack"
-  | "sunglasses"
   | "tactical.gloves"
-  | "tshirt.long"
   | "tshirt"
+  | "tshirt.long"
   | "twitch.headset"
   | "twitchrivalsflag"
   | "twitchsunglasses"
@@ -142,15 +140,6 @@ export const attireItems: {
     shortname: "attire.banditguard",
     category: "attire",
     image: "/images/clothing/attire.banditguard.png",
-    crafting: {
-      yield: 1,
-      ingredients: [
-        {
-          shortname: "cloth",
-          amount: 5,
-        },
-      ],
-    },
   },
   "attire.bunny.onesie": {
     name: "Bunny Onesie",
@@ -744,6 +733,15 @@ export const attireItems: {
     shortname: "hat.beenie",
     category: "attire",
     image: "/images/clothing/hat.beenie.png",
+    crafting: {
+      yield: 1,
+      ingredients: [
+        {
+          shortname: "cloth",
+          amount: 15,
+        },
+      ],
+    },
   },
   "hat.boonie": {
     name: "Boonie Hat",
@@ -800,12 +798,11 @@ export const attireItems: {
     category: "attire",
     image: "/images/clothing/hat.cap.png",
     crafting: {
-      workbenchLevel: 1,
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 50,
+          shortname: "cloth",
+          amount: 5,
         },
       ],
     },
@@ -1225,11 +1222,12 @@ export const attireItems: {
     category: "attire",
     image: "/images/clothing/horse.shoes.basic.png",
     crafting: {
+      workbenchLevel: 1,
       yield: 1,
       ingredients: [
         {
-          shortname: "cloth",
-          amount: 15,
+          shortname: "metal.fragments",
+          amount: 50,
         },
       ],
     },
@@ -1420,12 +1418,6 @@ export const attireItems: {
         },
       ],
     },
-  },
-  movembermoustachecard: {
-    name: "Card Movember Moustache",
-    shortname: "movembermoustachecard",
-    category: "attire",
-    image: "/images/clothing/movembermoustachecard.png",
   },
   mummymask: {
     name: "Mummy Mask",
@@ -1766,21 +1758,6 @@ export const attireItems: {
         {
           shortname: "cloth",
           amount: 50,
-        },
-      ],
-    },
-  },
-  sunglasses: {
-    name: "Sunglasses",
-    shortname: "sunglasses",
-    category: "attire",
-    image: "/images/clothing/sunglasses.png",
-    crafting: {
-      yield: 1,
-      ingredients: [
-        {
-          shortname: "metal.fragments",
-          amount: 30,
         },
       ],
     },

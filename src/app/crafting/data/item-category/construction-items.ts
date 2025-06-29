@@ -7,8 +7,8 @@ export type ConstructionItemShortname =
   | "barricade.metal"
   | "barricade.sandbags"
   | "barricade.stone"
-  | "barricade.wood.cover"
   | "barricade.wood"
+  | "barricade.wood.cover"
   | "barricade.woodwire"
   | "beehive"
   | "building.planner"
@@ -36,18 +36,18 @@ export type ConstructionItemShortname =
   | "shutter.metal.embrasure.a"
   | "shutter.metal.embrasure.b"
   | "shutter.wood.a"
+  | "wall.external.high"
   | "wall.external.high.ice"
   | "wall.external.high.stone"
-  | "wall.external.high"
-  | "wall.frame.cell.gate"
   | "wall.frame.cell"
-  | "wall.frame.fence.gate"
+  | "wall.frame.cell.gate"
   | "wall.frame.fence"
+  | "wall.frame.fence.gate"
   | "wall.frame.garagedoor"
   | "wall.frame.lunar2025_a"
   | "wall.frame.netting"
-  | "wall.frame.shopfront.metal"
   | "wall.frame.shopfront"
+  | "wall.frame.shopfront.metal"
   | "wall.ice.wall"
   | "wall.window.bars.metal"
   | "wall.window.bars.toptier"
@@ -645,6 +645,16 @@ export const constructionItems: {
     shortname: "wall.external.high.ice",
     category: "construction",
     image: "/images/construction/wall.external.high.ice.png",
+    crafting: {
+      workbenchLevel: 2,
+      yield: 3,
+      ingredients: [
+        {
+          shortname: "stones",
+          amount: 3000,
+        },
+      ],
+    },
   },
   "wall.external.high.stone": {
     name: "High External Stone Wall",
@@ -755,15 +765,6 @@ export const constructionItems: {
     shortname: "wall.frame.lunar2025_a",
     category: "construction",
     image: "/images/construction/wall.frame.lunar2025_a.png",
-    crafting: {
-      yield: 1,
-      ingredients: [
-        {
-          shortname: "wood",
-          amount: 100,
-        },
-      ],
-    },
   },
   "wall.frame.netting": {
     name: "Netting",
@@ -816,6 +817,16 @@ export const constructionItems: {
     shortname: "wall.ice.wall",
     category: "construction",
     image: "/images/construction/wall.ice.wall.png",
+    crafting: {
+      workbenchLevel: 1,
+      yield: 1,
+      ingredients: [
+        {
+          shortname: "stones",
+          amount: 300,
+        },
+      ],
+    },
   },
   "wall.window.bars.metal": {
     name: "Metal Window Bars",
@@ -844,7 +855,7 @@ export const constructionItems: {
       ingredients: [
         {
           shortname: "metal.refined",
-          amount: 1,
+          amount: 4,
         },
       ],
     },

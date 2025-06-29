@@ -7,23 +7,22 @@ export type AmmunitionItemShortname =
   | "ammo.grenadelauncher.smoke"
   | "ammo.handmade.shell"
   | "ammo.nailgun.nails"
+  | "ammo.pistol"
   | "ammo.pistol.fire"
   | "ammo.pistol.hv"
-  | "ammo.pistol"
+  | "ammo.rifle"
   | "ammo.rifle.explosive"
   | "ammo.rifle.hv"
   | "ammo.rifle.incendiary"
-  | "ammo.rifle"
   | "ammo.rocket.basic"
   | "ammo.rocket.fire"
   | "ammo.rocket.hv"
   | "ammo.rocket.mlrs"
   | "ammo.rocket.sam"
   | "ammo.rocket.seeker"
-  | "ammo.rocket.smoke"
+  | "ammo.shotgun"
   | "ammo.shotgun.fire"
   | "ammo.shotgun.slug"
-  | "ammo.shotgun"
   | "arrow.bone"
   | "arrow.fire"
   | "arrow.hv"
@@ -192,7 +191,7 @@ export const ammunitionItems: {
       yield: 2,
       ingredients: [
         {
-          shortname: "sulfur",
+          shortname: "metal.fragments",
           amount: 10,
         },
         {
@@ -200,7 +199,7 @@ export const ammunitionItems: {
           amount: 20,
         },
         {
-          shortname: "metal.fragments",
+          shortname: "sulfur",
           amount: 10,
         },
       ],
@@ -368,12 +367,6 @@ export const ammunitionItems: {
       ],
     },
   },
-  "ammo.rocket.smoke": {
-    name: "Smoke Rocket WIP!!!!",
-    shortname: "ammo.rocket.smoke",
-    category: "ammunition",
-    image: "/images/ammunition/ammo.rocket.smoke.png",
-  },
   "ammo.shotgun": {
     shortname: "ammo.shotgun",
     name: "12 Gauge Buckshot",
@@ -447,12 +440,12 @@ export const ammunitionItems: {
       yield: 3,
       ingredients: [
         {
-          shortname: "bone.fragments",
-          amount: 10,
-        },
-        {
           shortname: "wood",
           amount: 25,
+        },
+        {
+          shortname: "bone.fragments",
+          amount: 10,
         },
       ],
     },
@@ -491,12 +484,12 @@ export const ammunitionItems: {
       yield: 2,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 5,
-        },
-        {
           shortname: "wood",
           amount: 20,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 5,
         },
       ],
     },
@@ -530,12 +523,12 @@ export const ammunitionItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 75,
+          shortname: "metal.refined",
+          amount: 5,
         },
         {
-          shortname: "metal.refined",
-          amount: 10,
+          shortname: "metal.fragments",
+          amount: 75,
         },
       ],
     },
@@ -574,12 +567,12 @@ export const ammunitionItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 75,
-        },
-        {
           shortname: "metal.refined",
           amount: 5,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 75,
         },
       ],
     },
@@ -594,12 +587,12 @@ export const ammunitionItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 50,
-        },
-        {
           shortname: "wood",
           amount: 200,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 50,
         },
       ],
     },
@@ -614,12 +607,12 @@ export const ammunitionItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "wood",
-          amount: 200,
-        },
-        {
           shortname: "grenade.bee",
           amount: 3,
+        },
+        {
+          shortname: "wood",
+          amount: 200,
         },
       ],
     },
@@ -650,16 +643,16 @@ export const ammunitionItems: {
       yield: 1,
       ingredients: [
         {
+          shortname: "propanetank",
+          amount: 1,
+        },
+        {
           shortname: "gunpowder",
           amount: 450,
         },
         {
           shortname: "lowgradefuel",
           amount: 20,
-        },
-        {
-          shortname: "propanetank",
-          amount: 1,
         },
       ],
     },

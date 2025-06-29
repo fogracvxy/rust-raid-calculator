@@ -37,9 +37,9 @@ export type ComponentItemShortname =
   | "valve1"
   | "valve2"
   | "valve3"
+  | "vehicle.1mod.cockpit"
   | "vehicle.1mod.cockpit.armored"
   | "vehicle.1mod.cockpit.with.engine"
-  | "vehicle.1mod.cockpit"
   | "vehicle.1mod.engine"
   | "vehicle.1mod.flatbed"
   | "vehicle.1mod.passengers.armored"
@@ -181,8 +181,8 @@ export const componentItems: {
     category: "component",
     image: "/images/components/gears.png",
     crafting: {
-      yield: 1,
       workbenchLevel: 3,
+      yield: 1,
       ingredients: [
         {
           shortname: "metal.fragments",
@@ -461,7 +461,7 @@ export const componentItems: {
   },
   techparts: {
     shortname: "techparts",
-    name: "Tech Parts",
+    name: "Tech Trash",
     category: "component",
     image: "/images/components/techparts.png",
   },

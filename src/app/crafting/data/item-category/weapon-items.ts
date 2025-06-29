@@ -358,12 +358,12 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 20,
-        },
-        {
           shortname: "gunpowder",
           amount: 60,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 20,
         },
       ],
     },
@@ -378,12 +378,12 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "cloth",
-          amount: 30,
-        },
-        {
           shortname: "nucleus",
           amount: 1,
+        },
+        {
+          shortname: "cloth",
+          amount: 30,
         },
       ],
     },
@@ -398,12 +398,12 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 25,
-        },
-        {
           shortname: "gunpowder",
           amount: 30,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 25,
         },
       ],
     },
@@ -418,12 +418,12 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.fragments",
-          amount: 50,
-        },
-        {
           shortname: "gunpowder",
           amount: 25,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 50,
         },
       ],
     },
@@ -966,20 +966,20 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "metal.refined",
-          amount: 4,
-        },
-        {
-          shortname: "metal.fragments",
-          amount: 450,
+          shortname: "semibody",
+          amount: 1,
         },
         {
           shortname: "metalspring",
           amount: 1,
         },
         {
-          shortname: "semibody",
-          amount: 1,
+          shortname: "metal.fragments",
+          amount: 450,
+        },
+        {
+          shortname: "metal.refined",
+          amount: 4,
         },
       ],
     },
@@ -1116,7 +1116,7 @@ export const weaponItems: {
           amount: 2,
         },
         {
-          shortname: "metal.fragments",
+          shortname: "metalspring",
           amount: 1,
         },
       ],
@@ -1269,12 +1269,12 @@ export const weaponItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "stones",
-          amount: 20,
-        },
-        {
           shortname: "spear.wooden",
           amount: 1,
+        },
+        {
+          shortname: "stones",
+          amount: 20,
         },
       ],
     },
@@ -1503,7 +1503,7 @@ export const weaponItems: {
       ingredients: [
         {
           shortname: "metal.refined",
-          amount: 1,
+          amount: 6,
         },
       ],
     },

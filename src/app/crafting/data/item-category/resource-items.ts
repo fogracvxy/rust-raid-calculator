@@ -31,12 +31,12 @@ export type ResourceItemShortname =
   | "skull.human"
   | "skull.wolf"
   | "stones"
-  | "sulfur.ore"
   | "sulfur"
+  | "sulfur.ore"
   | "targeting.computer"
+  | "water"
   | "water.radioactive"
   | "water.salt"
-  | "water"
   | "wood";
 
 export const resourceItems: {
@@ -112,16 +112,16 @@ export const resourceItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "sulfur",
-          amount: 10,
+          shortname: "gunpowder",
+          amount: 50,
         },
         {
           shortname: "lowgradefuel",
           amount: 3,
         },
         {
-          shortname: "gunpowder",
-          amount: 50,
+          shortname: "sulfur",
+          amount: 10,
         },
         {
           shortname: "metal.fragments",
@@ -144,7 +144,7 @@ export const resourceItems: {
   },
   gunpowder: {
     shortname: "gunpowder",
-    name: "Gunpowder",
+    name: "Gun Powder",
     category: "resource",
     image: "/images/resources/gunpowder.png",
     crafting: {

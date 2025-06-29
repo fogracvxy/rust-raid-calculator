@@ -488,6 +488,19 @@ export const miscItems: {
     shortname: "wall.graveyard.fence",
     category: "misc",
     image: "/images/misc/wall.graveyard.fence.png",
+    crafting: {
+      yield: 1,
+      ingredients: [
+        {
+          shortname: "stones",
+          amount: 250,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 75,
+        },
+      ],
+    },
   },
   woodcross: {
     name: "Wooden Cross",

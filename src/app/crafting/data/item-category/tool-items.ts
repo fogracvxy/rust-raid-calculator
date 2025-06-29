@@ -14,8 +14,8 @@ export type ToolItemShortname =
   | "flashlight.held"
   | "geiger.counter"
   | "grenade.smoke"
-  | "hammer.salvaged"
   | "hammer"
+  | "hammer.salvaged"
   | "handcuffs"
   | "hatchet"
   | "icepick.salvaged"
@@ -140,12 +140,12 @@ export const toolItems: {
       yield: 1,
       ingredients: [
         {
-          shortname: "cloth",
-          amount: 5,
-        },
-        {
           shortname: "explosives",
           amount: 20,
+        },
+        {
+          shortname: "cloth",
+          amount: 5,
         },
         {
           shortname: "techparts",
