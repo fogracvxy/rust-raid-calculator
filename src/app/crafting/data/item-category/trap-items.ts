@@ -7,7 +7,8 @@ export type TrapItemShortname =
   | "trap.bear"
   | "guntrap"
   | "trap.landmine"
-  | "flameturret";
+  | "flameturret"
+  | "samsite";
 
 export const trapItems: {
   [K in TrapItemShortname]: Item<K> & { category: TrapItemCategory };
@@ -96,5 +97,11 @@ export const trapItems: {
         { shortname: "propanetank", amount: 1 },
       ],
     },
+  },
+  samsite: {
+    name: "SAM Site",
+    shortname: "samsite",
+    category: "trap",
+    image: "/images/trap/samsite.png",
   },
 };
