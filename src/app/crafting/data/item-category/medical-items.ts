@@ -1,11 +1,17 @@
 import type { Item } from "../../types/item.types";
 
 export type MedicalItemCategory = "medical";
-export type MedicalItemShortname = "bandage" | "largemedkit" | "syringe.medical";
+export type MedicalItemShortname = "antiradpills" | "bandage" | "blood" | "largemedkit" | "syringe.medical";
 
 export const medicalItems: {
   [K in MedicalItemShortname]: Item<K> & { category: MedicalItemCategory };
 } = {
+  antiradpills: {
+    name: "Anti-Radiation Pills",
+    shortname: "antiradpills",
+    category: "medical",
+    image: "/images/medical/antiradpills.png",
+  },
   bandage: {
     shortname: "bandage",
     name: "Bandage",
@@ -15,6 +21,12 @@ export const medicalItems: {
       yield: 1,
       ingredients: [{ shortname: "cloth", amount: 4 }],
     },
+  },
+  blood: {
+    name: "Blood",
+    shortname: "blood",
+    category: "medical",
+    image: "/images/medical/blood.png",
   },
   largemedkit: {
     shortname: "largemedkit",
