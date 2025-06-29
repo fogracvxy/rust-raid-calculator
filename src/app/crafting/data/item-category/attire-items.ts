@@ -139,25 +139,25 @@ export const attireItems: {
     name: "Bandit Guard Gear",
     shortname: "attire.banditguard",
     category: "attire",
-    image: "/images/clothing/attire.banditguard.png",
+    image: "/images/attire/attire.banditguard.png",
   },
   "attire.bunny.onesie": {
     name: "Bunny Onesie",
     shortname: "attire.bunny.onesie",
     category: "attire",
-    image: "/images/clothing/attire.bunny.onesie.png",
+    image: "/images/attire/attire.bunny.onesie.png",
   },
   "attire.bunnyears": {
     name: "Bunny Ears",
     shortname: "attire.bunnyears",
     category: "attire",
-    image: "/images/clothing/attire.bunnyears.png",
+    image: "/images/attire/attire.bunnyears.png",
   },
   "attire.egg.suit": {
     name: "Egg Suit",
     shortname: "attire.egg.suit",
     category: "attire",
-    image: "/images/clothing/attire.egg.suit.png",
+    image: "/images/attire/attire.egg.suit.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -176,7 +176,7 @@ export const attireItems: {
     name: "Hide Boots",
     shortname: "attire.hide.boots",
     category: "attire",
-    image: "/images/clothing/attire.hide.boots.png",
+    image: "/images/attire/attire.hide.boots.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -191,7 +191,7 @@ export const attireItems: {
     name: "Hide Halterneck",
     shortname: "attire.hide.helterneck",
     category: "attire",
-    image: "/images/clothing/attire.hide.helterneck.png",
+    image: "/images/attire/attire.hide.helterneck.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -206,7 +206,7 @@ export const attireItems: {
     name: "Hide Pants",
     shortname: "attire.hide.pants",
     category: "attire",
-    image: "/images/clothing/attire.hide.pants.png",
+    image: "/images/attire/attire.hide.pants.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -221,7 +221,7 @@ export const attireItems: {
     name: "Hide Poncho",
     shortname: "attire.hide.poncho",
     category: "attire",
-    image: "/images/clothing/attire.hide.poncho.png",
+    image: "/images/attire/attire.hide.poncho.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -236,7 +236,7 @@ export const attireItems: {
     name: "Hide Skirt",
     shortname: "attire.hide.skirt",
     category: "attire",
-    image: "/images/clothing/attire.hide.skirt.png",
+    image: "/images/attire/attire.hide.skirt.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -251,7 +251,7 @@ export const attireItems: {
     name: "Hide Vest",
     shortname: "attire.hide.vest",
     category: "attire",
-    image: "/images/clothing/attire.hide.vest.png",
+    image: "/images/attire/attire.hide.vest.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -266,7 +266,7 @@ export const attireItems: {
     name: "Nest Hat",
     shortname: "attire.nesthat",
     category: "attire",
-    image: "/images/clothing/attire.nesthat.png",
+    image: "/images/attire/attire.nesthat.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -285,7 +285,7 @@ export const attireItems: {
     name: "Ninja Suit",
     shortname: "attire.ninja.suit",
     category: "attire",
-    image: "/images/clothing/attire.ninja.suit.png",
+    image: "/images/attire/attire.ninja.suit.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -304,13 +304,13 @@ export const attireItems: {
     name: "Reindeer Antlers",
     shortname: "attire.reindeer.headband",
     category: "attire",
-    image: "/images/clothing/attire.reindeer.headband.png",
+    image: "/images/attire/attire.reindeer.headband.png",
   },
   "attire.snowman.helmet": {
     name: "Snowman Helmet",
     shortname: "attire.snowman.helmet",
     category: "attire",
-    image: "/images/clothing/attire.snowman.helmet.png",
+    image: "/images/attire/attire.snowman.helmet.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -325,13 +325,13 @@ export const attireItems: {
     name: "A Barrel Costume",
     shortname: "barrelcostume",
     category: "attire",
-    image: "/images/clothing/barrelcostume.png",
+    image: "/images/attire/barrelcostume.png",
   },
   "bone.armor.suit": {
     name: "Bone Armor",
     shortname: "bone.armor.suit",
     category: "attire",
-    image: "/images/clothing/bone.armor.suit.png",
+    image: "/images/attire/bone.armor.suit.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -350,7 +350,7 @@ export const attireItems: {
     name: "Frog Boots",
     shortname: "boots.frog",
     category: "attire",
-    image: "/images/clothing/boots.frog.png",
+    image: "/images/attire/boots.frog.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -365,7 +365,7 @@ export const attireItems: {
     name: "Bucket Helmet",
     shortname: "bucket.helmet",
     category: "attire",
-    image: "/images/clothing/bucket.helmet.png",
+    image: "/images/attire/bucket.helmet.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -381,7 +381,7 @@ export const attireItems: {
     name: "Leather Gloves",
     shortname: "burlap.gloves",
     category: "attire",
-    image: "/images/clothing/burlap.gloves.png",
+    image: "/images/attire/burlap.gloves.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -396,7 +396,7 @@ export const attireItems: {
     name: "Burlap Gloves",
     shortname: "burlap.gloves.new",
     category: "attire",
-    image: "/images/clothing/burlap.gloves.new.png",
+    image: "/images/attire/burlap.gloves.new.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -411,7 +411,7 @@ export const attireItems: {
     name: "Burlap Headwrap",
     shortname: "burlap.headwrap",
     category: "attire",
-    image: "/images/clothing/burlap.headwrap.png",
+    image: "/images/attire/burlap.headwrap.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -426,7 +426,7 @@ export const attireItems: {
     name: "Burlap Shirt",
     shortname: "burlap.shirt",
     category: "attire",
-    image: "/images/clothing/burlap.shirt.png",
+    image: "/images/attire/burlap.shirt.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -441,7 +441,7 @@ export const attireItems: {
     name: "Burlap Shoes",
     shortname: "burlap.shoes",
     category: "attire",
-    image: "/images/clothing/burlap.shoes.png",
+    image: "/images/attire/burlap.shoes.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -456,7 +456,7 @@ export const attireItems: {
     name: "Burlap Trousers",
     shortname: "burlap.trousers",
     category: "attire",
-    image: "/images/clothing/burlap.trousers.png",
+    image: "/images/attire/burlap.trousers.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -471,7 +471,7 @@ export const attireItems: {
     name: "Chicken Costume",
     shortname: "chicken.costume",
     category: "attire",
-    image: "/images/clothing/chicken.costume.png",
+    image: "/images/attire/chicken.costume.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -490,7 +490,7 @@ export const attireItems: {
     name: "Clatter Helmet",
     shortname: "clatter.helmet",
     category: "attire",
-    image: "/images/clothing/clatter.helmet.png",
+    image: "/images/attire/clatter.helmet.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -505,7 +505,7 @@ export const attireItems: {
     name: "Coffee Can Helmet",
     shortname: "coffeecan.helmet",
     category: "attire",
-    image: "/images/clothing/coffeecan.helmet.png",
+    image: "/images/attire/coffeecan.helmet.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -529,13 +529,13 @@ export const attireItems: {
     name: "Crate Costume",
     shortname: "cratecostume",
     category: "attire",
-    image: "/images/clothing/cratecostume.png",
+    image: "/images/attire/cratecostume.png",
   },
   "deer.skull.mask": {
     name: "Bone Helmet",
     shortname: "deer.skull.mask",
     category: "attire",
-    image: "/images/clothing/deer.skull.mask.png",
+    image: "/images/attire/deer.skull.mask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -554,31 +554,31 @@ export const attireItems: {
     name: "Diving Fins",
     shortname: "diving.fins",
     category: "attire",
-    image: "/images/clothing/diving.fins.png",
+    image: "/images/attire/diving.fins.png",
   },
   "diving.mask": {
     name: "Diving Mask",
     shortname: "diving.mask",
     category: "attire",
-    image: "/images/clothing/diving.mask.png",
+    image: "/images/attire/diving.mask.png",
   },
   "diving.tank": {
     name: "Diving Tank",
     shortname: "diving.tank",
     category: "attire",
-    image: "/images/clothing/diving.tank.png",
+    image: "/images/attire/diving.tank.png",
   },
   "diving.wetsuit": {
     name: "Wetsuit",
     shortname: "diving.wetsuit",
     category: "attire",
-    image: "/images/clothing/diving.wetsuit.png",
+    image: "/images/attire/diving.wetsuit.png",
   },
   draculacape: {
     name: "Dracula Cape",
     shortname: "draculacape",
     category: "attire",
-    image: "/images/clothing/draculacape.png",
+    image: "/images/attire/draculacape.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -598,7 +598,7 @@ export const attireItems: {
     name: "Dracula Mask",
     shortname: "draculamask",
     category: "attire",
-    image: "/images/clothing/draculamask.png",
+    image: "/images/attire/draculamask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -613,85 +613,85 @@ export const attireItems: {
     name: "Frankenstein Mask",
     shortname: "frankensteinmask",
     category: "attire",
-    image: "/images/clothing/frankensteinmask.png",
+    image: "/images/attire/frankensteinmask.png",
   },
   "frankensteins.monster.01.head": {
     name: "Light Frankenstein Head",
     shortname: "frankensteins.monster.01.head",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.01.head.png",
+    image: "/images/attire/frankensteins.monster.01.head.png",
   },
   "frankensteins.monster.01.legs": {
     name: "Light Frankenstein Legs",
     shortname: "frankensteins.monster.01.legs",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.01.legs.png",
+    image: "/images/attire/frankensteins.monster.01.legs.png",
   },
   "frankensteins.monster.01.torso": {
     name: "Light Frankenstein Torso",
     shortname: "frankensteins.monster.01.torso",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.01.torso.png",
+    image: "/images/attire/frankensteins.monster.01.torso.png",
   },
   "frankensteins.monster.02.head": {
     name: "Medium Frankenstein Head",
     shortname: "frankensteins.monster.02.head",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.02.head.png",
+    image: "/images/attire/frankensteins.monster.02.head.png",
   },
   "frankensteins.monster.02.legs": {
     name: "Medium Frankenstein Legs",
     shortname: "frankensteins.monster.02.legs",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.02.legs.png",
+    image: "/images/attire/frankensteins.monster.02.legs.png",
   },
   "frankensteins.monster.02.torso": {
     name: "Medium Frankenstein Torso",
     shortname: "frankensteins.monster.02.torso",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.02.torso.png",
+    image: "/images/attire/frankensteins.monster.02.torso.png",
   },
   "frankensteins.monster.03.head": {
     name: "Heavy Frankenstein Head",
     shortname: "frankensteins.monster.03.head",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.03.head.png",
+    image: "/images/attire/frankensteins.monster.03.head.png",
   },
   "frankensteins.monster.03.legs": {
     name: "Heavy Frankenstein Legs",
     shortname: "frankensteins.monster.03.legs",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.03.legs.png",
+    image: "/images/attire/frankensteins.monster.03.legs.png",
   },
   "frankensteins.monster.03.torso": {
     name: "Heavy Frankenstein Torso",
     shortname: "frankensteins.monster.03.torso",
     category: "attire",
-    image: "/images/clothing/frankensteins.monster.03.torso.png",
+    image: "/images/attire/frankensteins.monster.03.torso.png",
   },
   ghostsheet: {
     name: "Ghost Costume",
     shortname: "ghostsheet",
     category: "attire",
-    image: "/images/clothing/ghostsheet.png",
+    image: "/images/attire/ghostsheet.png",
   },
   gingerbreadsuit: {
     name: "Gingerbread Suit",
     shortname: "gingerbreadsuit",
     category: "attire",
-    image: "/images/clothing/gingerbreadsuit.png",
+    image: "/images/attire/gingerbreadsuit.png",
   },
   gloweyes: {
     name: "Glowing Eyes",
     shortname: "gloweyes",
     category: "attire",
-    image: "/images/clothing/gloweyes.png",
+    image: "/images/attire/gloweyes.png",
   },
   "hab.armor": {
     name: "Hot Air Balloon Armor",
     shortname: "hab.armor",
     category: "attire",
-    image: "/images/clothing/hab.armor.png",
+    image: "/images/attire/hab.armor.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -707,13 +707,13 @@ export const attireItems: {
     name: "Mummy Suit",
     shortname: "halloween.mummysuit",
     category: "attire",
-    image: "/images/clothing/halloween.mummysuit.png",
+    image: "/images/attire/halloween.mummysuit.png",
   },
   "halloween.surgeonsuit": {
     name: "Surgeon Scrubs",
     shortname: "halloween.surgeonsuit",
     category: "attire",
-    image: "/images/clothing/halloween.surgeonsuit.png",
+    image: "/images/attire/halloween.surgeonsuit.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -732,7 +732,7 @@ export const attireItems: {
     name: "Beenie Hat",
     shortname: "hat.beenie",
     category: "attire",
-    image: "/images/clothing/hat.beenie.png",
+    image: "/images/attire/hat.beenie.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -747,7 +747,7 @@ export const attireItems: {
     name: "Boonie Hat",
     shortname: "hat.boonie",
     category: "attire",
-    image: "/images/clothing/hat.boonie.png",
+    image: "/images/attire/hat.boonie.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -762,7 +762,7 @@ export const attireItems: {
     name: "Bunny Hat",
     shortname: "hat.bunnyhat",
     category: "attire",
-    image: "/images/clothing/hat.bunnyhat.png",
+    image: "/images/attire/hat.bunnyhat.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -777,7 +777,7 @@ export const attireItems: {
     name: "Candle Hat",
     shortname: "hat.candle",
     category: "attire",
-    image: "/images/clothing/hat.candle.png",
+    image: "/images/attire/hat.candle.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -796,7 +796,7 @@ export const attireItems: {
     name: "Baseball Cap",
     shortname: "hat.cap",
     category: "attire",
-    image: "/images/clothing/hat.cap.png",
+    image: "/images/attire/hat.cap.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -811,7 +811,7 @@ export const attireItems: {
     name: "Dragon Mask",
     shortname: "hat.dragonmask",
     category: "attire",
-    image: "/images/clothing/hat.dragonmask.png",
+    image: "/images/attire/hat.dragonmask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -830,13 +830,13 @@ export const attireItems: {
     name: "Gas Mask",
     shortname: "hat.gas.mask",
     category: "attire",
-    image: "/images/clothing/hat.gas.mask.png",
+    image: "/images/attire/hat.gas.mask.png",
   },
   "hat.miner": {
     name: "Miners Hat",
     shortname: "hat.miner",
     category: "attire",
-    image: "/images/clothing/hat.miner.png",
+    image: "/images/attire/hat.miner.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -860,7 +860,7 @@ export const attireItems: {
     name: "Ox Mask",
     shortname: "hat.oxmask",
     category: "attire",
-    image: "/images/clothing/hat.oxmask.png",
+    image: "/images/attire/hat.oxmask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -879,7 +879,7 @@ export const attireItems: {
     name: "Rabbit Mask",
     shortname: "hat.rabbitmask",
     category: "attire",
-    image: "/images/clothing/hat.rabbitmask.png",
+    image: "/images/attire/hat.rabbitmask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -898,7 +898,7 @@ export const attireItems: {
     name: "Rat Mask",
     shortname: "hat.ratmask",
     category: "attire",
-    image: "/images/clothing/hat.ratmask.png",
+    image: "/images/attire/hat.ratmask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -917,7 +917,7 @@ export const attireItems: {
     name: "Snake mask",
     shortname: "hat.snakemask",
     category: "attire",
-    image: "/images/clothing/hat.snakemask.png",
+    image: "/images/attire/hat.snakemask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -936,7 +936,7 @@ export const attireItems: {
     name: "Tiger Mask",
     shortname: "hat.tigermask",
     category: "attire",
-    image: "/images/clothing/hat.tigermask.png",
+    image: "/images/attire/hat.tigermask.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -955,7 +955,7 @@ export const attireItems: {
     name: "Wellipets Hat",
     shortname: "hat.wellipets",
     category: "attire",
-    image: "/images/clothing/hat.wellipets.png",
+    image: "/images/attire/hat.wellipets.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -970,7 +970,7 @@ export const attireItems: {
     name: "Wolf Headdress",
     shortname: "hat.wolf",
     category: "attire",
-    image: "/images/clothing/hat.wolf.png",
+    image: "/images/attire/hat.wolf.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -989,7 +989,7 @@ export const attireItems: {
     name: "Hazmat Suit",
     shortname: "hazmatsuit",
     category: "attire",
-    image: "/images/clothing/hazmatsuit.png",
+    image: "/images/attire/hazmatsuit.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1013,31 +1013,31 @@ export const attireItems: {
     name: "Arctic Suit",
     shortname: "hazmatsuit.arcticsuit",
     category: "attire",
-    image: "/images/clothing/hazmatsuit.arcticsuit.png",
+    image: "/images/attire/hazmatsuit.arcticsuit.png",
   },
   hazmatsuit_scientist_arctic: {
     name: "Arctic Scientist Suit",
     shortname: "hazmatsuit_scientist_arctic",
     category: "attire",
-    image: "/images/clothing/hazmatsuit_scientist_arctic.png",
+    image: "/images/attire/hazmatsuit_scientist_arctic.png",
   },
   hazmatsuit_scientist_nvgm: {
     name: "NVGM Scientist Suit",
     shortname: "hazmatsuit_scientist_nvgm",
     category: "attire",
-    image: "/images/clothing/hazmatsuit_scientist_nvgm.png",
+    image: "/images/attire/hazmatsuit_scientist_nvgm.png",
   },
   hazmatsuit_scientist_peacekeeper: {
     name: "Scientist Suit",
     shortname: "hazmatsuit_scientist_peacekeeper",
     category: "attire",
-    image: "/images/clothing/hazmatsuit_scientist_peacekeeper.png",
+    image: "/images/attire/hazmatsuit_scientist_peacekeeper.png",
   },
   "heavy.plate.helmet": {
     name: "Heavy Plate Helmet",
     shortname: "heavy.plate.helmet",
     category: "attire",
-    image: "/images/clothing/heavy.plate.helmet.png",
+    image: "/images/attire/heavy.plate.helmet.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1057,7 +1057,7 @@ export const attireItems: {
     name: "Heavy Plate Jacket",
     shortname: "heavy.plate.jacket",
     category: "attire",
-    image: "/images/clothing/heavy.plate.jacket.png",
+    image: "/images/attire/heavy.plate.jacket.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1077,7 +1077,7 @@ export const attireItems: {
     name: "Heavy Plate Pants",
     shortname: "heavy.plate.pants",
     category: "attire",
-    image: "/images/clothing/heavy.plate.pants.png",
+    image: "/images/attire/heavy.plate.pants.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1097,7 +1097,7 @@ export const attireItems: {
     name: "Hoodie",
     shortname: "hoodie",
     category: "attire",
-    image: "/images/clothing/hoodie.png",
+    image: "/images/attire/hoodie.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1117,7 +1117,7 @@ export const attireItems: {
     name: "Roadsign Horse Armor",
     shortname: "horse.armor.roadsign",
     category: "attire",
-    image: "/images/clothing/horse.armor.roadsign.png",
+    image: "/images/attire/horse.armor.roadsign.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1137,7 +1137,7 @@ export const attireItems: {
     name: "Wooden Horse Armor",
     shortname: "horse.armor.wood",
     category: "attire",
-    image: "/images/clothing/horse.armor.wood.png",
+    image: "/images/attire/horse.armor.wood.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1157,7 +1157,7 @@ export const attireItems: {
     name: "Horse Costume",
     shortname: "horse.costume",
     category: "attire",
-    image: "/images/clothing/horse.costume.png",
+    image: "/images/attire/horse.costume.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1176,19 +1176,19 @@ export const attireItems: {
     name: "Double Horse Saddle",
     shortname: "horse.saddle.double",
     category: "attire",
-    image: "/images/clothing/horse.saddle.double.png",
+    image: "/images/attire/horse.saddle.double.png",
   },
   "horse.saddle.single": {
     name: "Single Horse Saddle",
     shortname: "horse.saddle.single",
     category: "attire",
-    image: "/images/clothing/horse.saddle.single.png",
+    image: "/images/attire/horse.saddle.single.png",
   },
   "horse.saddlebag": {
     name: "Saddle bag",
     shortname: "horse.saddlebag",
     category: "attire",
-    image: "/images/clothing/horse.saddlebag.png",
+    image: "/images/attire/horse.saddlebag.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1204,7 +1204,7 @@ export const attireItems: {
     name: "High Quality Horse Shoes",
     shortname: "horse.shoes.advanced",
     category: "attire",
-    image: "/images/clothing/horse.shoes.advanced.png",
+    image: "/images/attire/horse.shoes.advanced.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1220,7 +1220,7 @@ export const attireItems: {
     name: "Basic Horse Shoes",
     shortname: "horse.shoes.basic",
     category: "attire",
-    image: "/images/clothing/horse.shoes.basic.png",
+    image: "/images/attire/horse.shoes.basic.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1236,7 +1236,7 @@ export const attireItems: {
     name: "Jacket",
     shortname: "jacket",
     category: "attire",
-    image: "/images/clothing/jacket.png",
+    image: "/images/attire/jacket.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1256,7 +1256,7 @@ export const attireItems: {
     name: "Snow Jacket",
     shortname: "jacket.snow",
     category: "attire",
-    image: "/images/clothing/jacket.snow.png",
+    image: "/images/attire/jacket.snow.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1276,37 +1276,37 @@ export const attireItems: {
     name: "Jumpsuit",
     shortname: "jumpsuit.suit",
     category: "attire",
-    image: "/images/clothing/jumpsuit.suit.png",
+    image: "/images/attire/jumpsuit.suit.png",
   },
   "jumpsuit.suit.blue": {
     name: "Blue Jumpsuit",
     shortname: "jumpsuit.suit.blue",
     category: "attire",
-    image: "/images/clothing/jumpsuit.suit.blue.png",
+    image: "/images/attire/jumpsuit.suit.blue.png",
   },
   "jumpsuit.waterwellnpc": {
     name: "Waterwell NPC Jumpsuit",
     shortname: "jumpsuit.waterwellnpc",
     category: "attire",
-    image: "/images/clothing/jumpsuit.waterwellnpc.png",
+    image: "/images/attire/jumpsuit.waterwellnpc.png",
   },
   largebackpack: {
     name: "Large Backpack",
     shortname: "largebackpack",
     category: "attire",
-    image: "/images/clothing/largebackpack.png",
+    image: "/images/attire/largebackpack.png",
   },
   "lumberjack hoodie": {
     name: "Lumberjack Hoodie",
     shortname: "lumberjack hoodie",
     category: "attire",
-    image: "/images/clothing/lumberjack hoodie.png",
+    image: "/images/attire/lumberjack hoodie.png",
   },
   "mask.balaclava": {
     name: "Improvised Balaclava",
     shortname: "mask.balaclava",
     category: "attire",
-    image: "/images/clothing/mask.balaclava.png",
+    image: "/images/attire/mask.balaclava.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1321,7 +1321,7 @@ export const attireItems: {
     name: "Bandana Mask",
     shortname: "mask.bandana",
     category: "attire",
-    image: "/images/clothing/mask.bandana.png",
+    image: "/images/attire/mask.bandana.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1336,7 +1336,7 @@ export const attireItems: {
     name: "Metal Facemask",
     shortname: "metal.facemask",
     category: "attire",
-    image: "/images/clothing/metal.facemask.png",
+    image: "/images/attire/metal.facemask.png",
     crafting: {
       workbenchLevel: 3,
       yield: 1,
@@ -1360,7 +1360,7 @@ export const attireItems: {
     name: "Metal Chest Plate",
     shortname: "metal.plate.torso",
     category: "attire",
-    image: "/images/clothing/metal.plate.torso.png",
+    image: "/images/attire/metal.plate.torso.png",
     crafting: {
       workbenchLevel: 3,
       yield: 1,
@@ -1384,7 +1384,7 @@ export const attireItems: {
     name: "Metal Shield",
     shortname: "metal.shield",
     category: "attire",
-    image: "/images/clothing/metal.shield.png",
+    image: "/images/attire/metal.shield.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1408,7 +1408,7 @@ export const attireItems: {
     name: "Movember Moustache",
     shortname: "movembermoustache",
     category: "attire",
-    image: "/images/clothing/movembermoustache.png",
+    image: "/images/attire/movembermoustache.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1423,13 +1423,13 @@ export const attireItems: {
     name: "Mummy Mask",
     shortname: "mummymask",
     category: "attire",
-    image: "/images/clothing/mummymask.png",
+    image: "/images/attire/mummymask.png",
   },
   nightvisiongoggles: {
     name: "Night Vision Goggles",
     shortname: "nightvisiongoggles",
     category: "attire",
-    image: "/images/clothing/nightvisiongoggles.png",
+    image: "/images/attire/nightvisiongoggles.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1449,13 +1449,13 @@ export const attireItems: {
     name: "Outbreak Scientist Suit",
     shortname: "oubreak_scientist",
     category: "attire",
-    image: "/images/clothing/oubreak_scientist.png",
+    image: "/images/attire/oubreak_scientist.png",
   },
   pants: {
     name: "Pants",
     shortname: "pants",
     category: "attire",
-    image: "/images/clothing/pants.png",
+    image: "/images/attire/pants.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1475,7 +1475,7 @@ export const attireItems: {
     name: "Shorts",
     shortname: "pants.shorts",
     category: "attire",
-    image: "/images/clothing/pants.shorts.png",
+    image: "/images/attire/pants.shorts.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1490,7 +1490,7 @@ export const attireItems: {
     name: "Parachute",
     shortname: "parachute",
     category: "attire",
-    image: "/images/clothing/parachute.png",
+    image: "/images/attire/parachute.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1514,13 +1514,13 @@ export const attireItems: {
     name: "Party Hat",
     shortname: "partyhat",
     category: "attire",
-    image: "/images/clothing/partyhat.png",
+    image: "/images/attire/partyhat.png",
   },
   prisonerhood: {
     name: "Prisoner Hood",
     shortname: "prisonerhood",
     category: "attire",
-    image: "/images/clothing/prisonerhood.png",
+    image: "/images/attire/prisonerhood.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1536,7 +1536,7 @@ export const attireItems: {
     name: "Reinforced Wooden Shield",
     shortname: "reinforced.wooden.shield",
     category: "attire",
-    image: "/images/clothing/reinforced.wooden.shield.png",
+    image: "/images/attire/reinforced.wooden.shield.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1560,7 +1560,7 @@ export const attireItems: {
     name: "Riot Helmet",
     shortname: "riot.helmet",
     category: "attire",
-    image: "/images/clothing/riot.helmet.png",
+    image: "/images/attire/riot.helmet.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1580,7 +1580,7 @@ export const attireItems: {
     name: "Roadsign Gloves",
     shortname: "roadsign.gloves",
     category: "attire",
-    image: "/images/clothing/roadsign.gloves.png",
+    image: "/images/attire/roadsign.gloves.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1604,7 +1604,7 @@ export const attireItems: {
     name: "Road Sign Jacket",
     shortname: "roadsign.jacket",
     category: "attire",
-    image: "/images/clothing/roadsign.jacket.png",
+    image: "/images/attire/roadsign.jacket.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1628,7 +1628,7 @@ export const attireItems: {
     name: "Road Sign Kilt",
     shortname: "roadsign.kilt",
     category: "attire",
-    image: "/images/clothing/roadsign.kilt.png",
+    image: "/images/attire/roadsign.kilt.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1652,7 +1652,7 @@ export const attireItems: {
     name: "Santa Beard",
     shortname: "santabeard",
     category: "attire",
-    image: "/images/clothing/santabeard.png",
+    image: "/images/attire/santabeard.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1667,31 +1667,31 @@ export const attireItems: {
     name: "Santa Hat",
     shortname: "santahat",
     category: "attire",
-    image: "/images/clothing/santahat.png",
+    image: "/images/attire/santahat.png",
   },
   "scarecrow.suit": {
     name: "Scarecrow Suit",
     shortname: "scarecrow.suit",
     category: "attire",
-    image: "/images/clothing/scarecrow.suit.png",
+    image: "/images/attire/scarecrow.suit.png",
   },
   scarecrowhead: {
     name: "Scarecrow Wrap",
     shortname: "scarecrowhead",
     category: "attire",
-    image: "/images/clothing/scarecrowhead.png",
+    image: "/images/attire/scarecrowhead.png",
   },
   scientistsuit_heavy: {
     name: "Heavy Scientist Suit",
     shortname: "scientistsuit_heavy",
     category: "attire",
-    image: "/images/clothing/scientistsuit_heavy.png",
+    image: "/images/attire/scientistsuit_heavy.png",
   },
   "shirt.collared": {
     name: "Shirt",
     shortname: "shirt.collared",
     category: "attire",
-    image: "/images/clothing/shirt.collared.png",
+    image: "/images/attire/shirt.collared.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1707,7 +1707,7 @@ export const attireItems: {
     name: "Tank Top",
     shortname: "shirt.tanktop",
     category: "attire",
-    image: "/images/clothing/shirt.tanktop.png",
+    image: "/images/attire/shirt.tanktop.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1722,7 +1722,7 @@ export const attireItems: {
     name: "Boots",
     shortname: "shoes.boots",
     category: "attire",
-    image: "/images/clothing/shoes.boots.png",
+    image: "/images/attire/shoes.boots.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -1746,7 +1746,7 @@ export const attireItems: {
     name: "Small Backpack",
     shortname: "smallbackpack",
     category: "attire",
-    image: "/images/clothing/smallbackpack.png",
+    image: "/images/attire/smallbackpack.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1766,13 +1766,13 @@ export const attireItems: {
     name: "Tactical Gloves",
     shortname: "tactical.gloves",
     category: "attire",
-    image: "/images/clothing/tactical.gloves.png",
+    image: "/images/attire/tactical.gloves.png",
   },
   tshirt: {
     name: "T-Shirt",
     shortname: "tshirt",
     category: "attire",
-    image: "/images/clothing/tshirt.png",
+    image: "/images/attire/tshirt.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1788,7 +1788,7 @@ export const attireItems: {
     name: "Longsleeve T-Shirt",
     shortname: "tshirt.long",
     category: "attire",
-    image: "/images/clothing/tshirt.long.png",
+    image: "/images/attire/tshirt.long.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -1804,7 +1804,7 @@ export const attireItems: {
     name: "Headset",
     shortname: "twitch.headset",
     category: "attire",
-    image: "/images/clothing/twitch.headset.png",
+    image: "/images/attire/twitch.headset.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1819,13 +1819,13 @@ export const attireItems: {
     name: "Twitch Rivals Flag",
     shortname: "twitchrivalsflag",
     category: "attire",
-    image: "/images/clothing/twitchrivalsflag.png",
+    image: "/images/attire/twitchrivalsflag.png",
   },
   twitchsunglasses: {
     name: "Purple Sunglasses",
     shortname: "twitchsunglasses",
     category: "attire",
-    image: "/images/clothing/twitchsunglasses.png",
+    image: "/images/attire/twitchsunglasses.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1840,7 +1840,7 @@ export const attireItems: {
     name: "Wood Armor Helmet",
     shortname: "wood.armor.helmet",
     category: "attire",
-    image: "/images/clothing/wood.armor.helmet.png",
+    image: "/images/attire/wood.armor.helmet.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1859,7 +1859,7 @@ export const attireItems: {
     name: "Wood Chestplate",
     shortname: "wood.armor.jacket",
     category: "attire",
-    image: "/images/clothing/wood.armor.jacket.png",
+    image: "/images/attire/wood.armor.jacket.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1878,7 +1878,7 @@ export const attireItems: {
     name: "Wood Armor Pants",
     shortname: "wood.armor.pants",
     category: "attire",
-    image: "/images/clothing/wood.armor.pants.png",
+    image: "/images/attire/wood.armor.pants.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1897,7 +1897,7 @@ export const attireItems: {
     name: "Wood Armor Gloves",
     shortname: "woodarmor.gloves",
     category: "attire",
-    image: "/images/clothing/woodarmor.gloves.png",
+    image: "/images/attire/woodarmor.gloves.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -1916,7 +1916,7 @@ export const attireItems: {
     name: "Wooden Shield",
     shortname: "wooden.shield",
     category: "attire",
-    image: "/images/clothing/wooden.shield.png",
+    image: "/images/attire/wooden.shield.png",
     crafting: {
       yield: 1,
       ingredients: [

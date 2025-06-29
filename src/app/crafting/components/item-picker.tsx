@@ -26,13 +26,28 @@ export interface ItemPickerProps {
   classNames?: ClassNames<"root">;
 }
 
+const imageFailed = new Set<string>();
+
 const SearchItemRenderer = ({
   item,
   enableSearchImages = false,
 }: SearchRenderOptionProps<Item> & { enableSearchImages?: boolean }) => {
   return (
     <div className="flex items-center gap-3">
-      {enableSearchImages && <Image src={item.image} alt={item.name} width={24} height={24} />}
+      {enableSearchImages && !imageFailed.has(item.shortname) && (
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={24}
+          height={24}
+          onError={(e) => {
+            if (!imageFailed.has(item.shortname)) {
+              imageFailed.add(item.shortname);
+              console.error(`Failed to load image for ${item.name}:`);
+            }
+          }}
+        />
+      )}
       <span className="text-white font-semibold">{item.name}</span>
     </div>
   );

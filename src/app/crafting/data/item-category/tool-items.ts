@@ -44,7 +44,7 @@ export const toolItems: {
     name: "Salvaged Axe",
     shortname: "axe.salvaged",
     category: "tool",
-    image: "/images/tool/axe.salvaged.png",
+    image: "/images/tools/axe.salvaged.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -64,7 +64,7 @@ export const toolItems: {
     name: "Water Bucket",
     shortname: "bucket.water",
     category: "tool",
-    image: "/images/tool/bucket.water.png",
+    image: "/images/tools/bucket.water.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -79,13 +79,13 @@ export const toolItems: {
     name: "Birthday Cake",
     shortname: "cakefiveyear",
     category: "tool",
-    image: "/images/tool/cakefiveyear.png",
+    image: "/images/tools/cakefiveyear.png",
   },
   chainsaw: {
     name: "Chainsaw",
     shortname: "chainsaw",
     category: "tool",
-    image: "/images/tool/chainsaw.png",
+    image: "/images/tools/chainsaw.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -158,13 +158,13 @@ export const toolItems: {
     name: "Fishing Tackle",
     shortname: "fishing.tackle",
     category: "tool",
-    image: "/images/tool/fishing.tackle.png",
+    image: "/images/tools/fishing.tackle.png",
   },
   "fishingrod.handmade": {
     name: "Handmade Fishing Rod",
     shortname: "fishingrod.handmade",
     category: "tool",
-    image: "/images/tool/fishingrod.handmade.png",
+    image: "/images/tools/fishingrod.handmade.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -183,7 +183,7 @@ export const toolItems: {
     name: "Flare",
     shortname: "flare",
     category: "tool",
-    image: "/images/tool/flare.png",
+    image: "/images/tools/flare.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -203,7 +203,7 @@ export const toolItems: {
     name: "Flashlight",
     shortname: "flashlight.held",
     category: "tool",
-    image: "/images/tool/flashlight.held.png",
+    image: "/images/tools/flashlight.held.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -219,13 +219,13 @@ export const toolItems: {
     name: "Geiger Counter",
     shortname: "geiger.counter",
     category: "tool",
-    image: "/images/tool/geiger.counter.png",
+    image: "/images/tools/geiger.counter.png",
   },
   "grenade.smoke": {
     name: "Smoke Grenade",
     shortname: "grenade.smoke",
     category: "tool",
-    image: "/images/tool/grenade.smoke.png",
+    image: "/images/tools/grenade.smoke.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -245,7 +245,7 @@ export const toolItems: {
     name: "Hammer",
     shortname: "hammer",
     category: "tool",
-    image: "/images/tool/hammer.png",
+    image: "/images/tools/hammer.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -260,7 +260,7 @@ export const toolItems: {
     name: "Salvaged Hammer",
     shortname: "hammer.salvaged",
     category: "tool",
-    image: "/images/tool/hammer.salvaged.png",
+    image: "/images/tools/hammer.salvaged.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -280,7 +280,7 @@ export const toolItems: {
     name: "Handcuffs",
     shortname: "handcuffs",
     category: "tool",
-    image: "/images/tool/handcuffs.png",
+    image: "/images/tools/handcuffs.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -296,7 +296,7 @@ export const toolItems: {
     name: "Hatchet",
     shortname: "hatchet",
     category: "tool",
-    image: "/images/tool/hatchet.png",
+    image: "/images/tools/hatchet.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -316,7 +316,7 @@ export const toolItems: {
     name: "Salvaged Icepick",
     shortname: "icepick.salvaged",
     category: "tool",
-    image: "/images/tool/icepick.salvaged.png",
+    image: "/images/tools/icepick.salvaged.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -336,13 +336,13 @@ export const toolItems: {
     name: "Jackhammer",
     shortname: "jackhammer",
     category: "tool",
-    image: "/images/tool/jackhammer.png",
+    image: "/images/tools/jackhammer.png",
   },
   "metal.detector": {
     name: "Metal Detector",
     shortname: "metal.detector",
     category: "tool",
-    image: "/images/tool/metal.detector.png",
+    image: "/images/tools/metal.detector.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -366,7 +366,7 @@ export const toolItems: {
     name: "Pickaxe",
     shortname: "pickaxe",
     category: "tool",
-    image: "/images/tool/pickaxe.png",
+    image: "/images/tools/pickaxe.png",
     crafting: {
       workbenchLevel: 1,
       yield: 1,
@@ -386,7 +386,7 @@ export const toolItems: {
     name: "RF Transmitter",
     shortname: "rf.detonator",
     category: "tool",
-    image: "/images/tool/rf.detonator.png",
+    image: "/images/tools/rf.detonator.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -402,7 +402,7 @@ export const toolItems: {
     name: "Rock",
     shortname: "rock",
     category: "tool",
-    image: "/images/tool/rock.png",
+    image: "/images/tools/rock.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -417,13 +417,13 @@ export const toolItems: {
     name: "Shovel",
     shortname: "shovel",
     category: "tool",
-    image: "/images/tool/shovel.png",
+    image: "/images/tools/shovel.png",
   },
   spraycan: {
     name: "Spray Can",
     shortname: "spraycan",
     category: "tool",
-    image: "/images/tool/spraycan.png",
+    image: "/images/tools/spraycan.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -438,7 +438,7 @@ export const toolItems: {
     name: "Stone Pickaxe",
     shortname: "stone.pickaxe",
     category: "tool",
-    image: "/images/tool/stone.pickaxe.png",
+    image: "/images/tools/stone.pickaxe.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -457,7 +457,7 @@ export const toolItems: {
     name: "Stone Hatchet",
     shortname: "stonehatchet",
     category: "tool",
-    image: "/images/tool/stonehatchet.png",
+    image: "/images/tools/stonehatchet.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -476,13 +476,13 @@ export const toolItems: {
     name: "Supply Signal",
     shortname: "supply.signal",
     category: "tool",
-    image: "/images/tool/supply.signal.png",
+    image: "/images/tools/supply.signal.png",
   },
   surveycharge: {
     name: "Survey Charge",
     shortname: "surveycharge",
     category: "tool",
-    image: "/images/tool/surveycharge.png",
+    image: "/images/tools/surveycharge.png",
     crafting: {
       workbenchLevel: 2,
       yield: 1,
@@ -510,7 +510,7 @@ export const toolItems: {
     name: "Binoculars",
     shortname: "tool.binoculars",
     category: "tool",
-    image: "/images/tool/tool.binoculars.png",
+    image: "/images/tools/tool.binoculars.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -529,13 +529,13 @@ export const toolItems: {
     name: "Camera",
     shortname: "tool.camera",
     category: "tool",
-    image: "/images/tool/tool.camera.png",
+    image: "/images/tools/tool.camera.png",
   },
   "tool.instant_camera": {
     name: "Instant Camera",
     shortname: "tool.instant_camera",
     category: "tool",
-    image: "/images/tool/tool.instant_camera.png",
+    image: "/images/tools/tool.instant_camera.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -554,7 +554,7 @@ export const toolItems: {
     name: "Garry's Mod Tool Gun",
     shortname: "toolgun",
     category: "tool",
-    image: "/images/tool/toolgun.png",
+    image: "/images/tools/toolgun.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -573,7 +573,7 @@ export const toolItems: {
     name: "Torch",
     shortname: "torch",
     category: "tool",
-    image: "/images/tool/torch.png",
+    image: "/images/tools/torch.png",
     crafting: {
       yield: 1,
       ingredients: [
@@ -596,7 +596,7 @@ export const toolItems: {
     name: "Wallpaper Tool",
     shortname: "wallpaper.tool",
     category: "tool",
-    image: "/images/tool/wallpaper.tool.png",
+    image: "/images/tools/wallpaper.tool.png",
     crafting: {
       yield: 1,
       ingredients: [
