@@ -130,10 +130,10 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
   }
 
   const resourceImages = {
-    c4: "/images/c4.png",
-    rockets: "/images/rockets.png",
-    satchel: "/images/satchel.png",
-    bullets: "/images/bullets.png",
+    c4: "/images/tools/c4.png",
+    rockets: "/images/ammunition/rockets.png",
+    satchel: "/images/tools/satchel.png",
+    bullets: "/images/ammunition/ammo.rifle.explosive.png",
   };
 
   const totalItems = collection.reduce((sum, c) => sum + c.quantity, 0);
@@ -456,7 +456,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                   <div className="relative w-10 h-10 mr-3">
                     <div className="absolute left-0 top-0">
                       <Image 
-                        src="/images/bullets.png" 
+                        src="/images/ammunition/ammo.rifle.explosive.png" 
                         alt="Bullets"
                         width={22} 
                         height={22}
@@ -465,7 +465,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                     </div>
                     <div className="absolute right-0 bottom-0">
                       <Image 
-                        src="/images/rockets.png" 
+                        src="/images/ammunition/rockets.png" 
                         alt="Rockets"
                         width={22} 
                         height={22}
@@ -487,16 +487,21 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                   if (!item.bestOption) return null;
                   
                   // Get options with values > 0 in bestOption
-                  const options = ["rockets", "c4", "satchel", "bullets"];
+                  const options = [
+                    { id: "rockets", image: "/images/ammunition/rockets.png" },
+                    { id: "c4", image: "/images/tools/c4.png" },
+                    { id: "satchel", image: "/images/tools/satchel.png" },
+                    { id: "bullets", image: "/images/ammunition/ammo.rifle.explosive.png" },
+                  ];
                   const validOptions = options.filter(
-                    opt => item.bestOption && item.bestOption[opt as keyof typeof item.bestOption] > 0
+                    opt => item.bestOption && item.bestOption[opt.id as keyof typeof item.bestOption] > 0
                   );
                   
                   if (validOptions.length === 0) return null;
                   
                   // Directly use the bestOption quantities from items.ts
                   const bestOptionMethods = validOptions.map(option => {
-                    const optionKey = option as keyof typeof item.bestOption;
+                    const optionKey = option.id as keyof typeof item.bestOption;
                     const exactQuantity = item.bestOption![optionKey];
                     // Calculate cost for a single item
                     const sulfurCost = exactQuantity * getSulfurCost(optionKey);
@@ -515,7 +520,7 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                   
                   // Calculate the best standard destruction method
                   const standardMethods = options.map(option => {
-                    const optionKey = option as keyof typeof item.destructionOptions;
+                    const optionKey = option.id as keyof typeof item.destructionOptions;
                     const standardQuantity = item.destructionOptions[optionKey];
                     // Calculate cost for a single item
                     const sulfurCost = standardQuantity * getSulfurCost(optionKey);
@@ -589,13 +594,13 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                           <div className="flex -space-x-3">
                             {bestOptionMethods.map((method, index) => (
                               <div
-                                key={method.option}
+                                key={method.option.id}
                                 className="h-8 w-8 bg-black rounded-full flex items-center justify-center relative"
                                 style={{ zIndex: 10 - index }}
                               >
                                 <Image 
-                                  src={`/images/${method.option}.png`} 
-                                  alt={method.option}
+                                  src={method.option.image} 
+                                  alt={method.option.id}
                                   width={18} 
                                   height={18} 
                                   className="object-contain"
@@ -612,20 +617,20 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                         <div className="bg-gray-900/50 rounded-lg p-2">
                           {bestOptionMethods.map((method) => (
                             <div 
-                              key={method.option}
+                              key={method.option.id}
                               className="flex items-center justify-between py-1.5 border-b border-gray-800/30 last:border-0"
                             >
                               <div className="flex items-center">
                                 <div className="h-7 w-7 bg-black rounded-full flex items-center justify-center mr-2">
                                   <Image 
-                                    src={`/images/${method.option}.png`} 
-                                    alt={method.option}
+                                    src={method.option.image} 
+                                    alt={method.option.id}
                                     width={16} 
                                     height={16} 
                                     className="object-contain"
                                   />
                                 </div>
-                                <div className="text-xs text-white capitalize">{method.option}</div>
+                                <div className="text-xs text-white capitalize">{method.option.id}</div>
                               </div>
                               <div className="flex items-center">
                                 <div className="text-white text-xs mr-3">
@@ -644,21 +649,21 @@ const CollectionDrawer: React.FC<CollectionDrawerProps> = ({
                           <div className="flex items-center justify-between mb-2">
                             <div className="text-xs text-gray-400">Standard approach:</div>
                             <div className="text-xs text-gray-500">
-                              {bestStandardMethod.option} × {bestStandardMethod.quantity * quantity}
+                              {bestStandardMethod.option.id} × {bestStandardMethod.quantity * quantity}
                             </div>
                           </div>
                           <div className="bg-gray-900/30 rounded-lg p-2 flex items-center justify-between">
                             <div className="flex items-center">
                               <div className="h-7 w-7 bg-black rounded-full flex items-center justify-center mr-2">
                                 <Image 
-                                  src={`/images/${bestStandardMethod.option}.png`} 
-                                  alt={bestStandardMethod.option}
+                                  src={bestStandardMethod.option.image} 
+                                  alt={bestStandardMethod.option.id}
                                   width={16} 
                                   height={16} 
                                   className="object-contain"
                                 />
                               </div>
-                              <div className="text-xs text-white capitalize">{bestStandardMethod.option}</div>
+                              <div className="text-xs text-white capitalize">{bestStandardMethod.option.id}</div>
                             </div>
                             <div className="flex items-center">
                               <div className="text-white text-xs mr-3">

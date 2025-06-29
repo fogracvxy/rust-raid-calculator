@@ -19,18 +19,23 @@ const BestOptionSulfurCost: React.FC<BestOptionSulfurCostProps> = ({
     return null;
   }
 
-  const options = ["c4", "bullets", "rockets", "satchel"];
+  const options = [
+    { id: "c4", image: "/images/tools/c4.png" },
+    { id: "bullets", image: "/images/ammunition/ammo.rifle.explosive.png" },
+    { id: "rockets", image: "/images/ammunition/rockets.png" },
+    { id: "satchel", image: "/images/tools/satchel.png" },
+  ];
   const optionCosts = options.reduce((acc, option) => {
     const totalCost = collection.reduce((total, c) => {
       const optionValue =
-        c.item.bestOption?.[option as keyof typeof c.item.bestOption] || 0;
-      return total + calculateCost(option, optionValue * c.quantity);
+        c.item.bestOption?.[option.id as keyof typeof c.item.bestOption] || 0;
+      return total + calculateCost(option.id, optionValue * c.quantity);
     }, 0);
     if (totalCost > 0) {
-      acc[option] = totalCost;
+      acc[option.id] = { total: totalCost, option };
     }
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as Record<string, { total: number; option: { image: string } }>);
 
   if (Object.keys(optionCosts).length === 0) {
     return null;
@@ -40,11 +45,11 @@ const BestOptionSulfurCost: React.FC<BestOptionSulfurCostProps> = ({
     <div className="p-4 py-8">
       <h2 className="text-xl font-bold ml-6 mb-4">Best Option Sulfur Cost</h2>
       <div className="flex ml-6">
-        {Object.entries(optionCosts).map(([option, totalCost]) => (
+        {Object.entries(optionCosts).map(([option, { total, option: { image } }]) => (
           <div key={option} className="flex items-center mr-4">
             <div style={{ position: "relative" }}>
               <Image
-                src={`/images/${option}.png`}
+                src={image}
                 height={50}
                 width={50}
                 alt={option.toUpperCase()}
@@ -66,10 +71,10 @@ const BestOptionSulfurCost: React.FC<BestOptionSulfurCostProps> = ({
                   fontWeight: "bold",
                 }}
               >
-                <p className="opacity-100">{totalCost}</p>
+                <p className="opacity-100">{total}</p>
                 <div className="flex flex-col w-20 h-20 absolute top-0 left-0">
                   <Image
-                    src="/images/sulfur.png"
+                    src="/images/resources/sulfur.png"
                     height={15}
                     width={15}
                     alt="Sulfur"

@@ -1,4 +1,4 @@
-import SearchInput, { type SearchInputProps } from "@/app/components/search-input";
+import SearchInput, { type SearchInputProps, type SearchRenderOptionProps } from "@/app/components/search-input";
 import type { ClassNames } from "@/app/types/classnames.types";
 import cn from "classnames";
 import Image from "next/image";
@@ -19,16 +19,35 @@ export interface ItemPickerProps {
   searchPlaceholder?: string;
   emptyPlaceholder?: React.ReactNode;
   showActualYield?: boolean;
+  enableSearchImages?: boolean;
   data?: Item[];
   view?: "grid" | "list";
   className?: string;
   classNames?: ClassNames<"root">;
 }
 
-const SearchItemRenderer: NonNullable<SearchInputProps<Item>["renderOption"]> = ({ item }) => {
+const imageFailed = new Set<string>();
+
+const SearchItemRenderer = ({
+  item,
+  enableSearchImages = false,
+}: SearchRenderOptionProps<Item> & { enableSearchImages?: boolean }) => {
   return (
     <div className="flex items-center gap-3">
-      <Image src={item.image} alt={item.name} width={24} height={24} loading="eager" />
+      {enableSearchImages && !imageFailed.has(item.shortname) && (
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={24}
+          height={24}
+          onError={(e) => {
+            if (!imageFailed.has(item.shortname)) {
+              imageFailed.add(item.shortname);
+              console.error(`Failed to load image for ${item.name}:`);
+            }
+          }}
+        />
+      )}
       <span className="text-white font-semibold">{item.name}</span>
     </div>
   );
@@ -41,6 +60,7 @@ const ItemPicker = ({
   searchPlaceholder,
   emptyPlaceholder = "No items selected.",
   showActualYield = false,
+  enableSearchImages = false,
   data = itemList,
   view = "grid",
   className,
@@ -91,10 +111,10 @@ const ItemPicker = ({
               setSearchTerm("");
               setLastItemAdded(item.shortname);
             }}
-            placeholder={searchPlaceholder || "Search items..."}
+            placeholder={searchPlaceholder || `Search ${data.length} items...`}
             data={searchableItems}
             getValue={(item) => item.shortname}
-            renderOption={SearchItemRenderer}
+            renderOption={(props) => <SearchItemRenderer {...props} enableSearchImages={enableSearchImages} />}
             fuzzyOptions={itemFuzzyOptions}
           />
         )}

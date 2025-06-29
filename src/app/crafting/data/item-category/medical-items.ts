@@ -1,11 +1,17 @@
 import type { Item } from "../../types/item.types";
 
 export type MedicalItemCategory = "medical";
-export type MedicalItemShortname = "bandage" | "largemedkit" | "syringe.medical";
+export type MedicalItemShortname = "antiradpills" | "bandage" | "blood" | "largemedkit" | "syringe.medical";
 
 export const medicalItems: {
   [K in MedicalItemShortname]: Item<K> & { category: MedicalItemCategory };
 } = {
+  antiradpills: {
+    name: "Anti-Radiation Pills",
+    shortname: "antiradpills",
+    category: "medical",
+    image: "/images/medical/antiradpills.png",
+  },
   bandage: {
     shortname: "bandage",
     name: "Bandage",
@@ -13,8 +19,19 @@ export const medicalItems: {
     image: "/images/medical/bandage.png",
     crafting: {
       yield: 1,
-      ingredients: [{ shortname: "cloth", amount: 4 }],
+      ingredients: [
+        {
+          shortname: "cloth",
+          amount: 4,
+        },
+      ],
     },
+  },
+  blood: {
+    name: "Blood",
+    shortname: "blood",
+    category: "medical",
+    image: "/images/medical/blood.png",
   },
   largemedkit: {
     shortname: "largemedkit",
@@ -22,11 +39,17 @@ export const medicalItems: {
     category: "medical",
     image: "/images/medical/largemedkit.png",
     crafting: {
-      yield: 1,
       workbenchLevel: 2,
+      yield: 1,
       ingredients: [
-        { shortname: "syringe.medical", amount: 2 },
-        { shortname: "lowgradefuel", amount: 10 },
+        {
+          shortname: "syringe.medical",
+          amount: 2,
+        },
+        {
+          shortname: "lowgradefuel",
+          amount: 10,
+        },
       ],
     },
   },
@@ -36,12 +59,21 @@ export const medicalItems: {
     category: "medical",
     image: "/images/medical/syringe.medical.png",
     crafting: {
-      yield: 1,
       workbenchLevel: 2,
+      yield: 1,
       ingredients: [
-        { shortname: "cloth", amount: 15 },
-        { shortname: "metal.fragments", amount: 10 },
-        { shortname: "lowgradefuel", amount: 10 },
+        {
+          shortname: "cloth",
+          amount: 15,
+        },
+        {
+          shortname: "metal.fragments",
+          amount: 10,
+        },
+        {
+          shortname: "lowgradefuel",
+          amount: 10,
+        },
       ],
     },
   },

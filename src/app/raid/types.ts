@@ -25,6 +25,7 @@ export interface CollectionItem {
 
 export interface SortedSulfurCost {
   item: string;
+  image: string;
   quantity: number;
 }
 export interface Resource {

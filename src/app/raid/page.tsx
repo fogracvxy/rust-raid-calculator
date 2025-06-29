@@ -136,20 +136,23 @@ const DestructionUI = () => {
   };
 
   const resources = [
-    { name: "C4", image: "/images/c4.png", quantity: calculateResources().c4 },
+    { id: "c4", name: "C4", image: "/images/tools/c4.png", quantity: calculateResources().c4 },
     {
+      id: "bullets",
       name: "Bullets",
-      image: "/images/bullets.png",
+      image: "/images/ammunition/ammo.rifle.explosive.png",
       quantity: calculateResources().bullets,
     },
     {
+      id: "rockets",
       name: "Rockets",
-      image: "/images/rockets.png",
+      image: "/images/ammunition/rockets.png",
       quantity: calculateResources().rockets,
     },
     {
+      id: "satchel",
       name: "Satchel",
-      image: "/images/satchel.png",
+      image: "/images/tools/satchel.png",
       quantity: calculateResources().satchel,
     },
   ];
@@ -184,7 +187,7 @@ const DestructionUI = () => {
   };
 
   const sortedOptions: SortedSulfurCost[] = Object.entries(sulfurCosts)
-    .map(([item, cost]) => ({ item, quantity: cost }))
+    .map(([item, cost]) => ({ item, quantity: cost, image: resources.find(r => r.id === item)?.image || "" }))
     .sort((a, b) => a.quantity - b.quantity);
 
   if (isLoading) {
