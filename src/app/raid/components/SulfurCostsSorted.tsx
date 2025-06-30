@@ -24,11 +24,11 @@ const SulfurCostsSorted: React.FC<SulfurCostsSortedProps> = ({
         Sulfur Costs Sorted (Lowest to Highest)
       </h2>
       <div className="flex">
-        {sortedOptions.map(({ item, quantity }) => (
+        {sortedOptions.map(({ item, quantity, image }) => (
           <div key={item} className="flex items-center mr-4">
             <div style={{ position: "relative" }}>
               <Image
-                src={`/images/${item}.png`}
+                src={image}
                 height={50}
                 width={50}
                 alt={item.toUpperCase()}
@@ -53,7 +53,7 @@ const SulfurCostsSorted: React.FC<SulfurCostsSortedProps> = ({
                 <p className="opacity-100">{quantity}</p>
                 <div className="flex flex-col w-20 h-20 absolute top-0 left-0">
                   <Image
-                    src="/images/sulfur.png"
+                    src="/images/resources/sulfur.png"
                     height={15}
                     width={15}
                     alt="Sulfur"

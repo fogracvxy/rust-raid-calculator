@@ -1,7 +1,7 @@
 export const items = [
   {
     name: "Armored Wall",
-    image: "/images/wall4.png",
+    image: "/images/building/wall4.png",
     destructionOptions: {
       c4: 8,
       bullets: 799,
@@ -18,7 +18,7 @@ export const items = [
   },
   {
     name: "Metal Wall",
-    image: "/images/wall3.png",
+    image: "/images/building/wall3.png",
     destructionOptions: {
       c4: 4,
       bullets: 400,
@@ -35,7 +35,7 @@ export const items = [
   },
   {
     name: "Stone Wall",
-    image: "/images/wall2.png",
+    image: "/images/building/wall2.png",
     destructionOptions: {
       c4: 2,
       bullets: 185,
@@ -52,7 +52,7 @@ export const items = [
   },
   {
     name: "Wooden Wall",
-    image: "/images/wall1.png",
+    image: "/images/building/wall1.png",
     destructionOptions: {
       c4: 1,
       bullets: 49,
@@ -63,7 +63,7 @@ export const items = [
   },
   {
     name: "Strengthened window",
-    image: "/images/wall.window.glass.reinforced.png",
+    image: "/images/construction/wall.window.glass.reinforced.png",
     destructionOptions: {
       c4: 2,
       bullets: 140,
@@ -80,7 +80,7 @@ export const items = [
   },
   {
     name: "Reinforced window",
-    image: "/images/wall.window.bars.toptier.png",
+    image: "/images/construction/wall.window.bars.toptier.png",
     destructionOptions: {
       c4: 2,
       bullets: 200,
@@ -97,7 +97,7 @@ export const items = [
   },
   {
     name: "Chainlink Fence",
-    image: "/images/wall.frame.fence.png",
+    image: "/images/construction/wall.frame.fence.png",
     destructionOptions: {
       c4: 1,
       bullets: 20,
@@ -114,7 +114,7 @@ export const items = [
   },
   {
     name: "Metal Window Bars",
-    image: "/images/wall.window.bars.metal.png",
+    image: "/images/construction/wall.window.bars.metal.png",
     destructionOptions: {
       c4: 2,
       bullets: 200,
@@ -125,7 +125,7 @@ export const items = [
   },
   {
     name: "Metal Vertical Embrasure",
-    image: "/images/shutter.metal.embrasure.b.png",
+    image: "/images/construction/shutter.metal.embrasure.b.png",
     destructionOptions: {
       c4: 2,
       bullets: 173,
@@ -136,7 +136,7 @@ export const items = [
   },
   {
     name: "Metal Horizontal Embrasure",
-    image: "/images/shutter.metal.embrasure.a.png",
+    image: "/images/construction/shutter.metal.embrasure.a.png",
     destructionOptions: {
       c4: 2,
       bullets: 173,
@@ -147,7 +147,7 @@ export const items = [
   },
   {
     name: "Prison Cell Wall",
-    image: "/images/wall.frame.cell.png",
+    image: "/images/construction/wall.frame.cell.png",
     destructionOptions: {
       c4: 1,
       bullets: 75,
@@ -164,7 +164,7 @@ export const items = [
   },
   {
     name: "Chainlink Fence Gate",
-    image: "/images/wall.frame.fence.gate.png",
+    image: "/images/construction/wall.frame.fence.gate.png",
     destructionOptions: {
       c4: 1,
       bullets: 15,
@@ -181,7 +181,7 @@ export const items = [
   },
   {
     name: "Prison Cell Gate",
-    image: "/images/wall.frame.cell.gate.png",
+    image: "/images/construction/wall.frame.cell.gate.png",
     destructionOptions: {
       c4: 1,
       bullets: 75,
@@ -198,7 +198,7 @@ export const items = [
   },
   {
     name: "Sheet Metal Door",
-    image: "/images/door.hinged.metal.png",
+    image: "/images/construction/door.hinged.metal.png",
     destructionOptions: {
       c4: 1,
       bullets: 63,
@@ -215,7 +215,7 @@ export const items = [
   },
   {
     name: "Armored Door",
-    image: "/images/door.hinged.toptier.png",
+    image: "/images/construction/door.hinged.toptier.png",
     destructionOptions: {
       c4: 3,
       bullets: 250,
@@ -226,7 +226,7 @@ export const items = [
   },
   {
     name: "Wooden Door",
-    image: "/images/door.hinged.wood.png",
+    image: "/images/construction/door.hinged.wood.png",
     destructionOptions: {
       c4: 1,
       bullets: 19,
@@ -243,7 +243,7 @@ export const items = [
   },
   {
     name: "Garage Door",
-    image: "/images/wall.frame.garagedoor.png",
+    image: "/images/construction/wall.frame.garagedoor.png",
     destructionOptions: {
       c4: 2,
       bullets: 150,
@@ -260,7 +260,7 @@ export const items = [
   },
   {
     name: "Ladder Hatch",
-    image: "/images/floor.ladder.hatch.png",
+    image: "/images/construction/floor.ladder.hatch.png",
     destructionOptions: {
       c4: 1,
       bullets: 63,
@@ -271,7 +271,7 @@ export const items = [
   },
   {
     name: "Ladder Hatch Triangle",
-    image: "/images/floor.triangle.ladder.hatch.png",
+    image: "/images/construction/floor.triangle.ladder.hatch.png",
     destructionOptions: {
       c4: 1,
       bullets: 63,
@@ -282,7 +282,7 @@ export const items = [
   },
   {
     name: "Metal Shop Front",
-    image: "/images/wall.frame.shopfront.metal.png",
+    image: "/images/construction/wall.frame.shopfront.metal.png",
     destructionOptions: {
       c4: 3,
       bullets: 300,
@@ -293,7 +293,7 @@ export const items = [
   },
   {
     name: "External Wooden Wall",
-    image: "/images/wall.external.high.png",
+    image: "/images/construction/wall.external.high.png",
     destructionOptions: {
       c4: 2,
       bullets: 98,
@@ -304,7 +304,7 @@ export const items = [
   },
   {
     name: "External Stone Wall",
-    image: "/images/wall.external.high.stone.png",
+    image: "/images/construction/wall.external.high.stone.png",
     destructionOptions: {
       c4: 2,
       bullets: 185,
@@ -315,7 +315,7 @@ export const items = [
   },
   {
     name: "Auto Turret",
-    image: "/images/autoturret.png",
+    image: "/images/electrical/autoturret.png",
     destructionOptions: {
       c4: 1,
       bullets: 112,
@@ -326,7 +326,7 @@ export const items = [
   },
   {
     name: "Shotgun Trap",
-    image: "/images/guntrap.png",
+    image: "/images/trap/guntrap.png",
     destructionOptions: {
       c4: 1,
       bullets: 34,
@@ -337,7 +337,7 @@ export const items = [
   },
   {
     name: "Metal Barricade",
-    image: "/images/barricade.metal.png",
+    image: "/images/construction/barricade.metal.png",
     destructionOptions: {
       c4: 1,
       bullets: 111,
@@ -348,7 +348,7 @@ export const items = [
   },
   {
     name: "Flame Turret",
-    image: "/images/flameturret.png",
+    image: "/images/trap/flameturret.png",
     destructionOptions: {
       c4: 1,
       bullets: 34,
@@ -359,7 +359,7 @@ export const items = [
   },
   {
     name: "SAM Site",
-    image: "/images/samsite.png",
+    image: "/images/trap/samsite.png",
     destructionOptions: {
       c4: 1,
       bullets: 200,
@@ -370,7 +370,7 @@ export const items = [
   },
   {
     name: "Workbench lvl 1",
-    image: "/images/workbench1.png",
+    image: "/images/items/workbench1.png",
     destructionOptions: {
       c4: 1,
       bullets: 56,
@@ -381,7 +381,7 @@ export const items = [
   },
   {
     name: "Workbench lvl 2",
-    image: "/images/workbench2.png",
+    image: "/images/items/workbench2.png",
     destructionOptions: {
       c4: 1,
       bullets: 173,
@@ -392,7 +392,7 @@ export const items = [
   },
   {
     name: "Workbench lvl 3",
-    image: "/images/workbench3.png",
+    image: "/images/items/workbench3.png",
     destructionOptions: {
       c4: 2,
       bullets: 259,
@@ -403,7 +403,7 @@ export const items = [
   },
   {
     name: "Vending Machine",
-    image: "/images/vending.machine.png",
+    image: "/images/items/vending.machine.png",
     destructionOptions: {
       c4: 3,
       bullets: 499,

@@ -3,18 +3,16 @@
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { GrResources } from "react-icons/gr";
-import { LuWrench } from "react-icons/lu";
+import { LuPackagePlus, LuWrench } from "react-icons/lu";
 import { MdOutlineInventory2 } from "react-icons/md";
 import Switch from "../components/switch";
 import ItemPicker, { type ItemPickerValue } from "./components/item-picker";
-import { calculateMultiCraftingBreakdown, type Inventory } from "./utils/calculate-crafting-breakdown";
 import { craftableItemList, ingredientItems } from "./data/items";
-import { LuPackagePlus } from "react-icons/lu";
-import SelectInput from "../components/select-input";
-import { BsGrid, BsList } from "react-icons/bs";
+import { calculateMultiCraftingBreakdown, type Inventory } from "./utils/calculate-crafting-breakdown";
 
 export default function CraftingCalculator() {
   const [disallowScraps, setDisallowScraps] = useState<boolean>(true);
+  const [enableSearchImages, setEnableSearchImages] = useState<boolean>(false);
 
   const [craftItems, setCraftItems] = useState<ItemPickerValue[]>([]);
   const [inventoryItems, setInventoryItems] = useState<ItemPickerValue[]>([]);
@@ -73,9 +71,7 @@ export default function CraftingCalculator() {
     >
       <div className="bg-gradient-to-r from-gray-900 to-black py-6 px-4 rounded-lg border border-gray-800 shadow-2xl mb-8">
         <h1 className="text-3xl font-bold mb-2 text-center text-white">Crafting Calculator</h1>
-        <p className="text-gray-400 text-center text-sm mb-6">
-          Plan which resources you need to craft a set of items.
-        </p>
+        <p className="text-gray-400 text-center text-sm mb-6">Plan which resources you need to craft a set of items.</p>
         <div className="hidden md:flex flex-col gap-3 mb-6">
           <p className="text-center">Keyboard Shortcuts</p>
           <p className="text-gray-400 text-center text-sm">
@@ -85,7 +81,7 @@ export default function CraftingCalculator() {
           </p>
           <p className="text-gray-400 text-center text-sm">
             Quantity: <kbd className="bg-gray-800 px-2 py-1 rounded">↑</kbd>{" "}
-            <kbd className="bg-gray-800 px-2 py-1 rounded">↓</kbd> to increase/decrease (hold {" "}
+            <kbd className="bg-gray-800 px-2 py-1 rounded">↓</kbd> to increase/decrease (hold{" "}
             <kbd className="bg-gray-800 px-2 py-1 rounded">Shift</kbd> for higher steps),{" "}
             <kbd className="bg-gray-800 px-2 py-1 rounded">Enter</kbd> to confirm and go back to the search input.
           </p>
@@ -99,6 +95,14 @@ export default function CraftingCalculator() {
             label="No Scraps"
             infoTitle="Disallow Scraps"
             info="When enabled, resources that can be crafted with scraps will be treated as raw resources and won't be broken down into scraps."
+          />
+          <Switch
+            className="bg-black border border-gray-700 rounded-md px-3 py-2 shadow-md"
+            checked={enableSearchImages}
+            onChange={setEnableSearchImages}
+            label="Search Images"
+            infoTitle="Enable Search Images"
+            info="Showing images in the search results can be data-intensive and slow down the page on low-end devices. Enable this option to see images in the search results."
           />
         </div>
       </div>
@@ -116,6 +120,7 @@ export default function CraftingCalculator() {
           }
           data={craftItemOptions}
           view="grid"
+          enableSearchImages={enableSearchImages}
         />
         <ItemPicker
           value={inventoryItems}
@@ -128,6 +133,7 @@ export default function CraftingCalculator() {
             </>
           }
           view="grid"
+          enableSearchImages={enableSearchImages}
         />
       </div>
 
@@ -142,6 +148,7 @@ export default function CraftingCalculator() {
           emptyPlaceholder="No resources needed."
           className="mt-6"
           view="list"
+          enableSearchImages={enableSearchImages}
         />
         <ItemPicker
           title={
@@ -153,6 +160,7 @@ export default function CraftingCalculator() {
           emptyPlaceholder="No excess resources."
           className="mt-6"
           view="list"
+          enableSearchImages={enableSearchImages}
         />
       </div>
     </motion.div>
