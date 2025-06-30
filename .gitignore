@@ -15,7 +15,8 @@
 
 # production
 /build
-
+README-IMAGE-RECOGNITION.md
+/backend
 # misc
 .DS_Store
 *.pem

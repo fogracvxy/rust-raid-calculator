@@ -281,7 +281,7 @@ export const itemsRecycle = [
     yield: {
       scrap: null,
       metal: null,
-      highQualityMetal:2,
+      highQualityMetal: 2,
       techTrash: 2,
       other: "Component",
     },
@@ -314,7 +314,7 @@ export const itemsRecycle = [
       highQualityMetal: 1,
       techTrash: 2,
     },
-    image: "/images/components/targeting.computer.png",
+    image: "/images/resources/targeting.computer.png",
   },
   {
     name: "Hazmat Suit",
